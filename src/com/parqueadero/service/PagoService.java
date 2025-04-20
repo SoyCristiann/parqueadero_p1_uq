@@ -1,5 +1,23 @@
 package com.parqueadero.service;
 
-public class PagoService {
+import java.util.ArrayList;
+import java.util.List;
 
+import com.parqueadero.model.Pago;
+
+public class PagoService {
+	
+	private List<Pago> pagos;
+	
+	
+	// Contructor vacío
+
+	public PagoService() {
+
+		this.pagos =  new ArrayList<>();
+	}
+	
+	
+	
+	
 }
