@@ -3,6 +3,8 @@ package com.parqueadero.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Cliente {
 
     // Atributos
@@ -13,7 +15,13 @@ public class Cliente {
     private List<Vehiculo> vehiculos = new ArrayList<>();
 
     // Constructor vacío
-    public Cliente() {}
+    public Cliente() {
+    	this.nombre = "";
+        this.cedula = "";
+        this.telefono = "";
+        this.correo = "";
+        this.vehiculos = new ArrayList<>();
+    }
 
     // Constructor con parámetros
     public Cliente(String nombre, String cedula, String telefono, String correo, List<Vehiculo> vehiculos) {
@@ -40,22 +48,41 @@ public class Cliente {
 
 //  registrar Vehiculo
     public void registrarVehiculo(Vehiculo vehiculo) {
-    	
-    }
+    	vehiculos.add(vehiculo);   }
 
 //  buscar Vehiculo
     public Vehiculo buscarVehiculo(String placa) {
         
-    	return null; // vehiculoABuscar;
-    }
-
-//  actualiza rVehiculo
-    public void actualizarVehiculo(Vehiculo vehiculo) {
+    	for (Vehiculo vehiculo : vehiculos) {
+    		if (vehiculo.getPlaca().equals(placa)) {
+    			return vehiculo;
+    		}
+    	}
     	
+    	return null;
     }
 
-    @Override
-    public String toString() {
-        return null;
+//  actualizar Vehiculo
+    public void actualizarVehiculo(Vehiculo vehiculoActualizado) {
+    	for (Vehiculo v : vehiculos) {
+    		if (v.getPlaca().equals(vehiculoActualizado)) {
+    			v.setPlaca(vehiculoActualizado.getPlaca());
+    			v.setColor(vehiculoActualizado.getColor());
+    			v.setModelo(vehiculoActualizado.getModelo());
+    			v.setMembresia(vehiculoActualizado.getMembresia());
+    			
+    			return;
+    		}
+    		
+    	}
+    	JOptionPane.showMessageDialog(null, "Vehiculo no encontrado.");;
     }
+
+	@Override
+	public String toString() {
+		return "Cliente [nombre=" + nombre + ", cedula=" + cedula + ", telefono=" + telefono + ", correo=" + correo
+				+ ", vehiculos=" + vehiculos + "]";
+	}
+
+    
 }

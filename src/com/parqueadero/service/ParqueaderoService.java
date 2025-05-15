@@ -7,8 +7,11 @@ import com.parqueadero.model.Vehiculo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
 
 public class ParqueaderoService {
 
@@ -21,7 +24,14 @@ public class ParqueaderoService {
     private List<Cliente> clientes = new ArrayList<>();
 
     // Constructor vacío
-    public ParqueaderoService() {}
+    public ParqueaderoService() {
+    	this.nombre = "";
+        this.direccion = "";
+        this.representante = "";
+        this.contacto = "";
+        this.espaciosDisponibles =new HashMap<>();;
+        this.clientes = new ArrayList<>();
+    }
 
     // Constructor con parámetros
     public ParqueaderoService(String nombre, String direccion, String representante, String contacto,
@@ -58,12 +68,24 @@ public class ParqueaderoService {
     
 //    registrar Cliente
     public void registrarCliente(Cliente cliente) {
-    	
+    	clientes.add(cliente);
     }
     
 //	eliminar Cliente
     public void eliminarCliente(String cedula) {
-    	
+    	boolean validacion = false;
+    	for (int i = 0; i < clientes.size(); i++) {
+    		if(clientes.get(i).getCedula().equals(cedula)) {
+    			clientes.remove(i);
+    			validacion = true;
+    			break;
+    		} 	
+    	}
+    	if (validacion) {
+    		JOptionPane.showMessageDialog(null, "Eliminación correcta." );
+    	} else {
+    		JOptionPane.showMessageDialog(null, "No existe un cliente con esa cédula." );		    		
+    	}
     }
 
 //  buscar Cliente  
