@@ -24,13 +24,14 @@ public class Cliente {
     }
 
     // Constructor con parámetros
-    public Cliente(String nombre, String cedula, String telefono, String correo, List<Vehiculo> vehiculos) {
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.vehiculos = vehiculos;
-    }
+    public Cliente(String nombre, String cedula, String telefono, String correo) {
+		
+		this.nombre = nombre;
+		this.cedula = cedula;
+		this.telefono = telefono;
+		this.correo = correo;
+		this.vehiculos = new ArrayList<>();
+	}
 
     // Getters y setters
     
@@ -55,6 +56,7 @@ public class Cliente {
     	this.correo = correo; }
     public void setVehiculos(List<Vehiculo> vehiculos) {
     	this.vehiculos = vehiculos; }
+    
 
 //    Metodos
     
@@ -100,6 +102,4 @@ public class Cliente {
 		return "Cliente [nombre=" + nombre + ", cedula=" + cedula + ", telefono=" + telefono + ", correo=" + correo
 				+ ", vehiculos=" + vehiculos + "]";
 	}
-
-    
 }
