@@ -21,13 +21,13 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(String nombre, String cedula, String telefono, String correo, ArrayList<Vehiculo> vehiculos) {
+	public Cliente(String nombre, String cedula, String telefono, String correo) {
 		
 		this.nombre = nombre;
 		this.cedula = cedula;
 		this.telefono = telefono;
 		this.correo = correo;
-		this.vehiculos = vehiculos;
+		this.vehiculos = new ArrayList<>();
 	}
 	
 	// Métodos getters y setters

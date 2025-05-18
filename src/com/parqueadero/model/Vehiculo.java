@@ -3,6 +3,7 @@ package com.parqueadero.model;
 import java.util.ArrayList;
 
 public class Vehiculo {
+	private String tipoVehiculo;
 	private String placa;
 	private String color;
 	private String modelo;
@@ -12,7 +13,7 @@ public class Vehiculo {
 	
 	// Constructor vacío y con parámetros
 	public Vehiculo() {
-		
+		this.tipoVehiculo= "";
 		this.placa = "";
 		this.color = "";
 		this.modelo = "";
@@ -20,8 +21,8 @@ public class Vehiculo {
 		this.membresia = new Membresia();
 		
 	}
-	public Vehiculo(String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
-		
+	public Vehiculo(String tippoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
+		this.tipoVehiculo=tipoVehiculo;
 		this.placa = placa;
 		this.color = color;
 		this.modelo = modelo;
@@ -31,6 +32,14 @@ public class Vehiculo {
 	
 	
 	// Métodos getters y setters
+	public String getTipoVehiculo() {
+		return this.tipoVehiculo;
+	}
+	
+	public void setTipoVehiculo() {
+		this.tipoVehiculo=tipoVehiculo;
+	}
+	
 	public String getPlaca() {
 		return placa;
 	}

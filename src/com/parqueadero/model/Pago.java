@@ -1,33 +1,47 @@
 package com.parqueadero.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Pago {
+	private String idPago;
+	private Cliente cliente;
 	private Vehiculo vehiculo;
 	private double monto; 
-	private LocalDateTime fecha;
+	private LocalDate fechaPago;
 	private String tipoPago;
 	
 	
 	// Constructor vacío y con parámetros
 	
 	public Pago() {
+		this.idPago=UUID.randomUUID().toString();
+		this.cliente= new Cliente();
 		this.vehiculo = new Vehiculo();
 		this.monto = 0.0;
-		this.fecha = LocalDateTime.now();;
+		this.fechaPago = LocalDate.now();
 		this.tipoPago = "";
 	}
 	
-	public Pago(Vehiculo vehiculo, double monto, LocalDateTime fecha, String tipoPago) {
-
+	public Pago(Cliente cliente, Vehiculo vehiculo, double monto, String tipoPago) {
+		this.idPago=UUID.randomUUID().toString();
+		this.cliente=cliente;
 		this.vehiculo = vehiculo;
 		this.monto = monto;
-		this.fecha = fecha;
+		this.fechaPago = LocalDate.now();
 		this.tipoPago = tipoPago;
 	}
 	
 	
 	// Métodos getters y setters
+	public String getIdPago() {
+		return idPago;
+	}
+	
+	public void setIdPago() {
+		this.idPago= idPago;
+	}
 
 	public Vehiculo getVehiculo() {
 		return vehiculo;
@@ -45,12 +59,12 @@ public class Pago {
 		this.monto = monto;
 	}
 
-	public LocalDateTime getFecha() {
-		return fecha;
+	public LocalDate getFechaPago() {
+		return fechaPago;
 	}
 
-	public void setFecha(LocalDateTime fecha) {
-		this.fecha = fecha;
+	public void setFechaPago(LocalDate fecha) {
+		this.fechaPago = fecha;
 	}
 
 	public String getTipoPago() {
@@ -64,6 +78,10 @@ public class Pago {
 	
 	// Métodos 
 	
+	@Override
+	public String toString() {
+		return "Id del pago: " + idPago + "\nCliente: " + cliente.getCedula() + "\nVehiculo: " + vehiculo.getPlaca() + "\nValor pagado: " + monto + "\nFecha de pago: " + fechaPago + "\nTipo de pago: " + tipoPago + "\n";
+	}
 	
 	
 	 
