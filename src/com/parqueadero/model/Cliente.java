@@ -32,20 +32,32 @@ public class Cliente {
         this.vehiculos = vehiculos;
     }
 
-    // Getters
-    public String getNombre() { return nombre; }
-    public String getCedula() { return cedula; }
-    public String getTelefono() { return telefono; }
-    public String getCorreo() { return correo; }
-    public List<Vehiculo> getVehiculos() { return vehiculos; }
+    // Getters y setters
+    
+    public String getNombre() {
+    	return nombre; }
+    public String getCedula() {
+    	return cedula; }
+    public String getTelefono() {
+    	return telefono; }
+    public String getCorreo() {
+    	return correo; }
+    public List<Vehiculo> getVehiculos() {
+    	return vehiculos; }
 
-    // Setters
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setCedula(String cedula) { this.cedula = cedula; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-    public void setCorreo(String correo) { this.correo = correo; }
-    public void setVehiculos(List<Vehiculo> vehiculos) { this.vehiculos = vehiculos; }
+    public void setNombre(String nombre) {
+    	this.nombre = nombre; }
+    public void setCedula(String cedula) {
+    	this.cedula = cedula; }
+    public void setTelefono(String telefono) {
+    	this.telefono = telefono; }
+    public void setCorreo(String correo) {
+    	this.correo = correo; }
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+    	this.vehiculos = vehiculos; }
 
+//    Metodos
+    
 //  registrar Vehiculo
     public void registrarVehiculo(Vehiculo vehiculo) {
     	vehiculos.add(vehiculo);   }
@@ -63,21 +75,26 @@ public class Cliente {
     }
 
 //  actualizar Vehiculo
-    public void actualizarVehiculo(Vehiculo vehiculoActualizado) {
+    public boolean actualizarVehiculo(Vehiculo vehiculoActualizado) {
+    	boolean validacion = false;
     	for (Vehiculo v : vehiculos) {
     		if (v.getPlaca().equals(vehiculoActualizado)) {
+    			
     			v.setPlaca(vehiculoActualizado.getPlaca());
     			v.setColor(vehiculoActualizado.getColor());
     			v.setModelo(vehiculoActualizado.getModelo());
     			v.setMembresia(vehiculoActualizado.getMembresia());
     			
-    			return;
+    			break;
     		}
-    		
+    			
     	}
-    	JOptionPane.showMessageDialog(null, "Vehiculo no encontrado.");;
+    	
+    	return validacion;
     }
 
+    
+    
 	@Override
 	public String toString() {
 		return "Cliente [nombre=" + nombre + ", cedula=" + cedula + ", telefono=" + telefono + ", correo=" + correo
