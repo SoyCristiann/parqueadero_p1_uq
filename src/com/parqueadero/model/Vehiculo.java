@@ -54,7 +54,7 @@ public class Vehiculo {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	} */ // no puede ser valido
+	} */ // no es valido
 	
 	public Membresia getMembresia() {
 		return membresia;

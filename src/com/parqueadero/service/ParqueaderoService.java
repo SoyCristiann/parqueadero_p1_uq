@@ -3,10 +3,13 @@ package com.parqueadero.service;
 import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
+import com.parqueadero.model.Membresia;
 import com.parqueadero.model.Vehiculo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,21 +93,52 @@ public class ParqueaderoService {
 
 //  buscar Cliente  
     public Cliente buscarCliente(String cedula) {
-        
-    	return null; // cliente;
+        for (Cliente cliente : clientes) {
+            if (cliente.getCedula().equals(cedula)) {
+                return cliente;
+            }
+        }
+        return null;
     }
+
     
 //  actualizar Cliente 
-    public void actualizarCliente(Cliente cliente) {
+    public boolean actualizarCliente(Cliente clienteActualizado) {
+    	boolean verificacion = false;
+    	for (Cliente c : clientes) {
+    		if(c.getCedula().equals(clienteActualizado.getCedula())) {
+				
+				c.setNombre(clienteActualizado.getNombre());
+				c.setTelefono(clienteActualizado.getTelefono());
+				c.setCorreo(clienteActualizado.getCorreo());
+				
+				verificacion = true;
+				break;
+			}
+		
+    	}
+    	return verificacion;
     	
     }
-
+    
 //  ver Vehiculos Cliente  
     public List<Vehiculo> verVehiculosCliente(String cedula) {
-        
-    	return null; // vehiculos;
+        Cliente cliente = buscarCliente(cedula);
+        if (cliente != null) {
+            return cliente.getVehiculos();
+        }
+        return Collections.emptyList();
     }
 
+
+    /* class IngresoSalida
+     
+     private String placa;
+	private String tipoVehiculo;
+	private LocalDateTime horaEntrada;
+	private LocalDateTime horaSalida;
+	private double valorCalculado;*/
+    
 //  registrar Ingreso
     public void registrarIngreso(Vehiculo vehiculo) {
     	
