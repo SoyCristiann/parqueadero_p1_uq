@@ -58,17 +58,24 @@ public class Vehiculo {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public Cliente getCliente() {
+	/*public Cliente getCliente() {
 		return cliente;
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
+	} */ // no es valido
+	
 	public Membresia getMembresia() {
 		return membresia;
 	}
 	public void setMembresia(Membresia membresia) {
 		this.membresia = membresia;
+	}
+	
+	@Override
+	public String toString() {
+		return "Vehiculo [placa=" + placa + ", color=" + color + ", modelo=" + modelo + ", cliente=" + cliente
+				+ ", membresia=" + membresia + "]";
 	}
 	
 	

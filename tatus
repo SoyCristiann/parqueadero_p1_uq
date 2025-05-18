@@ -1,0 +1,273 @@
+[1mdiff --cc bin/com/parqueadero/model/Cliente.class[m
+[1mindex ca25abb,9c31693..0000000[m
+Binary files differ
+[1mdiff --cc bin/com/parqueadero/model/Vehiculo.class[m
+[1mindex 9baf6c9,ddae54c..0000000[m
+Binary files differ
+[1mdiff --cc bin/com/parqueadero/service/ParqueaderoService.class[m
+[1mindex 74086b5,0d8f862..0000000[m
+Binary files differ
+[1mdiff --cc bin/com/proyectoParqueadero/Main.class[m
+[1mindex 183b4b1,1d965bb..0000000[m
+Binary files differ
+[1mdiff --cc src/com/parqueadero/model/Cliente.java[m
+[1mindex 959554f,ceb670c..0000000[m
+[1m--- a/src/com/parqueadero/model/Cliente.java[m
+[1m+++ b/src/com/parqueadero/model/Cliente.java[m
+[36m@@@ -1,69 -1,105 +1,105 @@@[m
+  package com.parqueadero.model;[m
+  [m
+  import java.util.ArrayList;[m
+[32m+ import java.util.List;[m
+[32m+ [m
+[32m+ import javax.swing.JOptionPane;[m
+  [m
+  public class Cliente {[m
+[31m- 	private String nombre;[m
+[31m- 	private String cedula;[m
+[31m- 	private String telefono;[m
+[31m- 	private String correo;[m
+[31m- 	private ArrayList<Vehiculo>vehiculos;[m
+[31m- 	[m
+[31m- 	[m
+[31m- 	// Constructor vacío y con parámetros[m
+[31m- 	public Cliente() {[m
+[31m- 		[m
+[31m- 		this.nombre = "";[m
+[31m- 		this.cedula = "";[m
+[31m- 		this.telefono = "";[m
+[31m- 		this.correo = "";[m
+[31m- 		this.vehiculos = new ArrayList<>();[m
+[31m- 		[m
+[31m- 	}[m
+[31m- 	[m
+[31m- 	public Cliente(String nombre, String cedula, String telefono, String correo) {[m
+[32m+ [m
+[32m+     // Atributos[m
+[32m+     private String nombre;[m
+[32m+     private String cedula;[m
+[32m+     private String telefono;[m
+[32m+     private String correo;[m
+[32m+     private List<Vehiculo> vehiculos = new ArrayList<>();[m
+[32m+ [m
+[32m+     // Constructor vacío[m
+[32m+     public Cliente() {[m
+[32m+     	this.nombre = "";[m
+[32m+         this.cedula = "";[m
+[32m+         this.telefono = "";[m
+[32m+         this.correo = "";[m
+[32m+         this.vehiculos = new ArrayList<>();[m
+[32m+     }[m
+[32m+ [m
+[32m+     // Constructor con parámetros[m
+[31m -    public Cliente(String nombre, String cedula, String telefono, String correo, List<Vehiculo> vehiculos) {[m
+[31m -        this.nombre = nombre;[m
+[31m -        this.cedula = cedula;[m
+[31m -        this.telefono = telefono;[m
+[31m -        this.correo = correo;[m
+[31m -        this.vehiculos = vehiculos;[m
+[31m -    }[m
+[32m++    public Cliente(String nombre, String cedula, String telefono, String correo) {[m
+[32m +		[m
+[32m +		this.nombre = nombre;[m
+[32m +		this.cedula = cedula;[m
+[32m +		this.telefono = telefono;[m
+[32m +		this.correo = correo;[m
+[32m +		this.vehiculos = new ArrayList<>();[m
+[32m +	}[m
+[31m- 	[m
+[31m- 	// Métodos getters y setters[m
+[31m- 	public String getNombre() {[m
+[31m- 		return nombre;[m
+[31m- 	}[m
+[31m- 	public void setNombre(String nombre) {[m
+[31m- 		this.nombre = nombre;[m
+[31m- 	}[m
+[31m- 	public String getCedula() {[m
+[31m- 		return cedula;[m
+[31m- 	}[m
+[31m- 	public void setCedula(String cedula) {[m
+[31m- 		this.cedula = cedula;[m
+[31m- 	}[m
+[31m- 	public String getTelefono() {[m
+[31m- 		return telefono;[m
+[31m- 	}[m
+[31m- 	public void setTelefono(String telefono) {[m
+[31m- 		this.telefono = telefono;[m
+[31m- 	}[m
+[31m- 	public String getCorreo() {[m
+[31m- 		return correo;[m
+[31m- 	}[m
+[31m- 	public void setCorreo(String correo) {[m
+[31m- 		this.correo = correo;[m
+[31m- 	}[m
+[31m- 	public ArrayList<Vehiculo> getVehiculos() {[m
+[31m- 		return vehiculos;[m
+[31m- 	}[m
+[31m- 	public void setVehiculos(ArrayList<Vehiculo> vehiculos) {[m
+[31m- 		this.vehiculos = vehiculos;[m
+[32m+ [m
+[32m+     // Getters y setters[m
+[32m+     [m
+[32m+     public String getNombre() {[m
+[32m+     	return nombre; }[m
+[32m+     public String getCedula() {[m
+[32m+     	return cedula; }[m
+[32m+     public String getTelefono() {[m
+[32m+     	return telefono; }[m
+[32m+     public String getCorreo() {[m
+[32m+     	return correo; }[m
+[32m+     public List<Vehiculo> getVehiculos() {[m
+[32m+     	return vehiculos; }[m
+[32m+ [m
+[32m+     public void setNombre(String nombre) {[m
+[32m+     	this.nombre = nombre; }[m
+[32m+     public void setCedula(String cedula) {[m
+[32m+     	this.cedula = cedula; }[m
+[32m+     public void setTelefono(String telefono) {[m
+[32m+     	this.telefono = telefono; }[m
+[32m+     public void setCorreo(String correo) {[m
+[32m+     	this.correo = correo; }[m
+[32m+     public void setVehiculos(List<Vehiculo> vehiculos) {[m
+[32m+     	this.vehiculos = vehiculos; }[m
+[32m++    [m
+[32m+ [m
+[32m+ //    Metodos[m
+[32m+     [m
+[32m+ //  registrar Vehiculo[m
+[32m+     public void registrarVehiculo(Vehiculo vehiculo) {[m
+[32m+     	vehiculos.add(vehiculo);   }[m
+[32m+ [m
+[32m+ //  buscar Vehiculo[m
+[32m+     public Vehiculo buscarVehiculo(String placa) {[m
+[32m+         [m
+[32m+     	for (Vehiculo vehiculo : vehiculos) {[m
+[32m+     		if (vehiculo.getPlaca().equals(placa)) {[m
+[32m+     			return vehiculo;[m
+[32m+     		}[m
+[32m+     	}[m
+[32m+     	[m
+[32m+     	return null;[m
+[32m+     }[m
+[32m+ [m
+[32m+ //  actualizar Vehiculo[m
+[32m+     public boolean actualizarVehiculo(Vehiculo vehiculoActualizado) {[m
+[32m+     	boolean validacion = false;[m
+[32m+     	for (Vehiculo v : vehiculos) {[m
+[32m+     		if (v.getPlaca().equals(vehiculoActualizado)) {[m
+[32m+     			[m
+[32m+     			v.setPlaca(vehiculoActualizado.getPlaca());[m
+[32m+     			v.setColor(vehiculoActualizado.getColor());[m
+[32m+     			v.setModelo(vehiculoActualizado.getModelo());[m
+[32m+     			v.setMembresia(vehiculoActualizado.getMembresia());[m
+[32m+     			[m
+[32m+     			break;[m
+[32m+     		}[m
+[32m+     			[m
+[32m+     	}[m
+[32m+     	[m
+[32m+     	return validacion;[m
+[32m+     }[m
+[32m+ [m
+[32m+     [m
+[32m+     [m
+[32m+ 	@Override[m
+[32m+ 	public String toString() {[m
+[32m+ 		return "Cliente [nombre=" + nombre + ", cedula=" + cedula + ", telefono=" + telefono + ", correo=" + correo[m
+[32m+ 				+ ", vehiculos=" + vehiculos + "]";[m
+  	}[m
+[31m- 	[m
+[31m- 	[m
+[31m- 	[m
+[31m- 	// Métodos[m
+[31m- 	[m
+[31m -[m
+[31m -    [m
+  }[m
+[1mdiff --cc src/com/proyectoParqueadero/Main.java[m
+[1mindex d150626,6d5b2e5..0000000[m
+[1m--- a/src/com/proyectoParqueadero/Main.java[m
+[1m+++ b/src/com/proyectoParqueadero/Main.java[m
+[36m@@@ -1,39 -1,22 +1,50 @@@[m
+  package com.proyectoParqueadero;[m
+[31m--[m
+[32m +import java.time.LocalDate;[m
+[32m +import java.time.LocalDateTime;[m
+[32m +import java.util.Date;[m
+[31m- [m
+  import com.parqueadero.model.Cliente;[m
+[32m +import com.parqueadero.model.Membresia;[m
+[32m +import com.parqueadero.model.Vehiculo;[m
+[32m +import com.parqueadero.service.PagoService;[m
+[32m +import com.parqueadero.utils.SelectorFecha;[m
+[32m +import com.parqueadero.model.Pago;[m
+[32m+ import com.parqueadero.service.ParqueaderoService;[m
+  [m
+  public class Main {[m
+[31m- [m
+[31m- 	public static void main(String[] args) {[m
+[31m- 		[m
+[31m- 		/*[m
+[31m- 		 * Estos datos son solo para hacer validaciones, por favor no borrar hasta el final. Si entorpece algo, por favor dejarlo comentado.[m
+[32m+     public static void main(String[] args) {[m
+[31m -        // Ejemplo de prueba[m
+[31m -        Cliente cliente = new Cliente("Juan", "1234567890", null, null, null);[m
+[32m++    	// Ejemplo de prueba[m
+[32m++        Cliente cliente = new Cliente("Juan", "1234567890", null, null);[m
+[32m+         System.out.println("Cliente creado: " + cliente.getNombre());[m
+[31m -[m
+[31m -        ParqueaderoService servicio = new ParqueaderoService();[m
+[31m -        [m
+[31m -        [m
+[31m -//      espacio para llamar metodos para probar funcionamiento[m
+[32m+         [m
+[32m++        ParqueaderoService servicio = new ParqueaderoService();[m
+[32m+         [m
+[32m+         [m
+[32m+         [m
+[32m++        /*[m
+[32m++		 * Estos datos son de Cristian solo para hacer validaciones, por favor no borrar hasta el final. Si entorpece algo, por favor dejarlo comentado en bloque.[m
+[32m +		 * */[m
+[32m +		[m
+[32m++        /*[m
+[32m +		//LocalDate fecha=SelectorFecha.seleccionarFecha();[m
+[32m +		PagoService adminPago = new PagoService();[m
+[32m +		adminPago.calcularTotalIngresos();[m
+[32m +		Membresia membresia= new Membresia(LocalDate.of(2025, 06, 01), LocalDate.of(2025, 06, 30), "Efectivo", 20000);[m
+[31m- 		Cliente cliente =new Cliente("Pedro Perez", "1010", "3100000000", "pedroperez@correo.com");[m
+[31m- 		Vehiculo vehiculo= new Vehiculo("Carro", "ABC123", "Negro", "2025", cliente, membresia);[m
+[31m- 		Vehiculo vehiculo2= new Vehiculo("Carro", "DEF123", "Negro", "2025", cliente, membresia);[m
+[31m- 		Pago pago = new Pago(cliente, vehiculo, 2000, "Efectivo");[m
+[31m- 		Pago pago2 = new Pago(cliente, vehiculo2, 4000, "Efectivo");		[m
+[32m++		Cliente cliente2 =new Cliente("Pedro Perez", "1010", "3100000000", "pedroperez@correo.com");[m
+[32m++		Vehiculo vehiculo= new Vehiculo("Carro", "ABC123", "Negro", "2025", cliente2, membresia);[m
+[32m++		Vehiculo vehiculo2= new Vehiculo("Carro", "DEF123", "Negro", "2025", cliente2, membresia);[m
+[32m++		Pago pago = new Pago(cliente2, vehiculo, 2000, "Efectivo");[m
+[32m++		Pago pago2 = new Pago(cliente2, vehiculo2, 4000, "Efectivo");		[m
+[32m +		adminPago.registrarPago(pago);[m
+[32m +		adminPago.registrarPago(pago2);[m
+[32m +		System.out.println(adminPago.calcularTotalIngresos());		[m
+[32m +		System.out.println(adminPago.calcularTotalPagosPeriodo(pago.getFechaPago(), pago2.getFechaPago()));[m
+[32m +		System.out.println(adminPago.obtenerHistorialPagoVehiculo(vehiculo2));[m
+[32m++		*/[m
+[32m++		[m
+[32m +		[m
+[31m- 	}[m
+[32m++//      espacio para llamar metodos para probar funcionamiento[m
+[32m++    }        [m
+[32m++[m
+[32m+         [m
+[31m -    }[m
+[31m -}[m
+[32m +[m
+[31m- }[m
+[32m++}[m
+[1mdiff --git a/bin/com/parqueadero/model/Automovil.class b/bin/com/parqueadero/model/Automovil.class[m
+[1mindex c1f99cc..d260870 100644[m
+Binary files a/bin/com/parqueadero/model/Automovil.class and b/bin/com/parqueadero/model/Automovil.class differ
+[1mdiff --git a/bin/com/parqueadero/model/Camion.class b/bin/com/parqueadero/model/Camion.class[m
+[1mindex 532a41a..f5425d8 100644[m
+Binary files a/bin/com/parqueadero/model/Camion.class and b/bin/com/parqueadero/model/Camion.class differ
+[1mdiff --git a/bin/com/parqueadero/model/Moto.class b/bin/com/parqueadero/model/Moto.class[m
+[1mindex 39bd8a2..2fb31d2 100644[m
+Binary files a/bin/com/parqueadero/model/Moto.class and b/bin/com/parqueadero/model/Moto.class differ
