@@ -21,8 +21,8 @@ public class Vehiculo {
 		this.membresia = new Membresia();
 		
 	}
-	public Vehiculo(String tippoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
-		this.tipoVehiculo=tipoVehiculo;
+	public Vehiculo(String tipoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
+		this.tipoVehiculo= tipoVehiculo;
 		this.placa = placa;
 		this.color = color;
 		this.modelo = modelo;
@@ -36,8 +36,8 @@ public class Vehiculo {
 		return this.tipoVehiculo;
 	}
 	
-	public void setTipoVehiculo() {
-		this.tipoVehiculo=tipoVehiculo;
+	public void setTipoVehiculo(String tipoVehiculo) {
+		this.tipoVehiculo= tipoVehiculo;
 	}
 	
 	public String getPlaca() {
