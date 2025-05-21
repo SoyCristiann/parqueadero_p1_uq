@@ -37,8 +37,7 @@ public class ParqueaderoService {
     }
 
     // Constructor con parámetros
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto,
-                              Map<String, Integer> espaciosDisponibles, List<Cliente> clientes) {
+    public ParqueaderoService(String nombre, String direccion, String representante, String contacto, Map<String, Integer> espaciosDisponibles, List<Cliente> clientes) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.representante = representante;
@@ -48,18 +47,38 @@ public class ParqueaderoService {
     }
 
     // Getters
-    public String getNombre() { return nombre; }
-    public String getDireccion() { return direccion; }
-    public String getRepresentante() { return representante; }
-    public String getContacto() { return contacto; }
-    public Map<String, Integer> getEspaciosDisponibles() { return espaciosDisponibles; }
-    public List<Cliente> getClientes() { return clientes; }
+    public String getNombre() { 
+    	return nombre; 
+    }
+    public String getDireccion() { 
+    	return direccion;
+    }
+    public String getRepresentante() { 
+    	return representante; 
+    }
+    public String getContacto() { 
+    	return contacto;
+    }
+    public Map<String, Integer> getEspaciosDisponibles() { 
+    	return espaciosDisponibles;
+    }
+    public List<Cliente> getClientes() {
+    	return clientes;
+    }
 
     // Setters
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
-    public void setRepresentante(String representante) { this.representante = representante; }
-    public void setContacto(String contacto) { this.contacto = contacto; }
+    public void setNombre(String nombre) { 
+    	this.nombre = nombre;
+    }
+    public void setDireccion(String direccion) {
+    	this.direccion = direccion;
+    }
+    public void setRepresentante(String representante) {
+    	this.representante = representante;
+    }
+    public void setContacto(String contacto) {
+    	this.contacto = contacto;
+    }
     public void setEspaciosDisponibles(Map<String, Integer> espaciosDisponibles) {
         this.espaciosDisponibles = espaciosDisponibles;
     }
