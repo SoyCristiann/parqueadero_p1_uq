@@ -51,6 +51,7 @@ public class Main {
 //      espacio para llamar metodos para probar funcionamiento
         
         
+
       //Menú. Ojo, no borrar, solo hacer ediciones que no afecten el funcionamiento del menú. Para editar el menú y/o crear submenues, vaya a com.parqueadero.utils -> Menu	
         byte opcion;
         ParqueaderoService adminParqueadero = new ParqueaderoService();
@@ -97,14 +98,9 @@ public class Main {
 			}
 		}
 		} while (opcion!=0);
-        
-        
-        
-        
-        
+                
     }
-    
-    
+
 
         
 

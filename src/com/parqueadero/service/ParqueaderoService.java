@@ -10,10 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JOptionPane;
 
 public class ParqueaderoService {
@@ -23,8 +20,11 @@ public class ParqueaderoService {
     private String direccion;
     private String representante;
     private String contacto;
-    private Map<String, Integer> espaciosDisponibles;
-    private List<Cliente> clientes = new ArrayList<>();
+    private ArrayList<String> espaciosDisponibles;
+    private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<IngresoSalida> registrosActivos = new ArrayList<>();
+    private ArrayList<IngresoSalida> historial = new ArrayList<>();
+
 
     // Constructor vacío
     public ParqueaderoService() {
@@ -32,12 +32,15 @@ public class ParqueaderoService {
         this.direccion = "";
         this.representante = "";
         this.contacto = "";
-        this.espaciosDisponibles =new HashMap<>();;
+        this.espaciosDisponibles =new ArrayList<>();
         this.clientes = new ArrayList<>();
+        this.registrosActivos = new ArrayList<>();
+        this.historial = new ArrayList<>();
     }
 
     // Constructor con parámetros
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto, Map<String, Integer> espaciosDisponibles, List<Cliente> clientes) {
+    public ParqueaderoService(String nombre, String direccion, String representante, String contacto,
+    		ArrayList<String> espaciosDisponibles, ArrayList<Cliente> clientes) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.representante = representante;
@@ -47,44 +50,22 @@ public class ParqueaderoService {
     }
 
     // Getters
-    public String getNombre() { 
-    	return nombre; 
-    }
-    public String getDireccion() { 
-    	return direccion;
-    }
-    public String getRepresentante() { 
-    	return representante; 
-    }
-    public String getContacto() { 
-    	return contacto;
-    }
-    public Map<String, Integer> getEspaciosDisponibles() { 
-    	return espaciosDisponibles;
-    }
-    public List<Cliente> getClientes() {
-    	return clientes;
-    }
+    public String getNombre() { return nombre; }
+    public String getDireccion() { return direccion; }
+    public String getRepresentante() { return representante; }
+    public String getContacto() { return contacto; }
+    public ArrayList<String> getEspaciosDisponibles() { return espaciosDisponibles; }
+    public ArrayList<Cliente> getClientes() { return clientes; }
+    public ArrayList<IngresoSalida> getRegistrosActivos() {return registrosActivos;}
+    public ArrayList<IngresoSalida> getHistorial() {return historial;}
 
     // Setters
-    public void setNombre(String nombre) { 
-    	this.nombre = nombre;
-    }
-    public void setDireccion(String direccion) {
-    	this.direccion = direccion;
-    }
-    public void setRepresentante(String representante) {
-    	this.representante = representante;
-    }
-    public void setContacto(String contacto) {
-    	this.contacto = contacto;
-    }
-    public void setEspaciosDisponibles(Map<String, Integer> espaciosDisponibles) {
-        this.espaciosDisponibles = espaciosDisponibles;
-    }
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
-    }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public void setRepresentante(String representante) { this.representante = representante; }
+    public void setContacto(String contacto) {this.contacto = contacto; }
+    public void setEspaciosDisponibles (ArrayList<String> espaciosDisponibles) {this.espaciosDisponibles = espaciosDisponibles;}
+    public void setClientes(ArrayList<Cliente> clientes) {this.clientes = clientes;}
 
     // metodos
     
@@ -94,20 +75,13 @@ public class ParqueaderoService {
     }
     
 //	eliminar Cliente
-    public void eliminarCliente(String cedula) {
-    	boolean validacion = false;
-    	for (int i = 0; i < clientes.size(); i++) {
-    		if(clientes.get(i).getCedula().equals(cedula)) {
-    			clientes.remove(i);
-    			validacion = true;
-    			break;
-    		} 	
+    public boolean eliminarCliente(String cedula) {
+    	Cliente c = buscarCliente(cedula);
+    	if (c != null) {
+    		clientes.remove(c);
+    		return true;
     	}
-    	if (validacion) {
-    		JOptionPane.showMessageDialog(null, "Eliminación correcta." );
-    	} else {
-    		JOptionPane.showMessageDialog(null, "No existe un cliente con esa cédula." );		    		
-    	}
+    	return false;
     }
 
 //  buscar Cliente  
@@ -123,21 +97,16 @@ public class ParqueaderoService {
     
 //  actualizar Cliente 
     public boolean actualizarCliente(Cliente clienteActualizado) {
-    	boolean verificacion = false;
-    	for (Cliente c : clientes) {
-    		if(c.getCedula().equals(clienteActualizado.getCedula())) {
-				
-				c.setNombre(clienteActualizado.getNombre());
-				c.setTelefono(clienteActualizado.getTelefono());
-				c.setCorreo(clienteActualizado.getCorreo());
-				
-				verificacion = true;
-				break;
-			}
-		
+    	Cliente c = buscarCliente(clienteActualizado.getCedula());
+    	if (c != null) {			
+    			c.setNombre(clienteActualizado.getNombre());
+    			c.setTelefono(clienteActualizado.getTelefono());
+    			c.setCorreo(clienteActualizado.getCorreo());
+    			// para modificar la cedula es un metodo aparte
+    			return true;
     	}
-    	return verificacion;
     	
+    	return false;	
     }
     
 //  ver Vehiculos Cliente  
@@ -149,27 +118,61 @@ public class ParqueaderoService {
         return Collections.emptyList();
     }
 
+    /*
+    public Vehiculo buscarVehiculoPorPlaca(String placa) {
+        for (Cliente c : clientes) {
+            for (Vehiculo v : c.getVehiculos()) {
+                if (v.getPlaca().equalsIgnoreCase(placa)) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    } */
 
-    /* class IngresoSalida
-     
-     private String placa;
-	private String tipoVehiculo;
-	private LocalDateTime horaEntrada;
-	private LocalDateTime horaSalida;
-	private double valorCalculado;*/
     
 //  registrar Ingreso
-    public void registrarIngreso(Vehiculo vehiculo) {
-    	
+    public boolean registrarIngreso(String placa, String tipoVehiculo, LocalDateTime horaEntrada) {
+        // Verificar si ya está registrado
+        for (IngresoSalida ingresoExistente : registrosActivos) {
+            if (ingresoExistente.getPlaca().equalsIgnoreCase(placa) &&
+                ingresoExistente.getHoraSalida() == null) {
+                System.out.println("El vehículo ya está registrado y no ha salido.");
+                return false; // Salir sin registrar
+            }
+        }
+
+        // Si no está, registrar nuevo ingreso
+        IngresoSalida ingreso = new IngresoSalida();
+        ingreso.setPlaca(placa);
+        ingreso.setTipoVehiculo(tipoVehiculo);
+        ingreso.setHoraEntrada(LocalDateTime.now());
+        ingreso.setHoraSalida(null); 
+        registrosActivos.add(ingreso);
+        return true;
     }
+
 
 //  registrar Salida
     public void registrarSalida(String placa) {
-    	
-    }
+        IngresoSalida ingreso = null; //  aún no se sabe si existe un IngresoSalida con esa placa
+        for (IngresoSalida r : registrosActivos) {
+            if (r.getPlaca().equalsIgnoreCase(placa)) {
+                ingreso = r;
+                break;
+            }
+        }
+    } // aun no esta terminado
 
-    public double calcularMonto(Vehiculo vehiculo, int horas) {
-        return 0;
+
+    public double calcularMonto(String tipoVehiculo, long horas) {
+        /* long horas = java.time.Duration.between(ingreso.getHoraEntrada(), ingreso.getHoraSalida()).toHours();
+            double monto = calcularMonto(ingreso.getTipoVehiculo(), horas);
+            ingreso.setValorCalculado(monto);
+
+            historial.add(ingreso);
+            registrosActivos.remove(ingreso);*/
+    	return 0;
     }
 
     public Factura generarFactura(Vehiculo vehiculo) {
@@ -177,7 +180,7 @@ public class ParqueaderoService {
     }
 
     public List<IngresoSalida> consultarHistorialCliente(String cedula) {
-        return null;
+        return null; // historialCliente
     }
 
     public double calcularGanancias(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -190,4 +193,7 @@ public class ParqueaderoService {
         
     	return null; // listVehiculosActuales;
     }
+
+
+	
 }
