@@ -22,8 +22,8 @@ public class ParqueaderoService {
     private String contacto;
     private ArrayList<String> espaciosDisponibles;
     private ArrayList<Cliente> clientes = new ArrayList<>();
-    private ArrayList<IngresoSalida> registrosActivos = new ArrayList<>();
-    private ArrayList<IngresoSalida> historial = new ArrayList<>();
+    private ArrayList<IngresoSalida> registrosActivos;
+    private ArrayList<IngresoSalida> historial;
 
 
     // Constructor vacío
@@ -39,14 +39,15 @@ public class ParqueaderoService {
     }
 
     // Constructor con parámetros
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto,
-    		ArrayList<String> espaciosDisponibles, ArrayList<Cliente> clientes) {
+    public ParqueaderoService(String nombre, String direccion, String representante, String contacto) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.representante = representante;
         this.contacto = contacto;
-        this.espaciosDisponibles = espaciosDisponibles;
-        this.clientes = clientes;
+        this.espaciosDisponibles = new ArrayList<>();
+        this.clientes = new ArrayList<>();
+        this.registrosActivos = new ArrayList<>();
+        this.historial = new ArrayList<>();
     }
 
     // Getters
@@ -70,8 +71,17 @@ public class ParqueaderoService {
     // metodos
     
 //    registrar Cliente
-    public void registrarCliente(Cliente cliente) {
-    	clientes.add(cliente);
+    public boolean registrarCliente(Cliente cliente) {
+    	for (Cliente c : clientes) {
+    		if (c.getCedula() != cliente.getCedula()) {
+    			clientes.add(cliente);
+    			JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
+    			return true;
+    		}
+    	}
+    	
+    	JOptionPane.showMessageDialog(null, "Ya hay un cliente con esa cedula registrado.");
+    	return false; 
     }
     
 //	eliminar Cliente
@@ -79,19 +89,37 @@ public class ParqueaderoService {
     	Cliente c = buscarCliente(cedula);
     	if (c != null) {
     		clientes.remove(c);
+    		JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
     		return true;
     	}
+    	JOptionPane.showMessageDialog(null, "");
     	return false;
     }
 
-//  buscar Cliente  
+//  buscar Cliente para el sistema 
     public Cliente buscarCliente(String cedula) {
         for (Cliente cliente : clientes) {
             if (cliente.getCedula().equals(cedula)) {
-                return cliente;
+            	return cliente;
             }
         }
-        return null;
+        return null; // no encontró un cliente con esa cedula
+    }
+//    buscar cliente para el usuario (Este solo mostrara: nombre, cedula, telefono y correo)
+    public void buscarClienteForUsuario(String cedula) {
+    	for (Cliente cliente : clientes) {
+    		if (cliente.getCedula().equals(cedula)) {
+    			JOptionPane.showMessageDialog(null, 
+    			"Nombre: " + cliente.getNombre() 
+    			+ "\nCédula: " + cliente.getCedula() 
+    			+ "\nTeléfono: " + cliente.getTelefono() 
+    			+ "\nCorreo: " + cliente.getCorreo()
+    			+ "\n\n");
+    			
+    		}
+    	}
+    	JOptionPane.showMessageDialog(null, "No se encontró un cliente con esa cédula.");
+    	
     }
 
     
@@ -103,19 +131,24 @@ public class ParqueaderoService {
     			c.setTelefono(clienteActualizado.getTelefono());
     			c.setCorreo(clienteActualizado.getCorreo());
     			// para modificar la cedula es un metodo aparte
+//    			creo que el metodo de editar la lista de vehiculos va en otra parte
+    			JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente.");
     			return true;
     	}
     	
+    	JOptionPane.showMessageDialog(null, "No se encontró un cliente con esa cédula.");
     	return false;	
     }
     
 //  ver Vehiculos Cliente  
-    public List<Vehiculo> verVehiculosCliente(String cedula) {
+    public void verVehiculosCliente(String cedula) {
         Cliente cliente = buscarCliente(cedula);
         if (cliente != null) {
-            return cliente.getVehiculos();
+        	JOptionPane.showMessageDialog(null, "");
+        } else {
+        	JOptionPane.showMessageDialog(null, "");
         }
-        return Collections.emptyList();
+        
     }
 
     /*
@@ -132,12 +165,12 @@ public class ParqueaderoService {
 
     
 //  registrar Ingreso
-    public boolean registrarIngreso(String placa, String tipoVehiculo, LocalDateTime horaEntrada) {
+    public boolean registrarIngreso(String placa, String tipoVehiculo, LocalDateTime horaEntradaN) {
         // Verificar si ya está registrado
         for (IngresoSalida ingresoExistente : registrosActivos) {
             if (ingresoExistente.getPlaca().equalsIgnoreCase(placa) &&
                 ingresoExistente.getHoraSalida() == null) {
-                System.out.println("El vehículo ya está registrado y no ha salido.");
+            	JOptionPane.showMessageDialog(null, "El vehículo ya está registrado y no ha salido.");
                 return false; // Salir sin registrar
             }
         }
@@ -146,34 +179,56 @@ public class ParqueaderoService {
         IngresoSalida ingreso = new IngresoSalida();
         ingreso.setPlaca(placa);
         ingreso.setTipoVehiculo(tipoVehiculo);
-        ingreso.setHoraEntrada(LocalDateTime.now());
+        ingreso.setHoraEntrada(horaEntradaN);
         ingreso.setHoraSalida(null); 
         registrosActivos.add(ingreso);
+        JOptionPane.showMessageDialog(null, "Registro de entrada exitoso.");
         return true;
     }
 
 
 //  registrar Salida
-    public void registrarSalida(String placa) {
-        IngresoSalida ingreso = null; //  aún no se sabe si existe un IngresoSalida con esa placa
+    public boolean registrarSalida(String placa, LocalDateTime horaSalidaN) {
         for (IngresoSalida r : registrosActivos) {
             if (r.getPlaca().equalsIgnoreCase(placa)) {
-                ingreso = r;
-                break;
+                if (r.getHoraSalida() == null) {
+                    r.setHoraSalida(horaSalidaN);
+                    JOptionPane.showMessageDialog(null, "Registro de salida exitoso.");
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El vehículo ya salió del parqueadero.");
+                    return false;
+                }
             }
         }
-    } // aun no esta terminado
-
-
-    public double calcularMonto(String tipoVehiculo, long horas) {
-        /* long horas = java.time.Duration.between(ingreso.getHoraEntrada(), ingreso.getHoraSalida()).toHours();
-            double monto = calcularMonto(ingreso.getTipoVehiculo(), horas);
-            ingreso.setValorCalculado(monto);
-
-            historial.add(ingreso);
-            registrosActivos.remove(ingreso);*/
-    	return 0;
+        JOptionPane.showMessageDialog(null, "El vehículo no está registrado.");
+        return false;
     }
+
+//	registra el monto
+    public double registrarCalculoMonto(String placa ,String tipoVehiculo) {
+        for (IngresoSalida r : registrosActivos ) {
+        	if(r.getPlaca().equalsIgnoreCase(placa) && r.getHoraSalida() != null) {
+        		double minutos = java.time.Duration.between(r.getHoraEntrada(), r.getHoraSalida()).toMinutes();
+                double monto = calcularMonto(r.getTipoVehiculo(), minutos);
+                r.setValorCalculado(monto);
+                historial.add(r);
+                registrosActivos.remove(r);
+        	}
+        }
+
+    	return 0;
+//    	No se ha terminado
+    	
+    }
+//   hace la operacion 
+    public double calcularMonto(String tipoVehiculo, double duracion) {
+		double montoAPagar = 0;
+		
+		return montoAPagar;
+	}
+    
+    
 
     public Factura generarFactura(Vehiculo vehiculo) {
         return null;
