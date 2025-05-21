@@ -73,15 +73,14 @@ public class ParqueaderoService {
 //    registrar Cliente
     public boolean registrarCliente(Cliente cliente) {
     	for (Cliente c : clientes) {
-    		if (c.getCedula() != cliente.getCedula()) {
-    			clientes.add(cliente);
-    			JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
-    			return true;
-    		}
+    	    if (c.getCedula().equals(cliente.getCedula())) {
+    	        JOptionPane.showMessageDialog(null, "Ya hay un cliente con esa cédula registrado.");
+    	        return false;
+    	    }
     	}
-    	
-    	JOptionPane.showMessageDialog(null, "Ya hay un cliente con esa cedula registrado.");
-    	return false; 
+    	clientes.add(cliente);
+    	JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
+    	return true;
     }
     
 //	eliminar Cliente
@@ -106,20 +105,24 @@ public class ParqueaderoService {
         return null; // no encontró un cliente con esa cedula
     }
 //    buscar cliente para el usuario (Este solo mostrara: nombre, cedula, telefono y correo)
-    public void buscarClienteForUsuario(String cedula) {
+    public boolean buscarClienteForUsuario(String cedula) {
     	for (Cliente cliente : clientes) {
     		if (cliente.getCedula().equals(cedula)) {
-    			JOptionPane.showMessageDialog(null, 
-    			"Nombre: " + cliente.getNombre() 
-    			+ "\nCédula: " + cliente.getCedula() 
-    			+ "\nTeléfono: " + cliente.getTelefono() 
-    			+ "\nCorreo: " + cliente.getCorreo()
-    			+ "\n\n");
-    			
+    			JOptionPane.showMessageDialog(null,
+    				    "Nombre: " + cliente.getNombre() +
+    				    "\nCédula: " + cliente.getCedula() +
+    				    "\nTeléfono: " + cliente.getTelefono() +
+    				    "\nCorreo: " + cliente.getCorreo(),
+    				    "Información del Cliente",
+    				    JOptionPane.INFORMATION_MESSAGE);
     		}
     	}
-    	JOptionPane.showMessageDialog(null, "No se encontró un cliente con esa cédula.");
-    	
+    	JOptionPane.showMessageDialog(null,
+    		    "No se encontró un cliente con esa cédula.",
+    		    "Cliente no encontrado",
+    		    JOptionPane.WARNING_MESSAGE);
+
+    	return false;
     }
 
     
@@ -149,7 +152,7 @@ public class ParqueaderoService {
         	JOptionPane.showMessageDialog(null, "");
         }
         
-    }
+    } // Metodo incompleto
 
     /*
     public Vehiculo buscarVehiculoPorPlaca(String placa) {
@@ -218,7 +221,7 @@ public class ParqueaderoService {
         }
 
     	return 0;
-//    	No se ha terminado
+//    	Metodo incompleto
     	
     }
 //   hace la operacion 
@@ -227,7 +230,7 @@ public class ParqueaderoService {
 		
 		return montoAPagar;
 	}
-    
+//    Metodo incompleto
     
 
     public Factura generarFactura(Vehiculo vehiculo) {
@@ -245,10 +248,14 @@ public class ParqueaderoService {
     
 //  listar Vehiculos Actuales  
     public List<Vehiculo> listarVehiculosActuales() {
-        
+        for (Cliente c: clientes) {
+        	for (Vehiculo v: c.getVehiculos()) {
+        		JOptionPane.showMessageDialog(null, "");
+        	}
+        }
+    	
+    	
     	return null; // listVehiculosActuales;
     }
-
-
-	
-}
+    
+} // Metodo incompleto|
