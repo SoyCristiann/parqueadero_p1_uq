@@ -3,7 +3,7 @@ package com.parqueadero.model;
 import java.util.ArrayList;
 
 public class Vehiculo {
-	private String tipoVehiculo;
+	private TipoVehiculo tipoVehiculo;
 	private String placa;
 	private String color;
 	private String modelo;
@@ -13,7 +13,7 @@ public class Vehiculo {
 	
 	// Constructor vacío y con parámetros
 	public Vehiculo() {
-		this.tipoVehiculo= "";
+		this.tipoVehiculo= TipoVehiculo.INDEFINIDO;
 		this.placa = "";
 		this.color = "";
 		this.modelo = "";
@@ -21,7 +21,7 @@ public class Vehiculo {
 		this.membresia = new Membresia();
 		
 	}
-	public Vehiculo(String tipoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
+	public Vehiculo(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
 		this.tipoVehiculo= tipoVehiculo;
 		this.placa = placa;
 		this.color = color;
@@ -32,11 +32,11 @@ public class Vehiculo {
 	
 	
 	// Métodos getters y setters
-	public String getTipoVehiculo() {
+	public TipoVehiculo getTipoVehiculo() {
 		return this.tipoVehiculo;
 	}
 	
-	public void setTipoVehiculo(String tipoVehiculo) {
+	public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
 		this.tipoVehiculo= tipoVehiculo;
 	}
 	
@@ -71,12 +71,12 @@ public class Vehiculo {
 	public void setMembresia(Membresia membresia) {
 		this.membresia = membresia;
 	}
-	
 	@Override
 	public String toString() {
-		return "Vehiculo [placa=" + placa + ", color=" + color + ", modelo=" + modelo + ", cliente=" + cliente
-				+ ", membresia=" + membresia + "]";
+		return "Vehiculo [tipoVehiculo=" + tipoVehiculo + ", placa=" + placa + ", color=" + color + ", modelo=" + modelo
+				+ ", cliente=" + cliente + ", membresia=" + membresia + "]";
 	}
+	
 	
 	
 	// Métodos
