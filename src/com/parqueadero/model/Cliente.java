@@ -61,20 +61,28 @@ public class Cliente {
 //    Metodos
     
 //  registrar Vehiculo
-    public void registrarVehiculo(Vehiculo vehiculo) {
-    	vehiculos.add(vehiculo);   }
+    public boolean registrarVehiculo(Vehiculo vehiculo) {
+    	for(Vehiculo v: vehiculos) {
+    		if(v.getPlaca().equalsIgnoreCase(vehiculo.getPlaca())) {
+    			JOptionPane.showMessageDialog(null, "El vehículo con placa " + vehiculo.getPlaca() + " ya se encuentra registrado en el sistema.");
+    			return false;
+    		}
+    	}
+    	vehiculos.add(vehiculo);
+    	JOptionPane.showMessageDialog(null, "El vehículo con placa " + vehiculo.getPlaca() + " se ha registrado de forma corecta.");
+    	return true;
+    }
 
 //  buscar Vehiculo
-    public Vehiculo buscarVehiculo(String placa) {
-        
+    public Vehiculo buscarVehiculoPlaca(String placa) {        
     	for (Vehiculo vehiculo : vehiculos) {
     		if (vehiculo.getPlaca().equals(placa)) {
     			return vehiculo;
     		}
-    	}
-    	
+    	}    	
     	return null;
     }
+
 
 //  actualizar Vehiculo
     public boolean actualizarVehiculo(Vehiculo vehiculoActualizado) {
@@ -85,7 +93,7 @@ public class Cliente {
     			v.setPlaca(vehiculoActualizado.getPlaca());
     			v.setColor(vehiculoActualizado.getColor());
     			v.setModelo(vehiculoActualizado.getModelo());
-    			v.setMembresia(vehiculoActualizado.getMembresia());
+    			//v.setMembresia(vehiculoActualizado.getMembresia());
     			
     			break;
     		}
@@ -94,6 +102,8 @@ public class Cliente {
     	
     	return validacion;
     }
+    
+   
 
     
     

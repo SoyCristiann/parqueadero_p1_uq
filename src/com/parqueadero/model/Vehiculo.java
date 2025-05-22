@@ -8,7 +8,7 @@ public class Vehiculo {
 	private String color;
 	private String modelo;
 	private Cliente cliente;
-	private Membresia membresia;
+	//private Membresia membresia;
 	
 	
 	// Constructor vacío y con parámetros
@@ -18,16 +18,16 @@ public class Vehiculo {
 		this.color = "";
 		this.modelo = "";
 		this.cliente =new Cliente();
-		this.membresia = new Membresia();
+		//this.membresia = new Membresia();
 		
 	}
-	public Vehiculo(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente, Membresia membresia) {
+	public Vehiculo(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
 		this.tipoVehiculo= tipoVehiculo;
 		this.placa = placa;
 		this.color = color;
 		this.modelo = modelo;
 		this.cliente = cliente;
-		this.membresia = membresia;
+		//this.membresia = membresia;
 	}
 	
 	
@@ -58,23 +58,23 @@ public class Vehiculo {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	/*public Cliente getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
-	public void setCliente(Cliente cliente) {
+	/*public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	} */ // no es valido
 	
-	public Membresia getMembresia() {
+	/*public Membresia getMembresia() {
 		return membresia;
 	}
 	public void setMembresia(Membresia membresia) {
 		this.membresia = membresia;
-	}
+	}*/
 	@Override
 	public String toString() {
-		return "Vehiculo tipoVehiculo=" + tipoVehiculo + ", placa=" + placa + ", color=" + color + ", modelo=" + modelo
-				+ ", cliente=" + cliente + ", membresia=" + membresia;
+		return "Tipo de Vehículo: " + tipoVehiculo + ", Placa: " + placa + ", Color: " + color + ", Modelo: " + modelo
+				+ ", " + cliente;
 	}
 	
 	
