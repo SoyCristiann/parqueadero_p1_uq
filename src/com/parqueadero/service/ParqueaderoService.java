@@ -21,7 +21,7 @@ public class ParqueaderoService {
     private String representante;
     private String contacto;
     private ArrayList<String> espaciosDisponibles;
-    private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<Cliente> clientes;
     private ArrayList<IngresoSalida> registrosActivos;
     private ArrayList<IngresoSalida> historial;
 
@@ -104,10 +104,14 @@ public class ParqueaderoService {
         }
         return null; // no encontró un cliente con esa cedula
     }
+    
+    
+    
+    
 //    buscar cliente para el usuario (Este solo mostrara: nombre, cedula, telefono y correo)
     public boolean buscarClienteForUsuario(String cedula) {
     	for (Cliente cliente : clientes) {
-    		if (cliente.getCedula().equals(cedula)) {
+    		if (cliente.getCedula().equals(cedula.trim())) {
     			JOptionPane.showMessageDialog(null,
     				    "Nombre: " + cliente.getNombre() +
     				    "\nCédula: " + cliente.getCedula() +
@@ -115,13 +119,10 @@ public class ParqueaderoService {
     				    "\nCorreo: " + cliente.getCorreo(),
     				    "Información del Cliente",
     				    JOptionPane.INFORMATION_MESSAGE);
+    			return true;
     		}
     	}
-    	JOptionPane.showMessageDialog(null,
-    		    "No se encontró un cliente con esa cédula.",
-    		    "Cliente no encontrado",
-    		    JOptionPane.WARNING_MESSAGE);
-
+    	JOptionPane.showMessageDialog(null,"No se encontró un cliente con esa cédula.","Cliente no encontrado",JOptionPane.WARNING_MESSAGE);
     	return false;
     }
 
@@ -247,15 +248,21 @@ public class ParqueaderoService {
 
     
 //  listar Vehiculos Actuales  
-    public List<Vehiculo> listarVehiculosActuales() {
-        for (Cliente c: clientes) {
-        	for (Vehiculo v: c.getVehiculos()) {
-        		JOptionPane.showMessageDialog(null, "");
-        	}
+    public void listarVehiculosActuales() { 
+        StringBuilder vehiculos = new StringBuilder();
+        // Iterar sobre los clientes y sus vehículos
+        for (Cliente c : clientes) { 
+            for (Vehiculo v : c.getVehiculos()) { 
+                vehiculos.append(v).append("\n");  // Se van agregando los vehículos por línea con un salto.
+            } 
         }
-    	
-    	
-    	return null; // listVehiculosActuales;
+
+        //Se valida si veículos tiene información que mostrar
+        if (vehiculos.length() > 0) {
+            JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
 } // Metodo incompleto|

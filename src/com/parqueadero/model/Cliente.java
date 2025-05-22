@@ -12,7 +12,7 @@ public class Cliente {
     private String cedula;
     private String telefono;
     private String correo;
-    private List<Vehiculo> vehiculos = new ArrayList<>();
+    private List<Vehiculo> vehiculos;
 
     // Constructor vacío
     public Cliente() {
@@ -99,7 +99,6 @@ public class Cliente {
     
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + nombre + ", cedula=" + cedula + ", telefono=" + telefono + ", correo=" + correo
-				+ ", vehiculos=" + vehiculos + "]";
+		return "Cliente: nombre: " + nombre + ", cedula: " + cedula + ", telefono: " + telefono + ", correo: " + correo;
 	}
 }
