@@ -13,6 +13,7 @@ import com.parqueadero.utils.Menu;
 import com.parqueadero.utils.SelectorFecha;
 
 import com.parqueadero.model.Pago;
+import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.service.ParqueaderoService;
 
 public class Main {
@@ -22,7 +23,7 @@ public class Main {
         Cliente clienteP = new Cliente("Juan", "1234567890", null, null);
         System.out.println("Cliente creado: " + clienteP.getNombre());
         
-        ParqueaderoService servicio = new ParqueaderoService();
+        ParqueaderoService adminParqueadero = new ParqueaderoService();
         
         
         
@@ -30,22 +31,33 @@ public class Main {
 		 * Estos datos son de Cristian solo para hacer validaciones, por favor no borrar hasta el final. Si entorpece algo, por favor dejarlo comentado en bloque.
 		 * */
 		
-        /*
+        
 		//LocalDate fecha=SelectorFecha.seleccionarFecha();
 		PagoService adminPago = new PagoService();
-		adminPago.calcularTotalIngresos();
+		//adminPago.calcularTotalIngresos();
 		Membresia membresia= new Membresia(LocalDate.of(2025, 06, 01), LocalDate.of(2025, 06, 30), "Efectivo", 20000);
-		Cliente cliente2 =new Cliente("Pedro Perez", "1010", "3100000000", "pedroperez@correo.com");
-		Vehiculo vehiculo= new Vehiculo("Carro", "ABC123", "Negro", "2025", cliente2, membresia);
-		Vehiculo vehiculo2= new Vehiculo("Carro", "DEF123", "Negro", "2025", cliente2, membresia);
-		Pago pago = new Pago(cliente2, vehiculo, 2000, "Efectivo");
+		Cliente cliente1 =new Cliente("Pedro Perez", "1010", "3100000001", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente1);
+		Cliente cliente2 =new Cliente("Pedro Perez", "1011", "3100000002", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente2);
+		Cliente cliente3 =new Cliente("Pedro Perez", "1012", "3100000003", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente3);
+		Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1, membresia);
+		cliente1.registrarVehiculo(vehiculo1);		
+		Vehiculo vehiculo2= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF456", "Negro", "2025", cliente2, membresia);
+		cliente3.registrarVehiculo(vehiculo2);
+		Vehiculo vehiculo3= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF789", "Negro", "2025", cliente3, membresia);
+		cliente2.registrarVehiculo(vehiculo3);
+		
+		
+		/*Pago pago = new Pago(cliente2, vehiculo1, 2000, "Efectivo");
 		Pago pago2 = new Pago(cliente2, vehiculo2, 4000, "Efectivo");		
 		adminPago.registrarPago(pago);
 		adminPago.registrarPago(pago2);
 		System.out.println(adminPago.calcularTotalIngresos());		
 		System.out.println(adminPago.calcularTotalPagosPeriodo(pago.getFechaPago(), pago2.getFechaPago()));
-		System.out.println(adminPago.obtenerHistorialPagoVehiculo(vehiculo2));
-		*/
+		System.out.println(adminPago.obtenerHistorialPagoVehiculo(vehiculo2));*/
+		
 		
 		
 //      espacio para llamar metodos para probar funcionamiento
@@ -54,23 +66,27 @@ public class Main {
 
       //Menú. Ojo, no borrar, solo hacer ediciones que no afecten el funcionamiento del menú. Para editar el menú y/o crear submenues, vaya a com.parqueadero.utils -> Menu	
         byte opcion;
-        ParqueaderoService adminParqueadero = new ParqueaderoService();
+        //ParqueaderoService adminParqueadero = new ParqueaderoService();
         do {
         	
         	opcion=Menu.seleccionarMenuPrincipal();
+        	System.out.println("Opcion seleccionada " + opcion);
         	switch (opcion) {
-        	case 2:{
-        		
-        	}        	 
+        	case 1:{}
         	
-        	case 3: {
+        	case 2:{}        	 
+        	
+        	case 3: { // Módulo clientes
         		opcion= Menu.seleccioanrMenuClientes();
+        		System.out.println("Opcion seleccionada " + opcion);
         		switch (opcion) {
-					case 1: {
+					case 1: {//Buscar un cliente por cédula.
+						String cedula=JOptionPane.showInputDialog(null, "Ingrese la cédula del cliente: ");
+						System.out.println(cedula);
+						adminParqueadero.buscarClienteForUsuario(cedula);
 						break;
 					}
-					case 2: {
-						System.out.println("Opcion 1");
+					case 2: {//Registrar un nuevo cliente.
 						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente: ");
 						String nombre=JOptionPane.showInputDialog(null, "Ingrese el nombre del cliente: ");
 						String telefono=JOptionPane.showInputDialog(null, "Ingrese el número de teléfono del cliente: ");
@@ -79,18 +95,57 @@ public class Main {
 						adminParqueadero.registrarCliente(cliente);
 						break;
 					}
+					case 3:{//Editar cliente
+						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente: ");
+						String nombre=JOptionPane.showInputDialog(null, "Ingrese el nombre del cliente: ");
+						String telefono=JOptionPane.showInputDialog(null, "Ingrese el número de teléfono del cliente: ");
+						String correo=JOptionPane.showInputDialog(null, "Ingrese el correo electrónico del cliente: ");
+						Cliente clienteActualizado= new Cliente(nombre, cedula, telefono, correo);
+						adminParqueadero.actualizarCliente(clienteActualizado);
+						break;
+					}
+					case 4:{//Eliminar cliente
+						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente que desea borrar del sistema: ");
+						adminParqueadero.eliminarCliente(cedula);
+						break;
+					}
+					
 					case 5: {
 						Menu.seleccionarMenuPrincipal();
 						System.out.println(opcion);
 						break;
 					}
 				}
-        		
-        		
-        		
-        		
-        		System.out.println(opcion);
+        		break;
 			}
+        	
+        	case 4:{// Módulo vehículos
+        		opcion= Menu.seleccioanrMenuVehiculos();
+        		switch (opcion) {
+					case 1: { //Ver vehículos registrados
+						adminParqueadero.listarVehiculosActuales();
+						break;
+					}
+					case 2:{//Registrar nuevo vehículo
+						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente: ");
+						adminParqueadero.buscarClienteForUsuario(cedula);
+						Cliente cliente = adminParqueadero.buscarCliente(cedula);
+						//cliente.registrarVehiculo(vehiculo3);
+						break;
+						
+					}
+					case 3:{//Editar vehículo
+						
+					}
+					case 4:{//Eliminar vehículo
+						
+					}
+				}
+        		break;
+    		}
+        	case 5:{}
+        	case 6:{}
+        	case 7:{}
 			
 			case 0: {
 				JOptionPane.showMessageDialog(null, "Ha salido del sistema.");
