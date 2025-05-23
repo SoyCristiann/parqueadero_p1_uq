@@ -8,9 +8,14 @@ public class Automovil extends Vehiculo implements Tarifable{
     }
 
 	@Override
-	public double calcularTarifa(int horas) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double calcularTarifa(double horas, Vehiculo vehiculo) {
+		double tarifa = 10000;
+        int horasCobradas = Math.max(1, (int) Math.round(horas));
+        return horasCobradas * tarifa;
 	}
+	
+	
+	
+	
 }
 
