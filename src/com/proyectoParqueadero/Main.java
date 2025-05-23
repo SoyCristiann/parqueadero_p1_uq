@@ -42,12 +42,17 @@ public class Main {
 		adminParqueadero.registrarCliente(cliente2);
 		Cliente cliente3 =new Cliente("Pedro Perez", "1012", "3100000003", "pedroperez@correo.com");
 		adminParqueadero.registrarCliente(cliente3);
-		Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1, membresia);
+		Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
 		cliente1.registrarVehiculo(vehiculo1);		
-		Vehiculo vehiculo2= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF456", "Negro", "2025", cliente2, membresia);
-		cliente3.registrarVehiculo(vehiculo2);
-		Vehiculo vehiculo3= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF789", "Negro", "2025", cliente3, membresia);
-		cliente2.registrarVehiculo(vehiculo3);
+		Vehiculo vehiculo2= new Vehiculo(TipoVehiculo.CAMION, "DEF456", "Negro", "2025", cliente2);
+		cliente2.registrarVehiculo(vehiculo2);
+		Vehiculo vehiculo3= new Vehiculo(TipoVehiculo.MOTO, "DEF789", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo3);
+		Vehiculo vehiculo4= new Vehiculo(TipoVehiculo.MOTO, "DEF22C", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo4);
+		Vehiculo vehiculo5= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF15A", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo5);
+	
 		
 		
 		/*Pago pago = new Pago(cliente2, vehiculo1, 2000, "Efectivo");
@@ -123,14 +128,45 @@ public class Main {
         		opcion= Menu.seleccioanrMenuVehiculos();
         		switch (opcion) {
 					case 1: { //Ver vehículos registrados
-						adminParqueadero.listarVehiculosActuales();
+						opcion=Byte.parseByte(JOptionPane.showInputDialog("Seleccione cómo desea buscar: \n"
+								+ "1. Ver todos los vehículos.\n"
+								+ "2. Ver por placa\n"
+								+ "3. Ver por cédula del cliente\n"
+								+ "4. Ver por tipo de vehículo"));
+						switch (opcion) {
+							case 1: {
+								adminParqueadero.listarVehiculos();
+								break;
+							}
+							case 2:{//Ver por placa
+								String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
+								adminParqueadero.listarVehiculosPorPlaca(placa);
+								break;
+							}
+							case 3:{//Ver por cédula del cliente
+								String cedula = JOptionPane.showInputDialog(null, "Ingrese la cédula del cliente: ");
+								adminParqueadero.listarVehiculos(cedula);
+								break;
+							}
+							case 4:{//Ver por Tipo de vehículo
+								TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:", "Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
+								System.out.println(tipoVehiculo);
+								adminParqueadero.listarVehiculos(tipoVehiculo);
+								break;
+							}						
+						}
 						break;
 					}
 					case 2:{//Registrar nuevo vehículo
 						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente: ");
 						adminParqueadero.buscarClienteForUsuario(cedula);
 						Cliente cliente = adminParqueadero.buscarCliente(cedula);
-						//cliente.registrarVehiculo(vehiculo3);
+						TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:", "Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
+						String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
+						String color = JOptionPane.showInputDialog(null, "Ingrese el color del vehículo: ");
+						String modelo= JOptionPane.showInputDialog(null, "Ingrese el modelo del vehículo: ");						
+						Vehiculo vehiculo= new Vehiculo(tipoVehiculo, placa, color, modelo, cliente);
+						cliente.registrarVehiculo(vehiculo);
 						break;
 						
 					}

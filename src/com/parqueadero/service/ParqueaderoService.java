@@ -4,6 +4,7 @@ import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
+import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
 
 import Interfaces.GestionClientes;
@@ -146,29 +147,7 @@ public class ParqueaderoService implements GestionClientes {
     	JOptionPane.showMessageDialog(null, "No se encontró un cliente con esa cédula.");
     	return false;	
     }
-    
-//  ver Vehiculos Cliente  
-    public void verVehiculosCliente(String cedula) {
-        Cliente cliente = buscarCliente(cedula);
-        if (cliente != null) {
-        	JOptionPane.showMessageDialog(null, "");
-        } else {
-        	JOptionPane.showMessageDialog(null, "");
-        }
-        
-    } // Metodo incompleto
-
-    /*
-    public Vehiculo buscarVehiculoPorPlaca(String placa) {
-        for (Cliente c : clientes) {
-            for (Vehiculo v : c.getVehiculos()) {
-                if (v.getPlaca().equalsIgnoreCase(placa)) {
-                    return v;
-                }
-            }
-        }
-        return null;
-    } */
+     
 
     
 //  registrar Ingreso
@@ -251,16 +230,43 @@ public class ParqueaderoService implements GestionClientes {
 
     
 //  listar Vehiculos Actuales  
-    public void listarVehiculosActuales() { 
+    public void listarVehiculos() { 
         StringBuilder vehiculos = new StringBuilder();
         // Iterar sobre los clientes y sus vehículos
         for (Cliente c : clientes) { 
             for (Vehiculo v : c.getVehiculos()) { 
                 vehiculos.append(v).append("\n");  // Se van agregando los vehículos por línea con un salto.
-            } 
+            }	        
         }
-
-        //Se valida si veículos tiene información que mostrar
+      //Se valida si veículos tiene información que mostrar
+        if (vehiculos.length() > 0) {
+            JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+        
+    public boolean listarVehiculosPorPlaca(String placa) {
+    	for(Cliente c : clientes) {
+    		for(Vehiculo v : c.getVehiculos()) {
+    			if(v.getPlaca().equalsIgnoreCase(placa)) {
+    				JOptionPane.showMessageDialog(null, v);
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    public void listarVehiculos(String cedula) {
+    	StringBuilder vehiculos = new StringBuilder();
+        for(Cliente c: clientes) {
+        	if(c.getCedula().equalsIgnoreCase(cedula.trim())) {
+        		for(Vehiculo v: c.getVehiculos()) {
+        			vehiculos.append(v).append("\n");
+        		}
+        	}
+        }
         if (vehiculos.length() > 0) {
             JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -272,5 +278,23 @@ public class ParqueaderoService implements GestionClientes {
 
 	
 	
+    
+    
+    public void listarVehiculos(TipoVehiculo tipoVehiculo) {
+    	StringBuilder vehiculos = new StringBuilder();
+        for(Cliente c: clientes) {
+    		for(Vehiculo v: c.getVehiculos()) {
+    			if(v.getTipoVehiculo().equals(tipoVehiculo)) {
+    				vehiculos.append(v).append("\n");
+    			}   			
+    		}       	
+        }
+        if (vehiculos.length() > 0) {
+            JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
     
 } // Metodo incompleto|
