@@ -2,13 +2,16 @@ package com.parqueadero.service;
 
 import com.parqueadero.model.Parqueadero;
 import com.parqueadero.model.Vehiculo;
+
+import Interfaces.Reportable;
+
 import com.parqueadero.model.Cliente;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Reporte {
+public class Reporte implements Reportable{
 	private Parqueadero parqueadero;
     private List<String> historialVehiculosPorCliente;
     private double totalIngresos;
@@ -78,9 +81,16 @@ public class Reporte {
 	public void setClientesConMembresiasActivas(List<Cliente> clientesConMembresiasActivas) {
 		this.clientesConMembresiasActivas = clientesConMembresiasActivas;
 	}
+
+	// Métodos
+
+	@Override
+    public String generarReporte() {
+        // Lógica para generar el reporte
+        return "Reporte diario:\n- Clientes: 10\n- Ingresos: $500,000";
+    }
     
     
-    // Métodos
     
 }
 
