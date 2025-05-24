@@ -11,7 +11,7 @@ public class Parqueadero {
 	private int espaciosDisponiblesMotos;
 	private int espaciosDisponiblesCarros;
 	private int espaciosDisponiblesCamiones;
-	private List<Tarifa> tarifas;
+	//private List<Tarifa> tarifas;
 	private List<Cliente> clientes;
 	private List<Vehiculo> vehiculos;
 	private List<IngresoSalida> ingresos;
