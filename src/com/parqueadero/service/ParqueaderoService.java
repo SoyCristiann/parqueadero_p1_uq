@@ -4,6 +4,7 @@ import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
+import com.parqueadero.model.Parqueadero;
 import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
 
@@ -294,7 +295,35 @@ public class ParqueaderoService implements GestionClientes {
         } else {
             JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
         }
+    }// Metodo incompleto|
+    
+//    Gestion de datos de parquadero:
+    
+    public void editarDatosParqueadero(String nombreN, String direccionN, String representanteN, String contactoN,
+    	int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
+    	
+    	Parqueadero p = new Parqueadero();
+    	
+    	p.setNombre(nombreN);
+    	p.setDireccion(direccionN);
+    	p.setRepresentante(representanteN);
+    	p.setContacto(contactoN);
+    	p.setContacto(contactoN);
+    	p.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
+    	p.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
+    	p.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
+    	
     }
     
     
-} // Metodo incompleto|
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+} 
