@@ -2,7 +2,7 @@ package com.parqueadero.model;
 
 import java.util.ArrayList;
 
-public class Vehiculo {
+public abstract class Vehiculo {
 	private TipoVehiculo tipoVehiculo;
 	private String placa;
 	private String color;
