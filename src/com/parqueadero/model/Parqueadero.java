@@ -11,6 +11,7 @@ public class Parqueadero {
 	private int espaciosDisponiblesMotos;
 	private int espaciosDisponiblesCarros;
 	private int espaciosDisponiblesCamiones;
+	// agregar la lista de clientes
 	
 //	private ArrayList<Tarifa> tarifas;
 	private ArrayList<Cliente> clientes;
