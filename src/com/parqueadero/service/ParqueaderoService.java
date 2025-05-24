@@ -26,6 +26,7 @@ public class ParqueaderoService implements GestionClientes {
     private String contacto;
     private ArrayList<String> espaciosDisponibles;
     private ArrayList<Cliente> clientes;
+    // los metodos de aqui hacia arriba son los mismos de la clase parqueadero
     private ArrayList<IngresoSalida> registrosActivos;
     private ArrayList<IngresoSalida> historial;
 
@@ -295,25 +296,43 @@ public class ParqueaderoService implements GestionClientes {
         } else {
             JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
         }
-    }// Metodo incompleto|
+    } // Metodo incompleto|
     
 //    Gestion de datos de parquadero:
-    
+   
+//  teniendo en cuenta que hay una instancia global de parqueadero    
+    /*
     public void editarDatosParqueadero(String nombreN, String direccionN, String representanteN, String contactoN,
-    	int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
-    	
-    	Parqueadero p = new Parqueadero();
-    	
-    	p.setNombre(nombreN);
-    	p.setDireccion(direccionN);
-    	p.setRepresentante(representanteN);
-    	p.setContacto(contactoN);
-    	p.setContacto(contactoN);
-    	p.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
-    	p.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
-    	p.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
-    	
+            int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
+		parqueadero.setNombre(nombreN);
+		parqueadero.setDireccion(direccionN);
+		parqueadero.setRepresentante(representanteN);
+		parqueadero.setContacto(contactoN);
+		parqueadero.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
+		parqueadero.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
+		parqueadero.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
     }
+    */
+
+    
+//    teniendo en cuenta que hay una instancia global de parqueadero
+    
+   /*
+	public void mostrarDatosParqueadero() {
+	   String mensaje = "DATOS DEL PARQUEADERO:\n" +
+	                     "Nombre: " + parqueadero.getNombre() + "\n" +
+	                     "Dirección: " + parqueadero.getDireccion() + "\n" +
+	                     "Representante: " + parqueadero.getRepresentante() + "\n" +
+	                     "Contacto: " + parqueadero.getContacto() + "\n" +
+	                     "Espacios disponibles:\n" +
+	                     "  Motos: " + parqueadero.getEspaciosDisponiblesMotos() + "\n" +
+	                     "  Carros: " + parqueadero.getEspaciosDisponiblesCarros() + "\n" +
+	                     "  Camiones: " + parqueadero.getEspaciosDisponiblesCamiones();
+	
+	   JOptionPane.showMessageDialog(null, mensaje);
+	}
+    */
+
     
     
     
