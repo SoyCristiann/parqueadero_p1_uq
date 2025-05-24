@@ -3,9 +3,11 @@ package com.parqueadero.model;
 import Interfaces.Tarifable;
 
 public class Automovil extends Vehiculo implements Tarifable{
-    public Automovil() {
-        super();
-    }
+
+	public Automovil(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
+		super(tipoVehiculo, placa, color, modelo, cliente);
+		
+	}
 
 	@Override
 	public double calcularTarifa(double horas, Vehiculo vehiculo) {
