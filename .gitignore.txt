@@ -1,0 +1,19 @@
+# Ignorar clases compiladas de Java
+*.class
+
+# Ignorar la carpeta de salida de compilación
+/bin/
+
+# Ignorar archivos temporales de Eclipse, NetBeans o IntelliJ si los usas
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+target/
+build/

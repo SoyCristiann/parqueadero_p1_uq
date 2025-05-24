@@ -4,8 +4,11 @@ import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
+import com.parqueadero.model.Parqueadero;
 import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
+
+import Interfaces.GestionClientes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class ParqueaderoService {
+public class ParqueaderoService implements GestionClientes {
 
     // Atributos según el UML
     private String nombre;
@@ -72,6 +75,7 @@ public class ParqueaderoService {
     // metodos
     
 //    registrar Cliente
+    @Override
     public boolean registrarCliente(Cliente cliente) {
     	for (Cliente c : clientes) {
     	    if (c.getCedula().equals(cliente.getCedula())) {
@@ -85,6 +89,7 @@ public class ParqueaderoService {
     }
     
 //	eliminar Cliente
+    @Override
     public boolean eliminarCliente(String cedula) {
     	Cliente c = buscarCliente(cedula);
     	if (c != null) {
@@ -97,6 +102,7 @@ public class ParqueaderoService {
     }
 
 //  buscar Cliente para el sistema 
+    @Override
     public Cliente buscarCliente(String cedula) {
         for (Cliente cliente : clientes) {
             if (cliente.getCedula().equals(cedula)) {
@@ -105,8 +111,6 @@ public class ParqueaderoService {
         }
         return null; // no encontró un cliente con esa cedula
     }
-    
-    
     
     
 //    buscar cliente para el usuario (Este solo mostrara: nombre, cedula, telefono y correo)
@@ -270,6 +274,11 @@ public class ParqueaderoService {
             JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
         }
     }
+
+	
+
+	
+	
     
     
     public void listarVehiculos(TipoVehiculo tipoVehiculo) {
@@ -286,7 +295,35 @@ public class ParqueaderoService {
         } else {
             JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
         }
+    }// Metodo incompleto|
+    
+//    Gestion de datos de parquadero:
+    
+    public void editarDatosParqueadero(String nombreN, String direccionN, String representanteN, String contactoN,
+    	int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
+    	
+    	Parqueadero p = new Parqueadero();
+    	
+    	p.setNombre(nombreN);
+    	p.setDireccion(direccionN);
+    	p.setRepresentante(representanteN);
+    	p.setContacto(contactoN);
+    	p.setContacto(contactoN);
+    	p.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
+    	p.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
+    	p.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
+    	
     }
     
     
-} // Metodo incompleto|
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+} 
