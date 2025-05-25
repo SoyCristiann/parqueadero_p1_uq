@@ -12,6 +12,7 @@ public class Menu {
 		menu.append("3: Módulo clientes.\n");
 		menu.append("4: Módulo vehículos.\n");
 		menu.append("5: Módulo Membresías.\n");
+		menu.append("6. Ver espacios disponibles.\n");
 		menu.append("0: Salir del sistema.\n");
 		
 		String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
@@ -85,30 +86,55 @@ public class Menu {
 		
 		
 		//Submenu membresías
-				public static byte seleccioanrMenuMembresias() {
-					StringBuilder menu= new StringBuilder();
-					menu.append("====== MENÚ Membresías ======\n");
-					menu.append("1: Ver membresías vigentes.\n");
-					menu.append("2: Crear nueva membresía.\n");
-					menu.append("3: Editar membresía.\n");
-					menu.append("4: Eliminar membresía.\n");
-					menu.append("5: Menú principal.\n");
-					
-					String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
-					System.out.println("Opción seleccionada en el menú membresías: " + opcion);
-			        
-					//Validaciones
-					if (opcion == null || opcion.isBlank()) {
-			            return 0; // Si presiona Cancel o X
-			        }
+		public static byte seleccioanrMenuMembresias() {
+			StringBuilder menu= new StringBuilder();
+			menu.append("====== MENÚ Membresías ======\n");
+			menu.append("1: Ver membresías vigentes.\n");
+			menu.append("2: Crear nueva membresía.\n");
+			menu.append("3: Editar membresía.\n");
+			menu.append("4: Eliminar membresía.\n");
+			menu.append("5: Menú principal.\n");
+			
+			String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("Opción seleccionada en el menú membresías: " + opcion);
+	        
+			//Validaciones
+			if (opcion == null || opcion.isBlank()) {
+	            return 0; // Si presiona Cancel o X
+	        }
 
-			        try {
-			            return Byte.parseByte(opcion.trim());
-			        } catch (NumberFormatException e) {
-			            JOptionPane.showMessageDialog(null, "Entrada inválida.");
-			            return 0;
-			        }
-				}
+	        try {
+	            return Byte.parseByte(opcion.trim());
+	        } catch (NumberFormatException e) {
+	            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+	            return 0;
+	        }
+		}
+		
+		//SubMenu Espacios disponibles
+		public static byte seleccioanrMenuCupos() {
+			StringBuilder menu= new StringBuilder();
+			menu.append("====== Seleccioanr Tipo Vehículo ======\n");
+			menu.append("1: Automovil.\n");
+			menu.append("2: Moto.\n");
+			menu.append("3: Camión.\n");
+			
+			String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
+	        
+			//Validaciones
+			if (opcion == null || opcion.isBlank()) {
+	            return 0; // Si presiona Cancel o X
+	        }
+
+	        try {
+	            return Byte.parseByte(opcion.trim());
+	        } catch (NumberFormatException e) {
+	            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+	            return 0;
+	        }
+		}
+				
+				
 
 	
 	
