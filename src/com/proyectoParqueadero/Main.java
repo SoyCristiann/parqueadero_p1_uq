@@ -17,6 +17,7 @@ import com.parqueadero.utils.SelectorFecha;
 
 
 import com.parqueadero.model.Pago;
+import com.parqueadero.model.TipoPago;
 import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.service.ParqueaderoService;
 
@@ -28,6 +29,7 @@ public class Main {
         System.out.println("Cliente creado: " + clienteP.getNombre());
         
         ParqueaderoService adminParqueadero = new ParqueaderoService();
+        PagoService adminPago = new PagoService();
         
         
         
@@ -37,7 +39,7 @@ public class Main {
 		
         
 		//LocalDate fecha=SelectorFecha.seleccionarFecha();
-		PagoService adminPago = new PagoService();
+		//PagoService adminPago = new PagoService();
 		//adminPago.calcularTotalIngresos();
 		
 		/*Cliente cliente1 =new Cliente("Pedro Perez", "1010", "3100000001", "pedroperez@correo.com");
@@ -205,12 +207,23 @@ public class Main {
         		opcion = Menu.seleccioanrMenuMembresias();
         		switch (opcion) {
 				case 1: {//Ver membresías activas
+					adminParqueadero.listarMembresias();
 					
 				}
 				case 2: {//Crear nueva membresía
-					adminParqueadero.crearMembresia();
+					String cedula= JOptionPane.showInputDialog("Ingrese la cédula del cliente: ");
+					Cliente c=adminParqueadero.buscarCliente(cedula);
+					String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
+					Vehiculo v=c.buscarVehiculoPlaca(placa);
+					LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
+					TipoPago tipoPago = (TipoPago) JOptionPane.showInputDialog(null, "Seleccione el tipo de pago:", "Tipo de pago.",JOptionPane.QUESTION_MESSAGE,null, TipoPago.values(), TipoPago.HORAS);
+					Membresia membresia = adminParqueadero.crearMembresia(cedula, placa, fechaInicio);
+					if(membresia!=null) {						
+						Pago pago= new Pago(c,v, membresia.getMonto(), tipoPago);
+						adminPago.registrarPago(pago);
+						JOptionPane.showMessageDialog(null, pago);
+					}			
 					break;	
-					
 				}
 				case 3:{// Editar membresía
 					
