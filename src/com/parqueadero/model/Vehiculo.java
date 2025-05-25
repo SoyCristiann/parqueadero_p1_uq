@@ -2,6 +2,8 @@ package com.parqueadero.model;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Vehiculo {
 	private TipoVehiculo tipoVehiculo;
 	private String placa;
@@ -32,6 +34,15 @@ public class Vehiculo {
 	
 	
 	// Métodos getters y setters
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente=cliente;
+	}
+	
+	
 	public TipoVehiculo getTipoVehiculo() {
 		return this.tipoVehiculo;
 	}
@@ -58,9 +69,6 @@ public class Vehiculo {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public Cliente getCliente() {
-		return cliente;
-	}
 	
 	
 	/*public void setCliente(Cliente cliente) {
@@ -73,6 +81,15 @@ public class Vehiculo {
 	public void setMembresia(Membresia membresia) {
 		this.membresia = membresia;
 	}*/
+	
+	public boolean confirmarVehiculo(Vehiculo vehiculo) {
+		int confirmacion = JOptionPane.showConfirmDialog(null, "Confirme que el siguiente vehículo es correcto: \n" + vehiculo, "Confirmación", 0);
+		System.out.println("confirmacion vehículo"+confirmacion);
+		if(confirmacion==0) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 	@Override
