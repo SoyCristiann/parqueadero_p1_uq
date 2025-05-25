@@ -3,7 +3,6 @@ package com.parqueadero.model;
 import Interfaces.Tarifable;
 
 public class Automovil extends Vehiculo implements Tarifable{
-	//Hola hoello
 	private static double tarifaMembresia= 100000;
 	
 	public Automovil(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
