@@ -209,9 +209,27 @@ public class Main {
 					break;
 				}
 				}
+        		break;
         		
         	}
-			System.out.println("Esta es la opcion actual " + opcion);
+        	
+        	case 6:{
+        		opcion=Menu.seleccioanrMenuCupos();
+        		switch (opcion) {
+					case 1: {
+						JOptionPane.showMessageDialog(null, adminParqueadero.getEspaciosCarros());
+						break;
+					}
+					case 2: {
+						JOptionPane.showMessageDialog(null, adminParqueadero.getEspaciosMotos());
+						break;
+					}
+					case 3: {
+						JOptionPane.showMessageDialog(null, adminParqueadero.getEspaciosCamion());
+						break;
+					}
+        		}
+        	}
 			case 0: {
 				JOptionPane.showMessageDialog(null, "Ha salido del sistema.");
 				break;

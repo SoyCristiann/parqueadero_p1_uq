@@ -71,20 +71,20 @@ public class ParqueaderoService implements GestionClientes {
         
        
      // Vehículos
-        Vehiculo vehiculo1 = new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
-        Vehiculo vehiculo2 = new Vehiculo(TipoVehiculo.MOTO, "MOT456", "Rojo", "2024", cliente1);
+        Vehiculo vehiculo1 = new Automovil(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
+        Vehiculo vehiculo2 = new Moto(TipoVehiculo.MOTO, "MOT456", "Rojo", "2024", cliente1);
 
-        Vehiculo vehiculo3 = new Vehiculo(TipoVehiculo.CAMION, "CAM789", "Blanco", "2023", cliente2);
-        Vehiculo vehiculo4 = new Vehiculo(TipoVehiculo.AUTOMOVIL, "XYZ123", "Azul", "2026", cliente2);
+        Vehiculo vehiculo3 = new Camion(TipoVehiculo.CAMION, "CAM789", "Blanco", "2023", cliente2);
+        Vehiculo vehiculo4 = new Automovil(TipoVehiculo.AUTOMOVIL, "XYZ123", "Azul", "2026", cliente2);
 
-        Vehiculo vehiculo5 = new Vehiculo(TipoVehiculo.MOTO, "JKL456", "Verde", "2022", cliente3);
-        Vehiculo vehiculo6 = new Vehiculo(TipoVehiculo.AUTOMOVIL, "QWE789", "Gris", "2025", cliente3);
+        Vehiculo vehiculo5 = new Moto(TipoVehiculo.MOTO, "JKL456", "Verde", "2022", cliente3);
+        Vehiculo vehiculo6 = new Automovil(TipoVehiculo.AUTOMOVIL, "QWE789", "Gris", "2025", cliente3);
 
-        Vehiculo vehiculo7 = new Vehiculo(TipoVehiculo.CAMION, "RTY654", "Amarillo", "2024", cliente4);
-        Vehiculo vehiculo8 = new Vehiculo(TipoVehiculo.MOTO, "UIO321", "Negro", "2023", cliente4);
+        Vehiculo vehiculo7 = new Camion(TipoVehiculo.CAMION, "RTY654", "Amarillo", "2024", cliente4);
+        Vehiculo vehiculo8 = new Moto(TipoVehiculo.MOTO, "UIO321", "Negro", "2023", cliente4);
 
-        Vehiculo vehiculo9 = new Vehiculo(TipoVehiculo.AUTOMOVIL, "PAS111", "Blanco", "2026", cliente5);
-        Vehiculo vehiculo10 = new Vehiculo(TipoVehiculo.CAMION, "ZXC222", "Rojo", "2022", cliente5);
+        Vehiculo vehiculo9 = new Automovil(TipoVehiculo.AUTOMOVIL, "PAS111", "Blanco", "2026", cliente5);
+        Vehiculo vehiculo10 = new Camion(TipoVehiculo.CAMION, "ZXC222", "Rojo", "2022", cliente5);
 
         // Asignar los vehículos a los clientes
         cliente1.registrarVehiculo(vehiculo1);
@@ -101,12 +101,18 @@ public class ParqueaderoService implements GestionClientes {
 
         cliente5.registrarVehiculo(vehiculo9);
         cliente5.registrarVehiculo(vehiculo10);
+    
         
-        //Membresias
-        
-        
-        
-
+        crearMembresia("1012", "ABC123", LocalDate.now());
+        crearMembresia("1012", "MOT456", LocalDate.now());
+        crearMembresia("2023", "CAM789", LocalDate.now());
+        crearMembresia("2023", "XYZ123", LocalDate.now());
+        crearMembresia("3034", "JKL456", LocalDate.now());
+        crearMembresia("3034", "QWE789", LocalDate.now());
+        crearMembresia("4045", "RTY654", LocalDate.now());
+        crearMembresia("4045", "UIO321", LocalDate.now());
+        crearMembresia("5056", "PAS111", LocalDate.now());
+        crearMembresia("5056", "ZXC222", LocalDate.now());
     }
 
     // Getters
@@ -426,6 +432,15 @@ public class ParqueaderoService implements GestionClientes {
     			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la membresía?\n" + m , getNombre(), 0);
     			if(confirmacion==0) {
         			membresias.remove(aux);
+        			if(m.getVehiculo() instanceof Moto) {
+        				espaciosMotos+=1;
+        			}
+					if(m.getVehiculo() instanceof Automovil) {
+						espaciosCarros+=1;        				
+        			}
+					if(m.getVehiculo() instanceof Camion) {
+						espaciosCamiones+=1;
+					}
         			JOptionPane.showMessageDialog(null, "La membresía se ha elimiando de forma correcta.");
     				return true;
     			}
@@ -481,70 +496,70 @@ public class ParqueaderoService implements GestionClientes {
     
     
     public Membresia crearMembresia(String cedula,String placa, LocalDate fechaInicio) {
-    	System.out.println("Ha ingresado al metodo crear membresia");
     	Membresia membresia=null;
+    	Cliente c=null;
+    	Vehiculo v=null;
     	
+    	//Verifica si ya existe una membresia
     	if(membresias.size()>0) {
     		for(Membresia m: membresias) {
-    			System.out.println("Placa extraída de la lista de mebresías" + m.getVehiculo().getPlaca());
         		if(m.getVehiculo().getPlaca().equalsIgnoreCase(placa.trim())) {
-        			System.out.println("Ha dado por veradero");
-        			JOptionPane.showMessageDialog(null, "Ya existe una membresía para el vehículo ingresado.");
+        			JOptionPane.showMessageDialog(null, "Ya existe una membresía para el vehículo ingresado.");        			
         			return null;
         		}
     		}
     	}
-		System.out.println("El vehiculo no tiene membresia y sigue");
-		//String cedula= JOptionPane.showInputDialog("Ingrese la cédula del cliente: ");
-		for(Cliente c: clientes) {
-			if(c.getCedula().equalsIgnoreCase(cedula.trim())) {
-				//String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
-				for(Vehiculo v:c.getVehiculos()) {
-					System.out.println("Placa extraída de la lista " + v.getPlaca());
-					System.out.println("Placa enviada por parametro " + placa);
-					if(v.getPlaca().equalsIgnoreCase(placa.trim())) {
-						//LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
-						if(SelectorFecha.validarFechaVigente(fechaInicio)) {
-							System.out.println("Ingreso a las instancias");
-							if(v instanceof Automovil) {
-								 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
-								 espaciosCarros-=1;
-								 System.out.println(membresia);
-								 System.out.println("Espacios para automoviles: " + espaciosCarros);
-							}if(v instanceof Moto) {
-								membresia= new Membresia(fechaInicio, v, c, Moto.getTarifaMembresia());
-								espaciosMotos-=1;
-								System.out.println("Espacios para motos: " + espaciosMotos);
-							}if(v instanceof Camion) {
-								membresia= new Membresia(fechaInicio, v, c, Camion.getTarifaMembresia());
-								espaciosCamiones-=1;
-								System.out.println("Espacios para camiones: " + espaciosCamiones);
-							}
-							if(membresia!=null) {
-								if(membresia.confirmarMembresia(membresia)) {
-									membresias.add(membresia);
-									JOptionPane.showMessageDialog(null, "La membresía fue guardada de forma correcta.");
-									return membresia;
-								}else {
-									JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
-									return null;
-								}
-							}else {
-								JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
-								return null;
-							}	
-						}else {
-							return null;
-						}
-					}
-				}	
-				JOptionPane.showMessageDialog(null, "El vehículo no está asociado al cliente.");
-				return null;			
-			}else {
-				JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
-				return null;
+    	
+    	//Busca el cliente según la cédula.
+		for(Cliente cliente: clientes) {
+			System.out.println("Cedula del cliente por el for " + cliente.getCedula());
+			System.out.println("Cedula parametro " + cedula);
+			if(cliente.getCedula().equalsIgnoreCase(cedula.trim())) {
+				c = cliente;
+				break;
 			}
-		}return null;
+		}
+		
+		//Buscar el vehículo dentro de cliente.
+		for(Vehiculo vehiculo:c.getVehiculos()) {
+			if(vehiculo.getPlaca().equalsIgnoreCase(placa.trim())) {
+				v=vehiculo;
+				break;
+			}
+		}	
+		
+		
+		//Validar que la fecha sea válida.
+		if(!SelectorFecha.validarFechaVigente(fechaInicio)) {
+			return null;
+		}
+		
+		//Crear la membresía según el tipo de vehículo
+		if(v instanceof Automovil) {
+			 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
+		}if(v instanceof Moto) {
+			membresia= new Membresia(fechaInicio, v, c, Moto.getTarifaMembresia());
+		}if(v instanceof Camion) {
+			membresia= new Membresia(fechaInicio, v, c, Camion.getTarifaMembresia());
+		}
+		if(membresia!=null) {
+			if(membresia.confirmarMembresia(membresia)) {
+				membresias.add(membresia);
+				JOptionPane.showMessageDialog(null, "La membresía fue guardada de forma correcta.");
+				if(v instanceof Automovil) {
+					 espaciosCarros-=1;
+				}if(v instanceof Moto) {
+					espaciosMotos-=1;
+				}if(v instanceof Camion) {
+					espaciosCamiones-=1;
+				}
+				return membresia;
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Ha cancelado el registro de la membresía.");
+			return null;
+		}
+		return null;
 	}
     
     
