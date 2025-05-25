@@ -78,6 +78,8 @@ public class Pago {
 	
 	// Métodos 
 	
+	
+	
 	@Override
 	public String toString() {
 		return "Id del pago: " + idPago + "\nCliente: " + cliente.getCedula() + "\nVehiculo: " + vehiculo.getPlaca() + "\nValor pagado: " + monto + "\nFecha de pago: " + fechaPago + "\nTipo de pago: " + tipoPago + "\n";

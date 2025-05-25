@@ -317,15 +317,15 @@ public class ParqueaderoService implements GestionClientes {
     //Membresias
     
     
-    public boolean crearMembresia() {
+    public Membresia crearMembresia(String cedula,String placa, LocalDate fechaInicio) {
     	Membresia membresia=null;
-		String cedula= JOptionPane.showInputDialog("Ingrese la cédula del cliente: ");
+		//String cedula= JOptionPane.showInputDialog("Ingrese la cédula del cliente: ");
 		for(Cliente c: clientes) {
 			if(c.getCedula().equalsIgnoreCase(cedula.trim())) {
-				String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
+				//String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
 				for(Vehiculo v:c.getVehiculos()) {
 					if(v.getPlaca().equalsIgnoreCase(placa.trim())) {
-						LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
+						//LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
 						if(SelectorFecha.validarFechaVigente(fechaInicio)) {
 							if(v instanceof Automovil) {
 								 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
@@ -339,32 +339,42 @@ public class ParqueaderoService implements GestionClientes {
 								if(membresia.confirmarMembresia(membresia)) {
 									membresias.add(membresia);
 									JOptionPane.showMessageDialog(null, "La membresía fue guardada de forma correcta.");
-									return true;
+									return membresia;
 								}else {
 									JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
-									return false;
+									return null;
 								}
 							}else {
 								JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
-								return false;
+								return null;
 							}	
 						}else {
-							return false;
+							return null;
 						}
 					}else {
 						JOptionPane.showMessageDialog(null, "El vehículo no está asociado al cliente.");
-						return false;
+						return null;
 					}
 				}				
 			}else {
 				JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
-				return false;
+				return null;
 			}
 		}
-		return false;
+		return null;
     }
     
-    
+    public void listarMembresias() {
+    	StringBuilder mensaje = new StringBuilder();
+        for(Membresia m: membresias) {
+			mensaje.append(m).append("\n");     	
+        }
+        if (mensaje.length() > 0) {
+            JOptionPane.showMessageDialog(null, membresias.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
+        }
+    }
     
     
     
