@@ -104,19 +104,19 @@ public class Parqueadero {
 	public void setTarifas(ArrayList<Tarifa> tarifas) {
 		this.tarifas = tarifas;
 	} */
-	public List<Cliente> getClientes() {
+	public ArrayList<Cliente> getClientes() {
 		return clientes;
 	}
 	public void setClientes(ArrayList<Cliente> clientes) {
 		this.clientes = clientes;
 	}
-	public List<Vehiculo> getVehiculos() {
+	public ArrayList<Vehiculo> getVehiculos() {
 		return vehiculos;
 	}
 	public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
 		this.vehiculos = vehiculos;
 	}
-	public List<IngresoSalida> getIngresos() {
+	public ArrayList<IngresoSalida> getIngresos() {
 		return ingresos;
 	}
 	public void setIngresos(ArrayList<IngresoSalida> ingresos) {

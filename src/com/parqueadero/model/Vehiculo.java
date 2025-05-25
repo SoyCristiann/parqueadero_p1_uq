@@ -2,7 +2,7 @@ package com.parqueadero.model;
 
 import java.util.ArrayList;
 
-public abstract class Vehiculo {
+public class Vehiculo {
 	private TipoVehiculo tipoVehiculo;
 	private String placa;
 	private String color;
@@ -61,6 +61,8 @@ public abstract class Vehiculo {
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
+	
 	/*public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	} */ // no es valido
@@ -71,6 +73,8 @@ public abstract class Vehiculo {
 	public void setMembresia(Membresia membresia) {
 		this.membresia = membresia;
 	}*/
+	
+	
 	@Override
 	public String toString() {
 		return "Tipo de Vehículo: " + tipoVehiculo + ", Placa: " + placa + ", Color: " + color + ", Modelo: " + modelo
