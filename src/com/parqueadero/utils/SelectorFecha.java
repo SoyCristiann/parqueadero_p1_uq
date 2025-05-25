@@ -8,7 +8,7 @@ import java.util.Date;
  * Se crea esta clase para manejar la funcionalidad de selector de fecha.
  * */
 
-public class SelectorFecha {	
+public abstract class SelectorFecha {	
 	
 	    public static LocalDate seleccionarFecha() {
 	        JSpinner spinner = new JSpinner(new SpinnerDateModel());
@@ -18,4 +18,14 @@ public class SelectorFecha {
 	        Date fechaSeleccionada= (Date) spinner.getValue();
 	        return fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();	        
     }
+	    
+	    //Validar si una fecha es igual o superior a a actual. Retorna falso si la fecha es en el pasado.
+	    public static boolean validarFechaVigente(LocalDate fecha) {
+	    	if(fecha.isAfter(LocalDate.now()) || fecha.isEqual(LocalDate.now())) {
+	    		return true; //Fecha válida
+	    	}else {
+	    		JOptionPane.showMessageDialog(null, "La fecha no puede estar en el pasado.");
+	    		return false; //Fecha inválida
+	    	}
+	    }
 }

@@ -1,76 +1,54 @@
 package com.parqueadero.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.parqueadero.model.Automovil;
+import com.parqueadero.model.Camion;
 import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
+import com.parqueadero.model.Moto;
 import com.parqueadero.model.Parqueadero;
 import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
+import com.parqueadero.utils.SelectorFecha;
 
 import Interfaces.GestionClientes;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import javax.swing.JOptionPane;
 
 public class ParqueaderoService implements GestionClientes {
 
     // Atributos según el UML
-    private String nombre;
-    private String direccion;
-    private String representante;
-    private String contacto;
     private ArrayList<String> espaciosDisponibles;
     private ArrayList<Cliente> clientes;
     // los metodos de aqui hacia arriba son los mismos de la clase parqueadero
     private ArrayList<IngresoSalida> registrosActivos;
     private ArrayList<IngresoSalida> historial;
+    private ArrayList<Membresia> membresias;
 
 
     // Constructor vacío
     public ParqueaderoService() {
-    	this.nombre = "";
-        this.direccion = "";
-        this.representante = "";
-        this.contacto = "";
         this.espaciosDisponibles =new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.registrosActivos = new ArrayList<>();
         this.historial = new ArrayList<>();
-    }
-
-    // Constructor con parámetros
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.representante = representante;
-        this.contacto = contacto;
-        this.espaciosDisponibles = new ArrayList<>();
-        this.clientes = new ArrayList<>();
-        this.registrosActivos = new ArrayList<>();
-        this.historial = new ArrayList<>();
+        this.membresias= new ArrayList<>();
     }
 
     // Getters
-    public String getNombre() { return nombre; }
-    public String getDireccion() { return direccion; }
-    public String getRepresentante() { return representante; }
-    public String getContacto() { return contacto; }
     public ArrayList<String> getEspaciosDisponibles() { return espaciosDisponibles; }
     public ArrayList<Cliente> getClientes() { return clientes; }
     public ArrayList<IngresoSalida> getRegistrosActivos() {return registrosActivos;}
     public ArrayList<IngresoSalida> getHistorial() {return historial;}
 
     // Setters
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
-    public void setRepresentante(String representante) { this.representante = representante; }
-    public void setContacto(String contacto) {this.contacto = contacto; }
-    public void setEspaciosDisponibles (ArrayList<String> espaciosDisponibles) {this.espaciosDisponibles = espaciosDisponibles;}
+     public void setEspaciosDisponibles (ArrayList<String> espaciosDisponibles) {this.espaciosDisponibles = espaciosDisponibles;}
     public void setClientes(ArrayList<Cliente> clientes) {this.clientes = clientes;}
 
     // metodos
@@ -110,6 +88,7 @@ public class ParqueaderoService implements GestionClientes {
             	return cliente;
             }
         }
+        JOptionPane.showMessageDialog(null,"No se encontró un cliente con esa cédula.","Cliente no encontrado",JOptionPane.WARNING_MESSAGE);
         return null; // no encontró un cliente con esa cedula
     }
     
@@ -333,6 +312,58 @@ public class ParqueaderoService implements GestionClientes {
 	}
     */
 
+    
+    
+    //Membresias
+    
+    
+    public boolean crearMembresia() {
+    	Membresia membresia=null;
+		String cedula= JOptionPane.showInputDialog("Ingrese la cédula del cliente: ");
+		for(Cliente c: clientes) {
+			if(c.getCedula().equalsIgnoreCase(cedula.trim())) {
+				String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
+				for(Vehiculo v:c.getVehiculos()) {
+					if(v.getPlaca().equalsIgnoreCase(placa.trim())) {
+						LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
+						if(SelectorFecha.validarFechaVigente(fechaInicio)) {
+							if(v instanceof Automovil) {
+								 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
+								 System.out.println(membresia);
+							}if(v instanceof Moto) {
+								membresia= new Membresia(fechaInicio, v, c, Moto.getTarifaMembresia());
+							}if(v instanceof Camion) {
+								membresia= new Membresia(fechaInicio, v, c, Camion.getTarifaMembresia());
+							}
+							if(membresia!=null) {
+								if(membresia.confirmarMembresia(membresia)) {
+									membresias.add(membresia);
+									JOptionPane.showMessageDialog(null, "La membresía fue guardada de forma correcta.");
+									return true;
+								}else {
+									JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
+									return false;
+								}
+							}else {
+								JOptionPane.showMessageDialog(null, "La membresía no pudo ser creada.");
+								return false;
+							}	
+						}else {
+							return false;
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "El vehículo no está asociado al cliente.");
+						return false;
+					}
+				}				
+			}else {
+				JOptionPane.showMessageDialog(null, "El cliente no está registrado.");
+				return false;
+			}
+		}
+		return false;
+    }
+    
     
     
     

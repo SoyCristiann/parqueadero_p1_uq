@@ -8,7 +8,9 @@ import javax.swing.JOptionPane;
 import com.parqueadero.model.Pago;
 import com.parqueadero.model.Vehiculo;
 
-public class PagoService {
+import Interfaces.Tarifable;
+
+public class PagoService{
 	
 	private ArrayList<Pago> pagos;
 	
@@ -84,12 +86,17 @@ public class PagoService {
 		return total;
 	}
 	
+	
 	//Método de prueba para ver la lista de pagos.
 	public void mostrarPagos() {
 		for(Pago p: pagos) {
 			System.out.println(p);
 		}
 	}
+	
+
+	
+
 }
 	
 

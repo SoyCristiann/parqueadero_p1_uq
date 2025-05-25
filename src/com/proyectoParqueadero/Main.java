@@ -5,12 +5,16 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import com.parqueadero.model.Automovil;
+import com.parqueadero.model.Camion;
 import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Membresia;
+import com.parqueadero.model.Moto;
 import com.parqueadero.model.Vehiculo;
 import com.parqueadero.service.PagoService;
 import com.parqueadero.utils.Menu;
 import com.parqueadero.utils.SelectorFecha;
+
 
 import com.parqueadero.model.Pago;
 import com.parqueadero.model.TipoVehiculo;
@@ -35,23 +39,26 @@ public class Main {
 		//LocalDate fecha=SelectorFecha.seleccionarFecha();
 		PagoService adminPago = new PagoService();
 		//adminPago.calcularTotalIngresos();
-		Membresia membresia= new Membresia(LocalDate.of(2025, 06, 01), LocalDate.of(2025, 06, 30), "Efectivo", 20000);
-		Cliente cliente1 =new Cliente("Pedro Perez", "1010", "3100000001", "pedroperez@correo.com");
+		
+		/*Cliente cliente1 =new Cliente("Pedro Perez", "1010", "3100000001", "pedroperez@correo.com");
 		adminParqueadero.registrarCliente(cliente1);
 		Cliente cliente2 =new Cliente("Pedro Perez", "1011", "3100000002", "pedroperez@correo.com");
-		adminParqueadero.registrarCliente(cliente2);
+		adminParqueadero.registrarCliente(cliente2);*/
 		Cliente cliente3 =new Cliente("Pedro Perez", "1012", "3100000003", "pedroperez@correo.com");
 		adminParqueadero.registrarCliente(cliente3);
-		Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
+		/*Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
 		cliente1.registrarVehiculo(vehiculo1);		
 		Vehiculo vehiculo2= new Vehiculo(TipoVehiculo.CAMION, "DEF456", "Negro", "2025", cliente2);
 		cliente2.registrarVehiculo(vehiculo2);
 		Vehiculo vehiculo3= new Vehiculo(TipoVehiculo.MOTO, "DEF789", "Negro", "2025", cliente3);
 		cliente3.registrarVehiculo(vehiculo3);
 		Vehiculo vehiculo4= new Vehiculo(TipoVehiculo.MOTO, "DEF22C", "Negro", "2025", cliente3);
-		cliente3.registrarVehiculo(vehiculo4);
-		Vehiculo vehiculo5= new Vehiculo(TipoVehiculo.AUTOMOVIL, "DEF15A", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo4);*/
+		Automovil vehiculo5= new Automovil(TipoVehiculo.AUTOMOVIL, "DEF15A", "Negro", "2025", cliente3);
 		cliente3.registrarVehiculo(vehiculo5);
+		//Membresia membresia= new Membresia(LocalDate.of(2025, 06, 01), vehiculo2, cliente2, 2000);
+		
+		//adminParqueadero.crearMembresia(vehiculo5);
 	
 		
 		
@@ -159,15 +166,30 @@ public class Main {
 					}
 					case 2:{//Registrar nuevo vehículo
 						String cedula=JOptionPane.showInputDialog(null, "Ingrese el número de cédula del cliente: ");
-						adminParqueadero.buscarClienteForUsuario(cedula);
-						Cliente cliente = adminParqueadero.buscarCliente(cedula);
-						TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:", "Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
-						String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
-						String color = JOptionPane.showInputDialog(null, "Ingrese el color del vehículo: ");
-						String modelo= JOptionPane.showInputDialog(null, "Ingrese el modelo del vehículo: ");						
-						Vehiculo vehiculo= new Vehiculo(tipoVehiculo, placa, color, modelo, cliente);
-						cliente.registrarVehiculo(vehiculo);
-						break;
+						if(adminParqueadero.buscarClienteForUsuario(cedula)) {
+							Cliente cliente = adminParqueadero.buscarCliente(cedula);
+							TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:", "Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
+							if(tipoVehiculo!=TipoVehiculo.INDEFINIDO) {
+								String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
+								String color = JOptionPane.showInputDialog(null, "Ingrese el color del vehículo: ");
+								String modelo= JOptionPane.showInputDialog(null, "Ingrese el modelo del vehículo: ");
+								if(tipoVehiculo== TipoVehiculo.AUTOMOVIL) {
+									Automovil vehiculo= new Automovil(tipoVehiculo, placa, color, modelo, cliente);
+									cliente.registrarVehiculo(vehiculo);
+								}if(tipoVehiculo== TipoVehiculo.CAMION) {
+									Camion vehiculo= new Camion(tipoVehiculo, placa, color, modelo, cliente);
+									cliente.registrarVehiculo(vehiculo);
+								}if(tipoVehiculo== TipoVehiculo.MOTO) {
+									Moto vehiculo= new Moto(tipoVehiculo, placa, color, modelo, cliente);
+									cliente.registrarVehiculo(vehiculo);
+								}
+								break;
+							}else {
+								JOptionPane.showMessageDialog(null, "El tipo de vehículo no es válido.");
+								break;
+							}
+						}
+						
 						
 					}
 					case 3:{//Editar vehículo
@@ -179,7 +201,29 @@ public class Main {
 				}
         		break;
     		}
-        	case 5:{}
+        	case 5:{// Módulo de membresías
+        		opcion = Menu.seleccioanrMenuMembresias();
+        		switch (opcion) {
+				case 1: {//Ver membresías activas
+					
+				}
+				case 2: {//Crear nueva membresía
+					adminParqueadero.crearMembresia();
+					break;	
+					
+				}
+				case 3:{// Editar membresía
+					
+				}
+				case 4:{// Eliminar membresía
+					
+				}
+				case 5:{//Regresar al menú principal
+					
+				}
+				}
+        		
+        	}
         	case 6:{}
         	case 7:{}
 			

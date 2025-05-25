@@ -12,7 +12,7 @@ public class Cliente {
     private String cedula;
     private String telefono;
     private String correo;
-    private List<Vehiculo> vehiculos;
+    private ArrayList<Vehiculo> vehiculos;
 
     // Constructor vacío
     public Cliente() {
@@ -43,7 +43,7 @@ public class Cliente {
     	return telefono; }
     public String getCorreo() {
     	return correo; }
-    public List<Vehiculo> getVehiculos() {
+    public ArrayList<Vehiculo> getVehiculos() {
     	return vehiculos; }
 
     public void setNombre(String nombre) {
@@ -54,7 +54,7 @@ public class Cliente {
     	this.telefono = telefono; }
     public void setCorreo(String correo) {
     	this.correo = correo; }
-    public void setVehiculos(List<Vehiculo> vehiculos) {
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
     	this.vehiculos = vehiculos; }
     
 
@@ -76,10 +76,11 @@ public class Cliente {
 //  buscar Vehiculo
     public Vehiculo buscarVehiculoPlaca(String placa) {        
     	for (Vehiculo vehiculo : vehiculos) {
-    		if (vehiculo.getPlaca().equals(placa)) {
+    		if (vehiculo.getPlaca().equalsIgnoreCase(placa.trim())) {
     			return vehiculo;
     		}
-    	}    	
+    	}
+    	JOptionPane.showMessageDialog(null,"No se encontró un vehículo con esa placa.","Vehículo no encontrado",JOptionPane.WARNING_MESSAGE);
     	return null;
     }
 

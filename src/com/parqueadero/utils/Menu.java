@@ -81,6 +81,33 @@ public class Menu {
 	            return 0;
 	        }
 		}
+		
+		
+		//Submenu membresías
+				public static byte seleccioanrMenuMembresias() {
+					StringBuilder menu= new StringBuilder();
+					menu.append("====== MENÚ Membresías ======\n");
+					menu.append("1: Ver membresías vigentes.\n");
+					menu.append("2: Crear nueva membresía.\n");
+					menu.append("3: Editar membresía.\n");
+					menu.append("4: Eliminar membresía.\n");
+					menu.append("5: Menú principal.\n");
+					
+					String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("Opción seleccionada en el menú membresías: " + opcion);
+			        
+					//Validaciones
+					if (opcion == null || opcion.isBlank()) {
+			            return 0; // Si presiona Cancel o X
+			        }
+
+			        try {
+			            return Byte.parseByte(opcion.trim());
+			        } catch (NumberFormatException e) {
+			            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+			            return 0;
+			        }
+				}
 
 	
 	
