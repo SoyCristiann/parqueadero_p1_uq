@@ -35,6 +35,30 @@ public class Membresia {
 	
 	
 	// Métodos getters y setters
+	public byte getCantidadDiasMembresia() {
+		return cantidadDiasMembresia;
+	}
+	
+	public void setCantidadDiasMembresia(byte cantidadDiasMembresia) {
+		this.cantidadDiasMembresia= cantidadDiasMembresia;
+	}
+	
+	
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+	
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo=vehiculo;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente=cliente;
+	}
 	
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
@@ -68,7 +92,7 @@ public class Membresia {
 	
 	@Override
 	public String toString() {
-		return "Datos de la membresía: \nFecha de inicio: " + fechaInicio + "\nFecha fin: " + fechaFinal + "\nCliente: " + cliente.getCedula() + "\nVehiculo placa: " + vehiculo.getPlaca() + "\nValor pagado: " + monto;
+		return "Datos de la membresía: \nFecha de inicio: " + fechaInicio + ", Fecha fin: " + fechaFinal + ", Cliente: " + cliente.getCedula() + ", Vehiculo placa: " + vehiculo.getPlaca() + ", Valor pagado: " + monto  + "\n";
 	}
 
 	

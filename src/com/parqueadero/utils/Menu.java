@@ -12,6 +12,7 @@ public class Menu {
 		menu.append("3: Módulo clientes.\n");
 		menu.append("4: Módulo vehículos.\n");
 		menu.append("5: Módulo Membresías.\n");
+		menu.append("0: Salir del sistema.\n");
 		
 		String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
 		System.out.println("Opción seleccionada en el menú principal: " + opcion);
