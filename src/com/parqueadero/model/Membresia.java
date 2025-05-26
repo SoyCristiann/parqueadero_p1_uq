@@ -15,7 +15,7 @@ public class Membresia {
 	private Cliente cliente;
 	private String tipoPago;
 	private double monto;
-	}
+	
 	
 	public Membresia() {
 		
@@ -25,7 +25,7 @@ public class Membresia {
 		this.monto = 0.0;
 	}
 	
-	public Membresia(LocalDate fechaInicio, Vehiculo  vehiculo, Cliente cliente, , String tipoPago double monto) {
+	public Membresia(LocalDate fechaInicio, Vehiculo  vehiculo, Cliente cliente, String tipoPago, double monto) {
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaInicio.plusDays(cantidadDiasMembresia); //Esto garantiza que la fecha final automaticamente será 30 días despues de la fecha de creación de la membresía.
 		this.vehiculo= vehiculo;
@@ -86,7 +86,7 @@ public class Membresia {
 	}
 
 	public void setTipoPago(String tipoPago) {
-		this.tipoPago = tipoPago;
+		this.tipoPago = tipoPago;}
 	
 	public boolean estaActiva() {
         return LocalDate.now().isBefore(fechaFinal);

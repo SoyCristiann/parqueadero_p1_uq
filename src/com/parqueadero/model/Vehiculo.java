@@ -2,13 +2,13 @@ package com.parqueadero.model;
 
 import java.util.ArrayList;
 
-public abstract class Vehiculo {
+public class Vehiculo {
     private TipoVehiculo tipoVehiculo;
     private String placa;
     private String color;
     private String modelo;
     private Cliente cliente;
-    private Membresia membresia;
+ //   private Membresia membresia;
 
     public Vehiculo() {
         this.tipoVehiculo = TipoVehiculo.INDEFINIDO;
@@ -16,7 +16,7 @@ public abstract class Vehiculo {
         this.color = "";
         this.modelo = "";
         this.cliente = new Cliente();
-        this.membresia = new Membresia();
+//        this.membresia = new Membresia();
     }
 
     public Vehiculo(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
@@ -25,7 +25,7 @@ public abstract class Vehiculo {
         this.color = color;
         this.modelo = modelo;
         this.cliente = cliente;
-        this.membresia = new Membresia();
+//      this.membresia = new Membresia();
     }
 
     public TipoVehiculo getTipoVehiculo() {
@@ -68,14 +68,15 @@ public abstract class Vehiculo {
         this.cliente = cliente;
     }
 
-    public Membresia getMembresia() {
+/*    public Membresia getMembresia() {
         return membresia;
     }
 
     public void setMembresia(Membresia membresia) {
         this.membresia = membresia;
     }
-
+*/
+    
     @Override
     public String toString() {
         return "Tipo de Vehículo: " + tipoVehiculo + ", Placa: " + placa + ", Color: " + color + ", Modelo: " + modelo + ", Cliente: " + cliente;
