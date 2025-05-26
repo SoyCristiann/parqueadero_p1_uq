@@ -10,22 +10,22 @@ public class Pago {
 	private Vehiculo vehiculo;
 	private double monto; 
 	private LocalDate fechaPago;
-	private String tipoPago;
+	private TipoPago tipoPago;
 	
 	
 	// Constructor vacío y con parámetros
 	
 	public Pago() {
-		this.idPago=UUID.randomUUID().toString();
+		this.idPago=UUID.randomUUID().toString(); //Genera un ID de pago único de forma aleatoria.
 		this.cliente= new Cliente();
 		this.vehiculo = new Vehiculo();
 		this.monto = 0.0;
 		this.fechaPago = LocalDate.now();
-		this.tipoPago = "";
+		this.tipoPago = TipoPago.NULL;
 	}
 	
-	public Pago(Cliente cliente, Vehiculo vehiculo, double monto, String tipoPago) {
-		this.idPago=UUID.randomUUID().toString();
+	public Pago(Cliente cliente, Vehiculo vehiculo, double monto, TipoPago tipoPago) {
+		this.idPago=UUID.randomUUID().toString(); //Genera un ID de pago único de forma aleatoria.
 		this.cliente=cliente;
 		this.vehiculo = vehiculo;
 		this.monto = monto;
@@ -67,16 +67,18 @@ public class Pago {
 		this.fechaPago = fecha;
 	}
 
-	public String getTipoPago() {
+	public TipoPago getTipoPago() {
 		return tipoPago;
 	}
 
-	public void setTipoPago(String tipoPago) {
+	public void setTipoPago(TipoPago tipoPago) {
 		this.tipoPago = tipoPago;
 	}
 	
 	
 	// Métodos 
+	
+	
 	
 	@Override
 	public String toString() {

@@ -14,6 +14,7 @@ import com.parqueadero.utils.Menu;
 
 public class Main {
 
+
     public static void main(String[] args) {
         Cliente clienteP = new Cliente("Juan", "1234567890", null, null);
         System.out.println("Cliente creado: " + clienteP.getNombre());
@@ -50,6 +51,8 @@ public class Main {
                             JOptionPane.showMessageDialog(null, "Opción inválida, regresando al menú principal.");
                             break;
                         }
+
+
 
                         switch (subopcion) {
                             case 1: { // Buscar cliente

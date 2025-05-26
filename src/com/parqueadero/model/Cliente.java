@@ -12,7 +12,7 @@ public class Cliente {
     private String cedula;
     private String telefono;
     private String correo;
-    private List<Vehiculo> vehiculos;
+    private ArrayList<Vehiculo> vehiculos;
 
     // Constructor vacío
     public Cliente() {
@@ -25,7 +25,6 @@ public class Cliente {
 
     // Constructor con parámetros
     public Cliente(String nombre, String cedula, String telefono, String correo) {
-		
 		this.nombre = nombre;
 		this.cedula = cedula;
 		this.telefono = telefono;
@@ -36,29 +35,36 @@ public class Cliente {
     // Getters y setters
     
     public String getNombre() {
-    	return nombre; }
+    	return nombre; 
+    	}
     public String getCedula() {
-    	return cedula; }
+    	return cedula; 
+    	}
     public String getTelefono() {
-    	return telefono; }
+    	return telefono;
+    	}
     public String getCorreo() {
-    	return correo; }
-    public List<Vehiculo> getVehiculos() {
-    	return vehiculos; }
+    	return correo; 
+    	}
+    public ArrayList<Vehiculo> getVehiculos() {
+    	return vehiculos; 
+    	}
 
     public void setNombre(String nombre) {
-    	this.nombre = nombre; }
+    	this.nombre = nombre; 
+    	}
     public void setCedula(String cedula) {
-    	this.cedula = cedula; }
+    	this.cedula = cedula;
+    	}
     public void setTelefono(String telefono) {
-    	this.telefono = telefono; }
+    	this.telefono = telefono;
+    	}
     public void setCorreo(String correo) {
-    	this.correo = correo; }
-    public void setVehiculos(List<Vehiculo> vehiculos) {
-    	this.vehiculos = vehiculos; }
-    
-
-//    Metodos
+    	this.correo = correo; 
+    	}
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
+    	this.vehiculos = vehiculos; 
+    	}  
     
 //  registrar Vehiculo
     public boolean registrarVehiculo(Vehiculo vehiculo) {
@@ -72,17 +78,17 @@ public class Cliente {
     	JOptionPane.showMessageDialog(null, "El vehículo con placa " + vehiculo.getPlaca() + " se ha registrado de forma corecta.");
     	return true;
     }
-
+    
 //  buscar Vehiculo
     public Vehiculo buscarVehiculoPlaca(String placa) {        
     	for (Vehiculo vehiculo : vehiculos) {
-    		if (vehiculo.getPlaca().equals(placa)) {
+    		if (vehiculo.getPlaca().equalsIgnoreCase(placa.trim())) {
     			return vehiculo;
     		}
-    	}    	
+    	}
+    	JOptionPane.showMessageDialog(null,"No se encontró un vehículo con esa placa.","Vehículo no encontrado",JOptionPane.WARNING_MESSAGE);
     	return null;
     }
-
 
 //  actualizar Vehiculo
     public boolean actualizarVehiculo(Vehiculo vehiculoActualizado) {
@@ -93,7 +99,7 @@ public class Cliente {
     			v.setPlaca(vehiculoActualizado.getPlaca());
     			v.setColor(vehiculoActualizado.getColor());
     			v.setModelo(vehiculoActualizado.getModelo());
-    			//v.setMembresia(vehiculoActualizado.getMembresia());
+    			v.setMembresia(vehiculoActualizado.getMembresia());
     			
     			break;
     		}
@@ -102,10 +108,6 @@ public class Cliente {
     	
     	return validacion;
     }
-    
-   
-
-    
     
 	@Override
 	public String toString() {
