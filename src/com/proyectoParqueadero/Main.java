@@ -3,17 +3,12 @@ package com.proyectoParqueadero;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
-import com.parqueadero.model.Automovil;
-import com.parqueadero.model.Camion;
-import com.parqueadero.model.Cliente;
-import com.parqueadero.model.Moto;
-import com.parqueadero.model.TipoVehiculo;
+import com.parqueadero.model.*;
 import com.parqueadero.service.PagoService;
 import com.parqueadero.service.ParqueaderoService;
 import com.parqueadero.utils.Menu;
 
 public class Main {
-
 
     public static void main(String[] args) {
         Cliente clienteP = new Cliente("Juan", "1234567890", null, null);
@@ -26,12 +21,44 @@ public class Main {
         adminParqueadero.registrarCliente(cliente3);
         Automovil vehiculo5 = new Automovil(TipoVehiculo.AUTOMOVIL, "DEF15A", "Negro", "2025", cliente3);
         cliente3.registrarVehiculo(vehiculo5);
+        
+        Cliente cliente1 =new Cliente("Pedro Perez", "1010", "3100000001", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente1);
+		Cliente cliente2 =new Cliente("Pedro Perez", "1011", "3100000002", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente2);
+		Cliente cliente3 =new Cliente("Pedro Perez", "1012", "3100000003", "pedroperez@correo.com");
+		adminParqueadero.registrarCliente(cliente3);
+		Vehiculo vehiculo1= new Vehiculo(TipoVehiculo.AUTOMOVIL, "ABC123", "Negro", "2025", cliente1);
+		cliente1.registrarVehiculo(vehiculo1);		
+		Vehiculo vehiculo2= new Vehiculo(TipoVehiculo.CAMION, "DEF456", "Negro", "2025", cliente2);
+		cliente2.registrarVehiculo(vehiculo2);
+		Vehiculo vehiculo3= new Vehiculo(TipoVehiculo.MOTO, "DEF789", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo3);
+		Vehiculo vehiculo4= new Vehiculo(TipoVehiculo.MOTO, "DEF22C", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo4);
+		Automovil vehiculo5= new Automovil(TipoVehiculo.AUTOMOVIL, "DEF15A", "Negro", "2025", cliente3);
+		cliente3.registrarVehiculo(vehiculo5);
+		Membresia membresia= new Membresia(LocalDate.of(2025, 06, 01), vehiculo2, cliente2, 2000);
+		
+		adminParqueadero.crearMembresia(vehiculo5);
+	
+		
+		
+		Pago pago = new Pago(cliente2, vehiculo1, 2000, "Efectivo");
+		Pago pago2 = new Pago(cliente2, vehiculo2, 4000, "Efectivo");		
+		adminPago.registrarPago(pago);
+		adminPago.registrarPago(pago2);
+		System.out.println(adminPago.calcularTotalIngresos());		
+		System.out.println(adminPago.calcularTotalPagosPeriodo(pago.getFechaPago(), pago2.getFechaPago()));
+		System.out.println(adminPago.obtenerHistorialPagoVehiculo(vehiculo2));
 
         byte opcion = -1;
 
         do {
             try {
                 opcion = Menu.seleccionarMenuPrincipal();
+                if (opcion == -1) continue;
+
                 System.out.println("Opción seleccionada: " + opcion);
 
                 switch (opcion) {
@@ -44,15 +71,8 @@ public class Main {
                         break;
 
                     case 3: { // Clientes
-                        byte subopcion = -1;
-                        try {
-                            subopcion = Menu.seleccioanrMenuClientes();
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Opción inválida, regresando al menú principal.");
-                            break;
-                        }
-
-
+                        byte subopcion = Menu.seleccioanrMenuClientes();
+                        if (subopcion == -1) break;
 
                         switch (subopcion) {
                             case 1: { // Buscar cliente
@@ -102,8 +122,7 @@ public class Main {
                                 break;
                             }
                             case 5:
-                                // Volver al menú principal
-                                break;
+                                break; // Volver al menú principal
                             default:
                                 JOptionPane.showMessageDialog(null, "Opción no válida.");
                         }
@@ -111,13 +130,8 @@ public class Main {
                     }
 
                     case 4: { // Vehículos
-                        byte subopcion = -1;
-                        try {
-                            subopcion = Menu.seleccioanrMenuVehiculos();
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Entrada inválida.");
-                            break;
-                        }
+                        byte subopcion = Menu.seleccioanrMenuVehiculos();
+                        if (subopcion == -1) break;
 
                         switch (subopcion) {
                             case 1: { // Ver vehículos
@@ -207,21 +221,53 @@ public class Main {
                                 }
                                 break;
                             }
-                            case 3:{//Editar vehículo
-        						String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
-        						TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:", "Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
-        						String color = JOptionPane.showInputDialog(null, "Ingrese el color del vehículo: ");
-        						String modelo= JOptionPane.showInputDialog(null, "Ingrese el modelo del vehículo: ");
-        						adminParqueadero.editarVehiculo(placa, tipoVehiculo, color, modelo);
-        						break;
-        					}
-        					case 4:{//Eliminar vehículo
-        						String cedula = JOptionPane.showInputDialog(null, "Ingrese la cédula del cliente: ");
-        						Cliente c = adminParqueadero.buscarCliente(cedula);
-        						String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo: ");
-        						Vehiculo v = c.buscarVehiculoPlaca(placa);
-        						adminParqueadero.eliminar(v);
-        						break;
+                            case 3: { // Editar vehículo
+                                String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo:");
+                                if (placa == null) break;
+
+                                TipoVehiculo tipoVehiculo = (TipoVehiculo) JOptionPane.showInputDialog(
+                                    null,
+                                    "Seleccione el tipo de vehículo:",
+                                    "Tipo de vehículo",
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    TipoVehiculo.values(),
+                                    TipoVehiculo.AUTOMOVIL);
+                                if (tipoVehiculo == null) break;
+
+                                String color = JOptionPane.showInputDialog(null, "Ingrese el color del vehículo:");
+                                if (color == null) break;
+
+                                String modelo = JOptionPane.showInputDialog(null, "Ingrese el modelo del vehículo:");
+                                if (modelo == null) break;
+
+                                adminParqueadero.editarVehiculo(placa.trim(), tipoVehiculo, color.trim(), modelo.trim());
+                                break;
+                            }
+                            case 4: { // Eliminar vehículo
+                                String cedula = JOptionPane.showInputDialog(null, "Ingrese la cédula del cliente:");
+                                if (cedula == null) break;
+
+                                Cliente c = adminParqueadero.buscarCliente(cedula.trim());
+                                if (c == null) {
+                                    JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
+                                    break;
+                                }
+
+                                String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo:");
+                                if (placa == null) break;
+
+                                Vehiculo v = c.buscarVehiculoPlaca(placa.trim());
+                                if (v == null) {
+                                    JOptionPane.showMessageDialog(null, "Vehículo no encontrado.");
+                                    break;
+                                }
+
+                                adminParqueadero.eliminar(v);
+                                break;
+                            }
+                            case 5:
+                                break; // Volver
                             default:
                                 JOptionPane.showMessageDialog(null, "Opción inválida.");
                         }
@@ -229,13 +275,15 @@ public class Main {
                     }
 
                     case 5: { // Membresías
-                        byte subopcion = Menu.seleccioanrMenuClientes();
+                        byte subopcion = Menu.seleccionarMenuMembresias(); 
+                        if (subopcion == -1) break;
+
                         switch (subopcion) {
                             case 1:
                                 // TODO: Ver membresías activas
                                 break;
                             case 2:
-//                                adminParqueadero.crearMembresia();
+                                // TODO: Crear membresía
                                 break;
                             case 3:
                                 // TODO: Editar membresía
@@ -244,7 +292,6 @@ public class Main {
                                 // TODO: Eliminar membresía
                                 break;
                             case 5:
-                                // Volver
                                 break;
                             default:
                                 JOptionPane.showMessageDialog(null, "Opción inválida.");
@@ -277,5 +324,4 @@ public class Main {
 
         } while (opcion != 0);
     }
-   }
-    
+}

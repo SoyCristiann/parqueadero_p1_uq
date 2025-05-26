@@ -23,33 +23,22 @@ import Interfaces.GestionClientes;
 
 public class ParqueaderoService implements GestionClientes {
 
-    // Atributos según el UML
-	private String nombre;
-	private String direccion;
-	private String representante;
-	private String contacto;
+    private Parqueadero parqueadero;
 	private int espaciosMotos;
 	private int espaciosCarros;
 	private int espaciosCamiones;
-	
-    private ArrayList<String> espaciosDisponibles;
-    private ArrayList<Cliente> clientes;
-    // los metodos de aqui hacia arriba son los mismos de la clase parqueadero
+	private ArrayList<Cliente> clientes;
     private ArrayList<IngresoSalida> registrosActivos;
     private ArrayList<IngresoSalida> historial;
     private ArrayList<Membresia> membresias;
 
 
     // Constructor vacío
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto, int espaciosMotos, int espaciosCarros, int espaciosCamiones) {
-    	this.nombre= nombre;
-    	this.direccion=direccion;
-    	this.representante= representante;
-    	this.contacto=contacto;
+    public ParqueaderoService(int espaciosMotos, int espaciosCarros, int espaciosCamiones) {
+    	
     	this.espaciosMotos= espaciosMotos;
     	this.espaciosCarros= espaciosCarros;
     	this.espaciosCamiones=espaciosCamiones;
-        this.espaciosDisponibles =new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.registrosActivos = new ArrayList<>();
         this.historial = new ArrayList<>();
@@ -116,27 +105,17 @@ public class ParqueaderoService implements GestionClientes {
     }
 
     // Getters
-    public String getNombre() {return nombre;}
-    public String getDireccion() {return direccion;}
-    public String getrepresentante() {return representante;}
-    public String getContacto() {return contacto;}
     public int getEspaciosMotos() {return espaciosMotos;}
     public int getEspaciosCarros() {return espaciosCarros;}
     public int getEspaciosCamion() {return espaciosCamiones;}    
-    public ArrayList<String> getEspaciosDisponibles() { return espaciosDisponibles; }
     public ArrayList<Cliente> getClientes() { return clientes; }
     public ArrayList<IngresoSalida> getRegistrosActivos() {return registrosActivos;}
     public ArrayList<IngresoSalida> getHistorial() {return historial;}
 
     // Setters
-    public void seetNombre(String nombre) {this.nombre=nombre;}
-    public void setDireccion(String nombre) {this.direccion=nombre;}
-    public void setRepresentante(String nombre) {this.representante=nombre;}
-    public void setContacto(String nombre) {this.contacto=nombre;}
     public void setEspaciosMotos(int espacios) {this.espaciosMotos=espacios;}
     public void setEspaciosCarros(int espacios) {this.espaciosCarros=espacios;}
     public void setEspaciosCamiones(int espacios) {this.espaciosCamiones=espacios;}    
-    public void setEspaciosDisponibles (ArrayList<String> espaciosDisponibles) {this.espaciosDisponibles = espaciosDisponibles;}
     public void setClientes(ArrayList<Cliente> clientes) {this.clientes = clientes;}
 
     
@@ -244,6 +223,16 @@ public class ParqueaderoService implements GestionClientes {
         ingreso.setHoraSalida(null); 
         registrosActivos.add(ingreso);
         JOptionPane.showMessageDialog(null, "Registro de entrada exitoso.");
+        
+        if(ingreso.getTipoVehiculo() == TipoVehiculo.MOTO) {
+        	parqueadero.
+        }
+        if() {
+        	
+        }
+        if() {
+        	
+        }
         return true;
     }
 
@@ -320,7 +309,7 @@ public class ParqueaderoService implements GestionClientes {
         if (vehiculos.length() > 0) {
             JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", getNombre(), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", parqueadero.getNombre(), JOptionPane.WARNING_MESSAGE);
         }
     }
         
@@ -367,7 +356,7 @@ public class ParqueaderoService implements GestionClientes {
         if (vehiculos.length() > 0) {
             JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", getNombre(), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay vehículos registrados.", getNombre, JOptionPane.WARNING_MESSAGE); // getNombre de qué?
         }
     }
     
@@ -382,7 +371,7 @@ public class ParqueaderoService implements GestionClientes {
     				v.setColor(color);
     				v.setModelo(modelo);
     				v.setCliente(c);
-    				if(v.confirmarVehiculo(v)) {
+    				if(v.confirmarVehiculo(v)) { // Cuál metodo confirmarVehiculo?
     					JOptionPane.showMessageDialog(null, "Los datos del vehículo se han modificado de forma correcta.");
             			return true;
         			}
@@ -456,39 +445,32 @@ public class ParqueaderoService implements GestionClientes {
     // Metodo incompleto
     
 //    Gestion de datos de parquadero:
-   
-//  teniendo en cuenta que hay una instancia global de parqueadero    
-    /*
+  
+    
     public void editarDatosParqueadero(String nombreN, String direccionN, String representanteN, String contactoN,
             int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
 		parqueadero.setNombre(nombreN);
 		parqueadero.setDireccion(direccionN);
 		parqueadero.setRepresentante(representanteN);
 		parqueadero.setContacto(contactoN);
-		parqueadero.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
-		parqueadero.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
-		parqueadero.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
     }
-    */
+    
 
+ 
     
-//    teniendo en cuenta que hay una instancia global de parqueadero
-    
-   /*
+   
 	public void mostrarDatosParqueadero() {
 	   String mensaje = "DATOS DEL PARQUEADERO:\n" +
 	                     "Nombre: " + parqueadero.getNombre() + "\n" +
 	                     "Dirección: " + parqueadero.getDireccion() + "\n" +
 	                     "Representante: " + parqueadero.getRepresentante() + "\n" +
 	                     "Contacto: " + parqueadero.getContacto() + "\n" +
-	                     "Espacios disponibles:\n" +
-	                     "  Motos: " + parqueadero.getEspaciosDisponiblesMotos() + "\n" +
-	                     "  Carros: " + parqueadero.getEspaciosDisponiblesCarros() + "\n" +
-	                     "  Camiones: " + parqueadero.getEspaciosDisponiblesCamiones();
+	                     "Espacios disponibles:\n";
+	                
 	
 	   JOptionPane.showMessageDialog(null, mensaje);
 	}
-    */
+    
 
     
     
@@ -574,7 +556,7 @@ public class ParqueaderoService implements GestionClientes {
         if (mensaje.length() > 0) {
             JOptionPane.showMessageDialog(null, membresias.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "No hay membresías registradas.", getNombre(), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay membresías registradas.", parqueadero.getNombre(), JOptionPane.WARNING_MESSAGE);
         }
     }
     
@@ -611,7 +593,8 @@ public class ParqueaderoService implements GestionClientes {
     
     
     public String toString() {
-    	return "Nombre del parqueadero: " + nombre + "\nDireccion: " + direccion + "\nRepresentante: " + representante + "\nContacto: " + contacto + "\nEspacios para motos: " + espaciosMotos + "\nEspacios para carros: " + espaciosCarros + "\nEspacios para camiones: " + espaciosCamiones;
+    	return "Nombre del parqueadero: " + parqueadero.getNombre() + "\nDireccion: " 
+    + parqueadero.getDireccion() + "\nRepresentante: " + parqueadero.getRepresentante() + "\nContacto: " + parqueadero.getContacto();
     }
     
     

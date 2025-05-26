@@ -14,7 +14,7 @@ public class Moto extends Vehiculo implements Tarifable{
 	public static double getTarifaMembresia() {return tarifaMembresia;}
 
 	@Override
-	public double calcularTarifa(double horas, TipoVehiculo tipoVehiculo, double tarifaHora) { 
+	public double calcularTarifa(double horas, TipoVehiculo tipoVehiculo) { 
 	    int horasCobradas = Math.max(1, (int) Math.round(horas));
 	    return horasCobradas * tarifaHora;
   }
