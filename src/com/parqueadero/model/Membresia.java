@@ -36,6 +36,30 @@ public class Membresia {
 	
 	
 	// Métodos getters y setters
+	public byte getCantidadDiasMembresia() {
+		return cantidadDiasMembresia;
+	}
+	
+	public void setCantidadDiasMembresia(byte cantidadDiasMembresia) {
+		this.cantidadDiasMembresia= cantidadDiasMembresia;
+	}
+	
+	
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+	
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo=vehiculo;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente=cliente;
+	}
 	
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
@@ -60,9 +84,9 @@ public class Membresia {
 	public String getTipoPago() {
 		return tipoPago;
 	}
+
 	public void setTipoPago(String tipoPago) {
 		this.tipoPago = tipoPago;
-	}
 	
 	public boolean estaActiva() {
         return LocalDate.now().isBefore(fechaFinal);
