@@ -16,7 +16,7 @@ public class Automovil extends Vehiculo implements Tarifable{
 	}
 	
 	@Override
-	public double calcularTarifa(double horas, Vehiculo vehiculo) {
+	public double calcularTarifa(double horas, TipoVehiculo tipoVehiculo, double tarifaHora) {
 		double tarifa = 10000;
         int horasCobradas = Math.max(1, (int) Math.round(horas));
         return horasCobradas * tarifa;
