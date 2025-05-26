@@ -1,5 +1,7 @@
 package com.parqueadero.model;
 
+import javax.swing.JOptionPane;
+
 import Interfaces.Tarifable;
 
 public class Moto extends Vehiculo implements Tarifable{
@@ -10,10 +12,10 @@ public class Moto extends Vehiculo implements Tarifable{
 	}
 
 	@Override
-	public double calcularTarifa(double horas, Vehiculo vehiculo) {
-		double tarifa = 5000;
-        int horasCobradas = Math.max(1, (int) Math.round(horas));
-        return horasCobradas * tarifa;
+	public double calcularTarifa(double horas, TipoVehiculo tipoVehiculo, double tarifaHora) { 
+	    int horasCobradas = Math.max(1, (int) Math.round(horas));
+	    return horasCobradas * tarifaHora;
 	}
+
 }
 
