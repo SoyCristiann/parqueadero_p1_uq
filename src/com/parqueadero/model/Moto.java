@@ -4,7 +4,7 @@ import Interfaces.Tarifable;
 
 public class Moto extends Vehiculo implements Tarifable{
 	private double tarifaHora= 1200;
-	private static double tarifaMembresia= 1200;
+	private static double tarifaMembresia= 60000;
 	public Moto(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
 		super(tipoVehiculo, placa, color, modelo, cliente);
 		
@@ -22,4 +22,3 @@ public class Moto extends Vehiculo implements Tarifable{
 	
 
 }
-
