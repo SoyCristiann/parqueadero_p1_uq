@@ -75,12 +75,12 @@ public class Pago {
 		this.tipoPago = tipoPago;
 	}
 	
-	
-	// Métodos 
+		// Métodos 
 	
 	public String mostrarPagoTemporal(String placa) {
 		return "Id del pago: " + idPago + "\nCliente: Temporal" + "\nVehiculo: " + placa + "\nValor pagado: " + monto + "\nFecha de pago: " + fechaPago + "\nTipo de pago: " + TipoPago.HORAS + "\n";
 	}
+
 	
 	@Override
 	public String toString() {

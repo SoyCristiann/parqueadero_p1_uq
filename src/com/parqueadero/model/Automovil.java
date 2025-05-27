@@ -5,7 +5,9 @@ import Interfaces.Tarifable;
 public class Automovil extends Vehiculo{
 
     private double tarifaMembresia = 100000;
+
     private static double tarifaHoraAutomovil=4000;
+
 
     public Automovil(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
         super(tipoVehiculo, placa, color, modelo, cliente);
