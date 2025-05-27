@@ -14,7 +14,9 @@ public class Menu {
 		menu.append("5: Módulo Membresías.\n");
 		menu.append("6. Ver espacios disponibles.\n");
 		menu.append("7. Reportes.\n");
-		menu.append("8. Vehículos en el parquadero.\n");
+		menu.append("8. Vehículos en el parquadero.\n");		
+		menu.append("9. Calcular tarifa ingreso y salida rapida.\n");		
+		menu.append("10. Editar tarifas.\n");		
 		menu.append("0: Salir del sistema.\n");
 		
 		String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
@@ -160,7 +162,7 @@ public class Menu {
 	        }
 		}
 				
-				
+	
 
 	
 	

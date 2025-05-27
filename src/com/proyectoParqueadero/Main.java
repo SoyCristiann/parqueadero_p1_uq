@@ -1,6 +1,7 @@
 package com.proyectoParqueadero;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ import javax.swing.JOptionPane;
 import com.parqueadero.model.Automovil;
 import com.parqueadero.model.Camion;
 import com.parqueadero.model.Cliente;
+import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
 import com.parqueadero.model.Moto;
 import com.parqueadero.model.Vehiculo;
@@ -15,6 +17,7 @@ import com.parqueadero.service.PagoService;
 import com.parqueadero.utils.Menu;
 import com.parqueadero.utils.SelectorFecha;
 
+import Interfaces.Tarifable;
 
 import com.parqueadero.model.Pago;
 import com.parqueadero.model.TipoPago;
@@ -35,9 +38,74 @@ public class Main {
         	opcion=Menu.seleccionarMenuPrincipal();
         	System.out.println("Opcion seleccionada " + opcion);
         	switch (opcion) {
-        	case 1:{}
+        	case 1:{
+        		String placaN = JOptionPane.showInputDialog("Ingrese la placa del vehiculo: ");
+        		if ( placaN == null||placaN.isBlank() ) {
+        			JOptionPane.showMessageDialog(null, "Opción inválida");
+        			continue;
+        		}
+        		TipoVehiculo tipoVehiculoN = (TipoVehiculo) JOptionPane.showInputDialog(null, "Seleccione el tipo de vehículo:",
+        				"Tipo de vehículo.",JOptionPane.QUESTION_MESSAGE,null, TipoVehiculo.values(), TipoVehiculo.AUTOMOVIL);
+        		if (tipoVehiculoN == null) {
+        			JOptionPane.showMessageDialog(null, "Opción inválida");
+        			continue;
+        		}
+        		
+        		
+        		
+        		
+        		adminParqueadero.registrarIngreso(placaN, tipoVehiculoN);
+        		break;
+        	}
         	
-        	case 2:{}        	 
+        	case 2: {
+        	    String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo:");
+
+        	    if (placa == null || placa.isBlank()) {
+        	        JOptionPane.showMessageDialog(null, "Placa inválida.");
+        	        break;  // Cambié return por break para no salir del loop principal
+        	    }
+
+        	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        	    LocalDateTime horaSalidaN = null;
+        	    boolean entradaValida = false;
+
+        	    while (!entradaValida) {
+        	        String horaSalidaStr = JOptionPane.showInputDialog(
+        	            null,
+        	            "Ingrese la fecha y hora de salida\nFormato: yyyy-MM-dd HH:mm",
+        	            "Registro de salida",
+        	            JOptionPane.QUESTION_MESSAGE
+        	        );
+        	        
+        	        
+        	        
+        	        
+        	        
+        	        
+
+        	        if (horaSalidaStr == null) {
+        	            JOptionPane.showMessageDialog(null, "Cancelado por el usuario.");
+        	            break;  // Salir del ciclo while y case
+        	        }
+
+        	        try {
+        	            horaSalidaN = LocalDateTime.parse(horaSalidaStr.trim(), formatter);
+        	            entradaValida = true;
+        	        } catch (Exception e) {
+        	            JOptionPane.showMessageDialog(null, "Formato inválido. Intente de nuevo.");
+        	        }
+        	    }
+
+        	    if (entradaValida) {
+        	        TipoVehiculo tipo = adminParqueadero.registrarSalida(placa.trim(), horaSalidaN);
+        	        if (tipo != null) {
+        	            JOptionPane.showMessageDialog(null, "Vehículo tipo " + tipo + " registrado como salida.");
+        	        }
+        	    }
+        	    break;
+        	}
+        	
         	
         	case 3: { // Módulo clientes
         		opcion= Menu.seleccioanrMenuClientes();
@@ -210,7 +278,7 @@ public class Main {
         		
         	}
         	
-        	case 6:{
+        	case 6:{ //Espacios en el parqueadero
         		opcion=Menu.seleccioanrMenuCupos();
         		switch (opcion) {
 					case 1: {
@@ -260,6 +328,112 @@ public class Main {
         		adminParqueadero.mostrarVehiculosActuales();
         	}
         	
+        	case 9: { // Calcular la tarifa vehículos Temporales
+        	    String placa = JOptionPane.showInputDialog("Ingrese la placa del vehículo:");
+        	    if (placa == null || placa.isBlank()) {
+        	        JOptionPane.showMessageDialog(null, "Placa inválida.");
+        	        break;
+        	    }
+
+        	    double horas = adminParqueadero.calcularHoras(placa.trim());
+        	    if (horas <= 0) {
+        	        JOptionPane.showMessageDialog(null, "El vehículo aún no ha salido del parqueadero.");
+        	        break;
+        	    }
+
+        	    TipoVehiculo tipo = null;
+        	    for (IngresoSalida registro : adminParqueadero.getVehiculosTemporales()) {
+        	        if (registro.getPlaca().equalsIgnoreCase(placa.trim())) {
+        	            tipo = registro.getTipoVehiculo();
+        	            break;
+        	        }
+        	    }
+
+        	    if (tipo == null) {
+        	        JOptionPane.showMessageDialog(null, "Vehículo no encontrado.");
+        	        break;
+        	    }
+
+        	    Tarifable vehiculo = null;
+        	    switch (tipo) {
+        	        case MOTO:
+        	            Moto moto = new Moto(tipo, placa, "", "", null);
+        	            // Aquí suponemos que la tarifa ya está establecida en el objeto moto
+        	            vehiculo = moto;
+        	            break;
+        	        case AUTOMOVIL:
+        	            Automovil auto = new Automovil(tipo, placa, "", "", null);
+        	            vehiculo = auto;
+        	            break;
+        	        case CAMION:
+        	            Camion camion = new Camion(tipo, placa, "", "", null);
+        	            vehiculo = camion;
+        	            break;
+        	        default:
+        	            JOptionPane.showMessageDialog(null, "Tipo de vehículo no válido.");
+        	            break;
+        	    }
+
+        	    double total = vehiculo.calcularTarifa(horas);
+
+        	    JOptionPane.showMessageDialog(null,
+        	        "Placa: " + placa + "\n" +
+        	        "Tipo de vehículo: " + tipo + "\n" +
+        	        "Horas cobradas: " + String.format("%.2f", horas) + "\n" +
+        	        "Total a pagar: $" + total
+        	    );
+
+        	    break;
+        	}
+
+        	case 10: { // Editar tarifas por hora
+        	    String[] opciones = {"Moto", "Automóvil", "Camión"};
+        	    int seleccion = JOptionPane.showOptionDialog(
+        	        null,
+        	        "Seleccione el tipo de vehículo para editar la tarifa por hora:",
+        	        "Editar Tarifa",
+        	        JOptionPane.DEFAULT_OPTION,
+        	        JOptionPane.INFORMATION_MESSAGE,
+        	        null,
+        	        opciones,
+        	        opciones[0]
+        	    );
+
+        	    if (seleccion == JOptionPane.CLOSED_OPTION) break;
+
+        	    String input = JOptionPane.showInputDialog("Ingrese la nueva tarifa por hora:");
+        	    if (input == null || input.isBlank()) break;
+
+        	    try {
+        	        double nuevaTarifa = Double.parseDouble(input);
+        	        if (nuevaTarifa <= 0) {
+        	            JOptionPane.showMessageDialog(null, "La tarifa debe ser un valor positivo.");
+        	            break;
+        	        }
+
+        	        switch (seleccion) {
+        	            case 0:
+        	                Moto.setTarifaHoraMoto(nuevaTarifa);
+        	                JOptionPane.showMessageDialog(null, "Tarifa por hora para Moto actualizada a $" + nuevaTarifa);
+        	                break;
+        	            case 1:
+        	                Automovil.setTarifaHoraAutomovil(nuevaTarifa);
+        	                JOptionPane.showMessageDialog(null, "Tarifa por hora para Automóvil actualizada a $" + nuevaTarifa);
+        	                break;
+        	            case 2:
+        	                Camion.setTarifaHoraCamion(nuevaTarifa);
+        	                JOptionPane.showMessageDialog(null, "Tarifa por hora para Camión actualizada a $" + nuevaTarifa);
+        	                break;
+        	        }
+
+        	    } catch (NumberFormatException e) {
+        	        JOptionPane.showMessageDialog(null, "Debe ingresar un número válido.");
+        	    }
+
+        	    break;
+        	}
+
+        	
         	
 			case 0: {
 				JOptionPane.showMessageDialog(null, "Ha salido del sistema.");
@@ -267,6 +441,8 @@ public class Main {
 			}
 		}
 		} while (opcion!=0);
+        
+        
                 
     }
 
