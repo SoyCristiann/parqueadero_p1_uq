@@ -372,8 +372,7 @@ public class Main {
         	        "Placa: " + placa + "\n" +
         	        "Tipo de vehículo: " + tipo + "\n" +
         	        "Horas cobradas: " + String.format("%.2f", horas) + "\n" +
-        	        "Total a pagar: $" + total +
-        	        "Total a pagar: $" + total	
+        	        "Total a pagar: $" + total
         	    );
         	    Cliente cliente=new Cliente();
         	    Pago pago = new Pago(cliente,vehiculo, total, TipoPago.HORAS);

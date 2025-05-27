@@ -260,12 +260,12 @@ public class ParqueaderoService implements GestionClientes {
 		        
         // Si no está, registrar nuevo ingreso
         IngresoSalida ingreso = new IngresoSalida();
-        ingreso.setPlaca(placa);
+        ingreso.setPlaca(placa.toUpperCase());
         ingreso.setTipoVehiculo(tipoVehiculo);
         ingreso.setHoraEntrada(ahora);
         ingreso.setHoraSalida(null); 
         vehiculosTemporales.add(ingreso);
-        vehiculosIngresados.add(placa);
+        vehiculosIngresados.add(placa.toUpperCase());
         if(tipoVehiculo == TipoVehiculo.AUTOMOVIL) {
         	espaciosCarros-=1;
         }
@@ -595,7 +595,7 @@ public class ParqueaderoService implements GestionClientes {
 		}
 		
 		//Crear la membresía según el tipo de vehículo
-		membresia= new Membresia(fechaInicio, v, c, v.getTarifaMembresia(), cantidadDias);
+		membresia= new Membresia(fechaInicio, v, c, v.getTarifaMembresia()*cantidadDias, cantidadDias);
 		/*if(v instanceof Automovil) {
 			 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
 		}if(v instanceof Moto) {

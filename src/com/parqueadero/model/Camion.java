@@ -4,7 +4,7 @@ import Interfaces.Tarifable;
 
 public class Camion extends Vehiculo{
 
-    private double tarifaMembresia = 150000;
+    private double tarifaMembresia = 5000;//Cómo se habilitó decidir la cantidad de días de la membresía, se debe definir el valor por día
 
     private static double tarifaHoraCamion=8000;
 
@@ -32,7 +32,8 @@ public class Camion extends Vehiculo{
 
     @Override
     public double calcularTarifa(double horas) {
-        int horasCobradas = Math.max(1, (int) Math.round(horas));
-        return horasCobradas * tarifaHoraCamion; 
+    	int horasCobradas = (int) Math.ceil(horas); //Redondea al entero superior.
+    	//int horasCobradas = Math.max(1, (int) Math.round(horas));
+        return horasCobradas * tarifaHoraCamion;
     }
 }

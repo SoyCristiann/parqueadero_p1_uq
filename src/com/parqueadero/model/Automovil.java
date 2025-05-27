@@ -4,9 +4,9 @@ import Interfaces.Tarifable;
 
 public class Automovil extends Vehiculo{
 
-    private double tarifaMembresia = 100000;
+    private double tarifaMembresia = 4000;
 
-    private static double tarifaHoraAutomovil=4000;
+    private static double tarifaHoraAutomovil=3000;
 
 
     public Automovil(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
@@ -28,7 +28,9 @@ public class Automovil extends Vehiculo{
 
     @Override
     public double calcularTarifa(double horas) {
-        int horasCobradas = Math.max(1, (int) Math.round(horas));
+        int horasCobradas = (int) Math.ceil(horas); //Redondea al entero superior.
+    	//int horasCobradas = Math.max(1, (int) Math.round(horas));
         return horasCobradas * tarifaHoraAutomovil;
+        
     }
 }
