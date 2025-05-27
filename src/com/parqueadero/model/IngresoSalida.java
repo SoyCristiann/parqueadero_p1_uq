@@ -9,11 +9,9 @@ public class IngresoSalida {
 	private LocalDateTime horaSalida;
 	private double valorCalculado;
 	
-	
 	// Constructor vacío y con parámetros
 	
 	public IngresoSalida() {
-		
 		this.placa = "";
 		this.tipoVehiculo = "";
 		this.horaEntrada = LocalDateTime.now();
@@ -22,7 +20,6 @@ public class IngresoSalida {
 	}
 	
 	public IngresoSalida(String placa, String tipoVehiculo, LocalDateTime horaEntrada, LocalDateTime horaSalida, double valorCalculado) {
-		
 		this.placa = placa;
 		this.tipoVehiculo = tipoVehiculo;
 		this.horaEntrada = horaEntrada;
