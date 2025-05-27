@@ -13,6 +13,8 @@ public class Menu {
 		menu.append("4: Módulo vehículos.\n");
 		menu.append("5: Módulo Membresías.\n");
 		menu.append("6. Ver espacios disponibles.\n");
+		menu.append("7. Reportes.\n");
+		menu.append("8. Vehículos en el parquadero.\n");
 		menu.append("0: Salir del sistema.\n");
 		
 		String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
@@ -114,10 +116,34 @@ public class Menu {
 		//SubMenu Espacios disponibles
 		public static byte seleccioanrMenuCupos() {
 			StringBuilder menu= new StringBuilder();
-			menu.append("====== Seleccioanr Tipo Vehículo ======\n");
+			menu.append("====== Seleccione una opción ======\n");
 			menu.append("1: Automovil.\n");
 			menu.append("2: Moto.\n");
 			menu.append("3: Camión.\n");
+			
+			String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
+	        
+			//Validaciones
+			if (opcion == null || opcion.isBlank()) {
+	            return 0; // Si presiona Cancel o X
+	        }
+
+	        try {
+	            return Byte.parseByte(opcion.trim());
+	        } catch (NumberFormatException e) {
+	            JOptionPane.showMessageDialog(null, "Entrada inválida.");
+	            return 0;
+	        }
+		}
+		
+		
+		//SubMenu seleccionar reportes
+		public static byte seleccionarReportes() {
+			StringBuilder menu= new StringBuilder();
+			menu.append("====== Reportes ======\n");
+			menu.append("1: Historial total de pagos.\n");
+			menu.append("2: Historial pagos por periodo.\n");
+			menu.append("3: Historial pago por vehículo.\n");
 			
 			String opcion = JOptionPane.showInputDialog(null, menu.toString(), "Seleccione una opción:", JOptionPane.INFORMATION_MESSAGE);
 	        

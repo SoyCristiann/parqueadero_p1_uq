@@ -4,15 +4,15 @@ import Interfaces.Tarifable;
 
 public class Automovil extends Vehiculo implements Tarifable{
 	
-	private static double tarifaMembresia= 100000;
+	private double tarifaMembresia= 100000;
 	
 	public Automovil(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
 		super(tipoVehiculo, placa, color, modelo, cliente);
 		
 	}
 	
-	
-	public static double getTarifaMembresia() {
+	@Override
+	public double getTarifaMembresia() {
 		return tarifaMembresia;
 	}
 	

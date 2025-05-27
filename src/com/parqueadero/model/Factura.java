@@ -17,7 +17,7 @@ public class Factura {
 	public Factura() {
 		
 		this.parqueadero = new Parqueadero();
-		this.vehiculo = new Vehiculo();
+		//this.vehiculo = new Vehiculo();
 		this.monto = 0.0;
 		this.fechaEntrada = LocalDateTime.now();
 		this.fechaSalida = LocalDateTime.now();

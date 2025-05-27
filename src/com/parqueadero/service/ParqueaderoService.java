@@ -14,7 +14,9 @@ import com.parqueadero.model.Factura;
 import com.parqueadero.model.IngresoSalida;
 import com.parqueadero.model.Membresia;
 import com.parqueadero.model.Moto;
+import com.parqueadero.model.Pago;
 import com.parqueadero.model.Parqueadero;
+import com.parqueadero.model.TipoPago;
 import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
 import com.parqueadero.utils.SelectorFecha;
@@ -31,6 +33,7 @@ public class ParqueaderoService implements GestionClientes {
 	private int espaciosMotos;
 	private int espaciosCarros;
 	private int espaciosCamiones;
+	private PagoService adminPago; //Es necesario para guardar los pagos en una sola lista.
 	
     private ArrayList<String> espaciosDisponibles;
     private ArrayList<Cliente> clientes;
@@ -38,10 +41,11 @@ public class ParqueaderoService implements GestionClientes {
     private ArrayList<IngresoSalida> registrosActivos;
     private ArrayList<IngresoSalida> historial;
     private ArrayList<Membresia> membresias;
+    private ArrayList<String> vehiculosIngresados;
 
 
     // Constructor vacío
-    public ParqueaderoService(String nombre, String direccion, String representante, String contacto, int espaciosMotos, int espaciosCarros, int espaciosCamiones) {
+    public ParqueaderoService(String nombre, String direccion, String representante, String contacto, int espaciosMotos, int espaciosCarros, int espaciosCamiones, PagoService adminPago) {
     	this.nombre= nombre;
     	this.direccion=direccion;
     	this.representante= representante;
@@ -54,6 +58,8 @@ public class ParqueaderoService implements GestionClientes {
         this.registrosActivos = new ArrayList<>();
         this.historial = new ArrayList<>();
         this.membresias= new ArrayList<>();
+        this.vehiculosIngresados=new ArrayList<>();
+        this.adminPago= adminPago;
         
       //Datos para que el sistema esté alimantado
         
@@ -103,16 +109,9 @@ public class ParqueaderoService implements GestionClientes {
         cliente5.registrarVehiculo(vehiculo10);
     
         
-        crearMembresia("1012", "ABC123", LocalDate.now());
-        crearMembresia("1012", "MOT456", LocalDate.now());
-        crearMembresia("2023", "CAM789", LocalDate.now());
-        crearMembresia("2023", "XYZ123", LocalDate.now());
-        crearMembresia("3034", "JKL456", LocalDate.now());
-        crearMembresia("3034", "QWE789", LocalDate.now());
-        crearMembresia("4045", "RTY654", LocalDate.now());
-        crearMembresia("4045", "UIO321", LocalDate.now());
-        crearMembresia("5056", "PAS111", LocalDate.now());
-        crearMembresia("5056", "ZXC222", LocalDate.now());
+        crearMembresia("1012", "ABC123", LocalDate.now(), 30);
+        crearMembresia("1012", "MOT456", LocalDate.now(), 7);
+        crearMembresia("2023", "CAM789", LocalDate.now(), 365);
     }
 
     // Getters
@@ -316,7 +315,7 @@ public class ParqueaderoService implements GestionClientes {
                 vehiculos.append(v).append("\n");  // Se van agregando los vehículos por línea con un salto.
             }	        
         }
-      //Se valida si veículos tiene información que mostrar
+      //Se valida si vehículos tiene información que mostrar
         if (vehiculos.length() > 0) {
             JOptionPane.showMessageDialog(null, vehiculos.toString(), "Lista de Vehículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -431,7 +430,13 @@ public class ParqueaderoService implements GestionClientes {
     		if(m.getVehiculo().getPlaca().equalsIgnoreCase(membresia.getVehiculo().getPlaca().trim())) {
     			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la membresía?\n" + m , getNombre(), 0);
     			if(confirmacion==0) {
-        			membresias.remove(aux);
+        			membresias.remove(aux);        			
+        			for (int i = 0; i < vehiculosIngresados.size(); i++) {
+        			    if (vehiculosIngresados.get(i).equalsIgnoreCase(m.getVehiculo().getPlaca().trim())) {
+        			        vehiculosIngresados.remove(i);
+        			        i--; // Ajusta el índice para evitar saltos en la iteración
+        			    }
+        			}       			
         			if(m.getVehiculo() instanceof Moto) {
         				espaciosMotos+=1;
         			}
@@ -495,7 +500,7 @@ public class ParqueaderoService implements GestionClientes {
     //Membresias
     
     
-    public Membresia crearMembresia(String cedula,String placa, LocalDate fechaInicio) {
+    public Membresia crearMembresia(String cedula,String placa, LocalDate fechaInicio, int cantidadDias) {
     	Membresia membresia=null;
     	Cliente c=null;
     	Vehiculo v=null;
@@ -535,17 +540,21 @@ public class ParqueaderoService implements GestionClientes {
 		}
 		
 		//Crear la membresía según el tipo de vehículo
-		if(v instanceof Automovil) {
+		membresia= new Membresia(fechaInicio, v, c, v.getTarifaMembresia(), cantidadDias);
+		/*if(v instanceof Automovil) {
 			 membresia= new Membresia(fechaInicio, v, c, Automovil.getTarifaMembresia());
 		}if(v instanceof Moto) {
 			membresia= new Membresia(fechaInicio, v, c, Moto.getTarifaMembresia());
 		}if(v instanceof Camion) {
 			membresia= new Membresia(fechaInicio, v, c, Camion.getTarifaMembresia());
-		}
+		}*/
 		if(membresia!=null) {
 			if(membresia.confirmarMembresia(membresia)) {
-				membresias.add(membresia);
+				membresias.add(membresia); // Se agrega a la lista de membresías.
+				vehiculosIngresados.add(membresia.getVehiculo().getPlaca()); // Se agrega a la lista de vehículos dentro del parqueadero.
 				JOptionPane.showMessageDialog(null, "La membresía fue guardada de forma correcta.");
+				Pago pago= new Pago(c,v, membresia.getMonto(), TipoPago.MEMBRESIA);
+				adminPago.registrarPago(pago, membresia);
 				if(v instanceof Automovil) {
 					 espaciosCarros-=1;
 				}if(v instanceof Moto) {
@@ -554,16 +563,13 @@ public class ParqueaderoService implements GestionClientes {
 					espaciosCamiones-=1;
 				}
 				return membresia;
+			}else {
+				JOptionPane.showMessageDialog(null, "Ha cancelado el registro de la membresía.");
+				return null;
 			}
-		}else {
-			JOptionPane.showMessageDialog(null, "Ha cancelado el registro de la membresía.");
-			return null;
 		}
 		return null;
 	}
-    
-    
-    
     
     
     public void listarMembresias() {
@@ -606,7 +612,13 @@ public class ParqueaderoService implements GestionClientes {
     	return false;
     }
     
-    
+    public void mostrarVehiculosActuales() {
+    	StringBuilder mensaje=new StringBuilder();
+    	for(String elemento:vehiculosIngresados) {
+    		mensaje.append(elemento + "\n");
+    	}
+    	JOptionPane.showMessageDialog(null, mensaje);
+    }
     
     
     
