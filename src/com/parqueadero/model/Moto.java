@@ -2,25 +2,31 @@ package com.parqueadero.model;
 
 import Interfaces.Tarifable;
 
-public class Moto extends Vehiculo implements Tarifable{
-	private double tarifaHora= 1200;
-	private double tarifaMembresia= 50000;
-	public Moto(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
-		super(tipoVehiculo, placa, color, modelo, cliente);
-		
-	}
-	
-	@Override
-	public double getTarifaMembresia() {
-		return tarifaMembresia;
-	}
+public class Moto extends Vehiculo implements Tarifable {
 
-	@Override
-	public double calcularTarifa(double horas, Vehiculo vehiculo) {
+    private double tarifaMembresia = 60000;
+    private static double tarifaHoraMoto;
+
+    public Moto(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
+        super(tipoVehiculo, placa, color, modelo, cliente);
+    }
+
+    public static double getTarifaHoraMoto() {
+        return tarifaHoraMoto;
+    }
+
+    public static void setTarifaHoraMoto(double tarifaHoraMoto) {
+        Moto.tarifaHoraMoto = tarifaHoraMoto;
+    }
+
+    @Override
+    public double getTarifaMembresia() {
+        return tarifaMembresia;
+    }
+
+    @Override
+    public double calcularTarifa(double horas) {
         int horasCobradas = Math.max(1, (int) Math.round(horas));
-        return horasCobradas * tarifaHora;
-	}
-	
-
+        return horasCobradas * tarifaHoraMoto;
+    }
 }
-

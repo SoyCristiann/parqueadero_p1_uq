@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class IngresoSalida {
 	private String placa;
-	private String tipoVehiculo;
+	private TipoVehiculo tipoVehiculo;
 	private LocalDateTime horaEntrada;
 	private LocalDateTime horaSalida;
 	private double valorCalculado;
@@ -15,13 +15,13 @@ public class IngresoSalida {
 	public IngresoSalida() {
 		
 		this.placa = "";
-		this.tipoVehiculo = "";
+		this.tipoVehiculo = TipoVehiculo.INDEFINIDO;
 		this.horaEntrada = LocalDateTime.now();
 		this.horaSalida = LocalDateTime.now();
 		this.valorCalculado = 0.0;
 	}
 	
-	public IngresoSalida(String placa, String tipoVehiculo, LocalDateTime horaEntrada, LocalDateTime horaSalida, double valorCalculado) {
+	public IngresoSalida(String placa, TipoVehiculo tipoVehiculo, LocalDateTime horaEntrada, LocalDateTime horaSalida, double valorCalculado) {
 		
 		this.placa = placa;
 		this.tipoVehiculo = tipoVehiculo;
@@ -41,12 +41,12 @@ public class IngresoSalida {
 		this.placa = placa;
 	}
 
-	public String getTipoVehiculo() {
+	public TipoVehiculo getTipoVehiculo() {
 		return tipoVehiculo;
 	}
 
-	public void setTipoVehiculo(String tipoVehiculo) {
-		this.tipoVehiculo = tipoVehiculo;
+	public void setTipoVehiculo(TipoVehiculo tipoVehiculo2) {
+		this.tipoVehiculo = tipoVehiculo2;
 	}
 
 	public LocalDateTime getHoraEntrada() {
@@ -73,8 +73,6 @@ public class IngresoSalida {
 		this.valorCalculado = valorCalculado;
 	}
 	
-	
-	// Métodos
 	
 	
 	

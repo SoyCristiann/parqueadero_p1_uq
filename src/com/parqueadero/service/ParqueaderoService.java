@@ -1,5 +1,6 @@
 package com.parqueadero.service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +22,11 @@ import com.parqueadero.model.TipoVehiculo;
 import com.parqueadero.model.Vehiculo;
 import com.parqueadero.utils.SelectorFecha;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import Interfaces.GestionClientes;
+import Interfaces.Tarifable;
 
 public class ParqueaderoService implements GestionClientes {
 
@@ -38,10 +43,11 @@ public class ParqueaderoService implements GestionClientes {
     private ArrayList<String> espaciosDisponibles;
     private ArrayList<Cliente> clientes;
     // los metodos de aqui hacia arriba son los mismos de la clase parqueadero
-    private ArrayList<IngresoSalida> registrosActivos;
+    private ArrayList<IngresoSalida> vehiculosTemporales;
     private ArrayList<IngresoSalida> historial;
     private ArrayList<Membresia> membresias;
     private ArrayList<String> vehiculosIngresados;
+
 
 
     // Constructor vacío
@@ -55,12 +61,14 @@ public class ParqueaderoService implements GestionClientes {
     	this.espaciosCamiones=espaciosCamiones;
         this.espaciosDisponibles =new ArrayList<>();
         this.clientes = new ArrayList<>();
-        this.registrosActivos = new ArrayList<>();
+        this.vehiculosTemporales = new ArrayList<>();
         this.historial = new ArrayList<>();
         this.membresias= new ArrayList<>();
+
         this.vehiculosIngresados=new ArrayList<>();
         this.adminPago= adminPago;
         
+
       //Datos para que el sistema esté alimantado
         
         //Clientes
@@ -117,18 +125,19 @@ public class ParqueaderoService implements GestionClientes {
     // Getters
     public String getNombre() {return nombre;}
     public String getDireccion() {return direccion;}
-    public String getrepresentante() {return representante;}
+    public String getRepresentante() {return representante;}
     public String getContacto() {return contacto;}
     public int getEspaciosMotos() {return espaciosMotos;}
     public int getEspaciosCarros() {return espaciosCarros;}
     public int getEspaciosCamion() {return espaciosCamiones;}    
     public ArrayList<String> getEspaciosDisponibles() { return espaciosDisponibles; }
     public ArrayList<Cliente> getClientes() { return clientes; }
-    public ArrayList<IngresoSalida> getRegistrosActivos() {return registrosActivos;}
+    public ArrayList<IngresoSalida> getRegistrosActivos() {return vehiculosTemporales;}
     public ArrayList<IngresoSalida> getHistorial() {return historial;}
+    public ArrayList<IngresoSalida> getVehiculosTemporales(){return vehiculosTemporales;}
 
     // Setters
-    public void seetNombre(String nombre) {this.nombre=nombre;}
+    public void setNombre(String nombre) {this.nombre=nombre;}
     public void setDireccion(String nombre) {this.direccion=nombre;}
     public void setRepresentante(String nombre) {this.representante=nombre;}
     public void setContacto(String nombre) {this.contacto=nombre;}
@@ -137,7 +146,7 @@ public class ParqueaderoService implements GestionClientes {
     public void setEspaciosCamiones(int espacios) {this.espaciosCamiones=espacios;}    
     public void setEspaciosDisponibles (ArrayList<String> espaciosDisponibles) {this.espaciosDisponibles = espaciosDisponibles;}
     public void setClientes(ArrayList<Cliente> clientes) {this.clientes = clientes;}
-
+    public void setVehiculosTemporales(ArrayList<IngresoSalida> vehiculosTemporales) {this.vehiculosTemporales = vehiculosTemporales;}
     
     
     
@@ -225,69 +234,130 @@ public class ParqueaderoService implements GestionClientes {
 
     
 //  registrar Ingreso
-    public boolean registrarIngreso(String placa, String tipoVehiculo, LocalDateTime horaEntradaN) {
-        // Verificar si ya está registrado
-        for (IngresoSalida ingresoExistente : registrosActivos) {
+    public void registrarIngreso(String placa, TipoVehiculo tipoVehiculo) {
+        LocalDateTime ahora = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		
+		// Verificar si ya está registrado
+        for (IngresoSalida ingresoExistente : vehiculosTemporales) {
             if (ingresoExistente.getPlaca().equalsIgnoreCase(placa) &&
                 ingresoExistente.getHoraSalida() == null) {
             	JOptionPane.showMessageDialog(null, "El vehículo ya está registrado y no ha salido.");
-                return false; // Salir sin registrar
+                return;// Salir sin registrar
             }
         }
-
+        
+        
+        // Verificar espacio disponible
+        if ((tipoVehiculo == TipoVehiculo.AUTOMOVIL && espaciosCarros <= 0) ||
+            (tipoVehiculo == TipoVehiculo.MOTO && espaciosMotos <= 0) ||
+            (tipoVehiculo == TipoVehiculo.CAMION && espaciosCamiones <= 0)) {
+            JOptionPane.showMessageDialog(null, "No hay espacios disponibles para este tipo de vehículo.");
+            return;
+        }
+        
+		
+		        
         // Si no está, registrar nuevo ingreso
         IngresoSalida ingreso = new IngresoSalida();
         ingreso.setPlaca(placa);
         ingreso.setTipoVehiculo(tipoVehiculo);
-        ingreso.setHoraEntrada(horaEntradaN);
+        ingreso.setHoraEntrada(ahora);
         ingreso.setHoraSalida(null); 
-        registrosActivos.add(ingreso);
-        JOptionPane.showMessageDialog(null, "Registro de entrada exitoso.");
-        return true;
+        vehiculosTemporales.add(ingreso);
+        vehiculosIngresados.add(placa);
+        if(tipoVehiculo == TipoVehiculo.AUTOMOVIL) {
+        	espaciosCarros-=1;
+        }
+        
+        if(tipoVehiculo == TipoVehiculo.MOTO) {
+        	espaciosMotos-=1;
+        }
+        
+        if(tipoVehiculo == TipoVehiculo.CAMION) {
+        	espaciosCamiones-=1;
+        }
+
+        JOptionPane.showMessageDialog(null, "Registro de entrada exitoso, con fecha: " + ahora.format(formatter));
+
+        return;
     }
 
+    
+    
 
 //  registrar Salida
-    public boolean registrarSalida(String placa, LocalDateTime horaSalidaN) {
-        for (IngresoSalida r : registrosActivos) {
+    public TipoVehiculo registrarSalida(String placa, LocalDateTime horaSalidaN) {
+        for (IngresoSalida r : vehiculosTemporales) {
             if (r.getPlaca().equalsIgnoreCase(placa)) {
                 if (r.getHoraSalida() == null) {
                     r.setHoraSalida(horaSalidaN);
+                    
+                    // Busca el vehiculo por la placa en lista de vehiculos actuales y la borra.
+                   
+                    
                     JOptionPane.showMessageDialog(null, "Registro de salida exitoso.");
-                    return true;
+                    if (r.getTipoVehiculo() == TipoVehiculo.AUTOMOVIL) {
+                    	espaciosCarros+= 1;
+                    }
+                    
+                    if (r.getTipoVehiculo() == TipoVehiculo.MOTO) {
+                    	espaciosMotos+= 1;
+                    }
+                    
+                    if (r.getTipoVehiculo() == TipoVehiculo.CAMION) {
+                    	espaciosCamiones+= 1;
+                    }
+                    
+                    return r.getTipoVehiculo();
                 } else {
-                    JOptionPane.showMessageDialog(null, "El vehículo ya salió del parqueadero.");
-                    return false;
+                    JOptionPane.showMessageDialog(null, "El vehículo ya salió del parqueadero.");    
                 }
             }
         }
         JOptionPane.showMessageDialog(null, "El vehículo no está registrado.");
-        return false;
+        return null;
     }
-
-//	registra el monto
-    public double registrarCalculoMonto(String placa ,String tipoVehiculo) {
-        for (IngresoSalida r : registrosActivos ) {
-        	if(r.getPlaca().equalsIgnoreCase(placa) && r.getHoraSalida() != null) {
-        		double minutos = java.time.Duration.between(r.getHoraEntrada(), r.getHoraSalida()).toMinutes();
-                double monto = calcularMonto(r.getTipoVehiculo(), minutos);
-                r.setValorCalculado(monto);
-                historial.add(r);
-                registrosActivos.remove(r);
-        	}
+    
+    public double calcularHoras(String placa) {
+        for (IngresoSalida r : vehiculosTemporales) {
+            if (r.getPlaca().equalsIgnoreCase(placa)) {
+                if (r.getHoraEntrada() != null && r.getHoraSalida() != null) {
+                    Duration duracion = Duration.between(r.getHoraEntrada(), r.getHoraSalida());
+                    return duracion.toMinutes() / 60.0; // horas decimales
+                } else {
+                    JOptionPane.showMessageDialog(null, "El vehículo aún no ha salido del parqueadero.");
+                    return 0;
+                }
+            }
         }
-
-    	return 0;
-//    	Metodo incompleto
-    	
+        JOptionPane.showMessageDialog(null, "Vehículo no encontrado.");
+        return 0;
     }
-//   hace la operacion 
-    public double calcularMonto(String tipoVehiculo, double duracion) {
-		double montoAPagar = 0;
-		
-		return montoAPagar;
-	}
-//    Metodo incompleto
+
+    
+    
+
+ 
+        public void editarTarifaVehiculo(TipoVehiculo tipoVehiculo, double nuevaTarifa) {
+            switch (tipoVehiculo) {
+                case MOTO:
+                    Moto.setTarifaHoraMoto(nuevaTarifa);
+                    break;
+                case AUTOMOVIL:
+                    Automovil.setTarifaHoraAutomovil(nuevaTarifa);
+                    break;
+                case CAMION:
+                    Camion.setTarifaHoraCamion(nuevaTarifa);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Tipo de vehículo no válido");
+            }
+        }
+    
+
+
+
     
 
     public Factura generarFactura(Vehiculo vehiculo) {
@@ -302,6 +372,8 @@ public class ParqueaderoService implements GestionClientes {
         return 0;
     }
 
+    
+    
     
 //Vehiculos    
     
@@ -456,44 +528,40 @@ public class ParqueaderoService implements GestionClientes {
     	return false;
     }
     
-    
 
-    // Metodo incompleto
     
 //    Gestion de datos de parquadero:
-   
-//  teniendo en cuenta que hay una instancia global de parqueadero    
-    /*
+    
     public void editarDatosParqueadero(String nombreN, String direccionN, String representanteN, String contactoN,
             int espaciosDisponiblesMotosN, int espaciosDisponiblesCarrosN, int espaciosDisponiblesCamionesN) {
-		parqueadero.setNombre(nombreN);
-		parqueadero.setDireccion(direccionN);
-		parqueadero.setRepresentante(representanteN);
-		parqueadero.setContacto(contactoN);
-		parqueadero.setEspaciosDisponiblesCamiones(espaciosDisponiblesCamionesN);
-		parqueadero.setEspaciosDisponiblesCarros(espaciosDisponiblesCarrosN);
-		parqueadero.setEspaciosDisponiblesMotos(espaciosDisponiblesMotosN);
+		setNombre(nombreN);
+		setDireccion(direccionN);
+		setRepresentante(representanteN);
+		setContacto(contactoN);
+		setEspaciosCamiones(espaciosDisponiblesCamionesN);
+		setEspaciosCarros(espaciosDisponiblesCarrosN);
+		setEspaciosMotos(espaciosDisponiblesMotosN);
+		
+		JOptionPane.showMessageDialog(null, "Los datos fueron editados correctamente");
     }
-    */
+    
 
     
-//    teniendo en cuenta que hay una instancia global de parqueadero
-    
-   /*
+   
 	public void mostrarDatosParqueadero() {
-	   String mensaje = "DATOS DEL PARQUEADERO:\n" +
-	                     "Nombre: " + parqueadero.getNombre() + "\n" +
-	                     "Dirección: " + parqueadero.getDireccion() + "\n" +
-	                     "Representante: " + parqueadero.getRepresentante() + "\n" +
-	                     "Contacto: " + parqueadero.getContacto() + "\n" +
+	   String mensaje = "DATOS DEL PARQUEADERO:\n\n" +
+	                     "Nombre: " + getNombre() + "\n" +
+	                     "Dirección: " + getDireccion() + "\n" +
+	                     "Representante: " + getRepresentante() + "\n" +
+	                     "Contacto: " + getContacto() + "\n" +
 	                     "Espacios disponibles:\n" +
-	                     "  Motos: " + parqueadero.getEspaciosDisponiblesMotos() + "\n" +
-	                     "  Carros: " + parqueadero.getEspaciosDisponiblesCarros() + "\n" +
-	                     "  Camiones: " + parqueadero.getEspaciosDisponiblesCamiones();
+	                     "  Motos: " + getEspaciosMotos() + "\n" +
+	                     "  Carros: " + getEspaciosCarros() + "\n" +
+	                     "  Camiones: " + getEspaciosCamion();
 	
 	   JOptionPane.showMessageDialog(null, mensaje);
 	}
-    */
+    
 
     
     
@@ -625,6 +693,14 @@ public class ParqueaderoService implements GestionClientes {
     public String toString() {
     	return "Nombre del parqueadero: " + nombre + "\nDireccion: " + direccion + "\nRepresentante: " + representante + "\nContacto: " + contacto + "\nEspacios para motos: " + espaciosMotos + "\nEspacios para carros: " + espaciosCarros + "\nEspacios para camiones: " + espaciosCamiones;
     }
+
+	public ArrayList <String> getVehiculosIngresados() {
+		return vehiculosIngresados;
+	}
+
+	public void setVehiculosIngresados(ArrayList <String> vehiculosIngresados) {
+		this.vehiculosIngresados = vehiculosIngresados;
+	}
     
     
     
