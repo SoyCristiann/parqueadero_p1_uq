@@ -287,6 +287,7 @@ public class ParqueaderoService implements GestionClientes {
     
 
 //  registrar Salida
+    
     public TipoVehiculo registrarSalida(String placa, LocalDateTime horaSalidaN) {
     	Pago pago;
         for (IngresoSalida r : vehiculosTemporales) {
@@ -295,7 +296,8 @@ public class ParqueaderoService implements GestionClientes {
                     r.setHoraSalida(horaSalidaN);
                     
                     // Busca el vehiculo por la placa en lista de vehiculos actuales y la borra.
-                   
+                    vehiculosIngresados.removeIf(p -> p.equalsIgnoreCase(placa));
+
                     
                     JOptionPane.showMessageDialog(null, "Registro de salida exitoso.");
                     if (r.getTipoVehiculo() == TipoVehiculo.AUTOMOVIL) {
@@ -320,6 +322,8 @@ public class ParqueaderoService implements GestionClientes {
         return null;
     }
     
+    
+    
     public double calcularHoras(String placa) {
         for (IngresoSalida r : vehiculosTemporales) {
             if (r.getPlaca().equalsIgnoreCase(placa)) {
@@ -338,7 +342,7 @@ public class ParqueaderoService implements GestionClientes {
 
     
     
-
+//		Tarifa
  
         public void editarTarifaVehiculo(TipoVehiculo tipoVehiculo, double nuevaTarifa) {
             switch (tipoVehiculo) {
@@ -355,24 +359,6 @@ public class ParqueaderoService implements GestionClientes {
                     throw new IllegalArgumentException("Tipo de vehículo no válido");
             }
         }
-    
-
-
-
-    
-
-    public Factura generarFactura(Vehiculo vehiculo) {
-        return null;
-    }
-
-    public List<IngresoSalida> consultarHistorialCliente(String cedula) {
-        return null; // historialCliente
-    }
-
-    public double calcularGanancias(LocalDate fechaInicio, LocalDate fechaFin) {
-        return 0;
-    }
-
     
     
     

@@ -51,9 +51,6 @@ public class Main {
         			continue;
         		}
         		
-        		
-        		
-        		
         		adminParqueadero.registrarIngreso(placaN, tipoVehiculoN);
         		break;
         	}
@@ -75,9 +72,10 @@ public class Main {
         	            "Registro de salida",
         	            JOptionPane.QUESTION_MESSAGE
         	        );
+
         	        if (horaSalidaStr == null) {
         	            JOptionPane.showMessageDialog(null, "Cancelado por el usuario.");
-        	            break;  // Salir del ciclo while y case
+        	            break;  
         	        }
 
         	        try {
@@ -86,6 +84,7 @@ public class Main {
         	        } catch (Exception e) {
         	            JOptionPane.showMessageDialog(null, "Formato inválido. Intente de nuevo.");
         	        }
+        	        
         	    }
 
         	    if (entradaValida) {
@@ -317,6 +316,8 @@ public class Main {
         	}
         	case 8:{//Vehículos en el parqueadero.
         		adminParqueadero.mostrarVehiculosActuales();
+        		break;
+        		
         	}
         	
         	case 9: { // Calcular la tarifa vehículos Temporales
@@ -367,16 +368,18 @@ public class Main {
 
         	    double total = vehiculo.calcularTarifa(horas);
 
-        	    JOptionPane.showMessageDialog(null,
+       	    JOptionPane.showMessageDialog(null,
         	        "Placa: " + placa + "\n" +
         	        "Tipo de vehículo: " + tipo + "\n" +
         	        "Horas cobradas: " + String.format("%.2f", horas) + "\n" +
-        	        "Total a pagar: $" + total
+        	        "Total a pagar: $" + total +
+        	        "Total a pagar: $" + total	
         	    );
         	    Cliente cliente=new Cliente();
         	    Pago pago = new Pago(cliente,vehiculo, total, TipoPago.HORAS);
         	    adminPago.registrarPago(pago, placa);
-
+        	        
+        	    
         	    break;
         	}
 
