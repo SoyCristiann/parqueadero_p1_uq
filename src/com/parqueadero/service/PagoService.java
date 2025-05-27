@@ -56,7 +56,7 @@ public class PagoService{
 		if(pagos.isEmpty()) {
 			pagos.add(pago);
 			System.out.println(pagos);
-			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nVTotal pagado: " + pago.getMonto());
+			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nTotal pagado: " + pago.getMonto());
 			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
 			return true;
 		}else {
@@ -67,7 +67,7 @@ public class PagoService{
 				}
 			}
 			pagos.add(pago);System.out.println(pagos);
-			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nVTotal pagado: " + pago.getMonto());
+			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nTotal pagado: " + pago.getMonto());
 			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
 			return true;
 		}
