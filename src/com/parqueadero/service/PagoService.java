@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.parqueadero.model.Cliente;
 import com.parqueadero.model.Membresia;
 import com.parqueadero.model.Pago;
 import com.parqueadero.model.Vehiculo;
@@ -44,6 +45,29 @@ public class PagoService{
 			}
 			pagos.add(pago);System.out.println(pagos);
 			mensaje.append(pago + "Fecha inicio Membresia: " + membresia.getFechaInicio() + "\nFecha fin membresía: " + membresia.getFechaFinal());
+			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
+			return true;
+		}
+	}
+	
+	
+	public boolean registrarPago(Pago pago, String placa) {
+		StringBuilder mensaje=new StringBuilder();
+		if(pagos.isEmpty()) {
+			pagos.add(pago);
+			System.out.println(pagos);
+			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nVTotal pagado: " + pago.getMonto());
+			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
+			return true;
+		}else {
+			for(Pago p: pagos) {
+				if(p.getIdPago() == pago.getIdPago()) {
+					JOptionPane.showInternalMessageDialog(null, "El pago ya está registrado en el sistema, por favor intente de nuevo.", "Pago duplicado.", 0);
+					return false;
+				}
+			}
+			pagos.add(pago);System.out.println(pagos);
+			mensaje.append(pago.mostrarPagoTemporal(placa) + "Fecha pago: " + LocalDate.now() + "\nPlaca: " + placa + "\nVTotal pagado: " + pago.getMonto());
 			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
 			return true;
 		}

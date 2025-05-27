@@ -15,13 +15,13 @@ public class Pago {
 	
 	// Constructor vacío y con parámetros
 	
-	public Pago() {
+	public Pago(Cliente c, String placa, double monto) {
+		System.out.println("constructor correcto");
 		this.idPago=UUID.randomUUID().toString(); //Genera un ID de pago único de forma aleatoria.
-		this.cliente= new Cliente();
-		//this.vehiculo = new Vehiculo();
-		this.monto = 0.0;
+		this.monto = monto;
 		this.fechaPago = LocalDate.now();
-		this.tipoPago = TipoPago.NULL;
+		this.tipoPago = TipoPago.HORAS;
+		this.cliente=c;
 	}
 	
 	public Pago(Cliente cliente, Vehiculo vehiculo, double monto, TipoPago tipoPago) {
@@ -78,7 +78,9 @@ public class Pago {
 	
 	// Métodos 
 	
-	
+	public String mostrarPagoTemporal(String placa) {
+		return "Id del pago: " + idPago + "\nCliente: Temporal" + "\nVehiculo: " + placa + "\nValor pagado: " + monto + "\nFecha de pago: " + fechaPago + "\nTipo de pago: " + TipoPago.HORAS + "\n";
+	}
 	
 	@Override
 	public String toString() {
