@@ -288,6 +288,7 @@ public class ParqueaderoService implements GestionClientes {
 
 //  registrar Salida
     public TipoVehiculo registrarSalida(String placa, LocalDateTime horaSalidaN) {
+    	Pago pago;
         for (IngresoSalida r : vehiculosTemporales) {
             if (r.getPlaca().equalsIgnoreCase(placa)) {
                 if (r.getHoraSalida() == null) {

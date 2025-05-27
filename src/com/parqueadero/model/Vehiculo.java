@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-public abstract class Vehiculo {
+import Interfaces.Tarifable;
+
+public abstract class Vehiculo implements Tarifable {
 	private TipoVehiculo tipoVehiculo;
 	private String placa;
 	private String color;
@@ -92,6 +94,9 @@ public abstract class Vehiculo {
 	}
 	
 	public abstract double getTarifaMembresia();
+	
+	@Override
+	public double calcularTarifa(double horas) {return 0;}
 	
 	
 	@Override

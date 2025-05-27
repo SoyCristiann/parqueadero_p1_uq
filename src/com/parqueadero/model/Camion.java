@@ -2,10 +2,10 @@ package com.parqueadero.model;
 
 import Interfaces.Tarifable;
 
-public class Camion extends Vehiculo implements Tarifable {
+public class Camion extends Vehiculo{
 
     private double tarifaMembresia = 150000;
-    private static double tarifaHoraCamion;
+    private static double tarifaHoraCamion=8000;
 
     public Camion(TipoVehiculo tipoVehiculo, String placa, String color, String modelo, Cliente cliente) {
         super(tipoVehiculo, placa, color, modelo, cliente);

@@ -38,7 +38,7 @@ public class Main {
         	opcion=Menu.seleccionarMenuPrincipal();
         	System.out.println("Opcion seleccionada " + opcion);
         	switch (opcion) {
-        	case 1:{
+        	case 1:{//Registrar ingreso sin membresía
         		String placaN = JOptionPane.showInputDialog("Ingrese la placa del vehiculo: ");
         		if ( placaN == null||placaN.isBlank() ) {
         			JOptionPane.showMessageDialog(null, "Opción inválida");
@@ -58,14 +58,12 @@ public class Main {
         		break;
         	}
         	
-        	case 2: {
+        	case 2: {//Registrar salida sin membresía
         	    String placa = JOptionPane.showInputDialog(null, "Ingrese la placa del vehículo:");
-
         	    if (placa == null || placa.isBlank()) {
         	        JOptionPane.showMessageDialog(null, "Placa inválida.");
         	        break;  // Cambié return por break para no salir del loop principal
         	    }
-
         	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         	    LocalDateTime horaSalidaN = null;
         	    boolean entradaValida = false;
@@ -77,13 +75,6 @@ public class Main {
         	            "Registro de salida",
         	            JOptionPane.QUESTION_MESSAGE
         	        );
-        	        
-        	        
-        	        
-        	        
-        	        
-        	        
-
         	        if (horaSalidaStr == null) {
         	            JOptionPane.showMessageDialog(null, "Cancelado por el usuario.");
         	            break;  // Salir del ciclo while y case
@@ -354,7 +345,7 @@ public class Main {
         	        break;
         	    }
 
-        	    Tarifable vehiculo = null;
+        	    Vehiculo vehiculo = null;
         	    switch (tipo) {
         	        case MOTO:
         	            Moto moto = new Moto(tipo, placa, "", "", null);
@@ -382,6 +373,9 @@ public class Main {
         	        "Horas cobradas: " + String.format("%.2f", horas) + "\n" +
         	        "Total a pagar: $" + total
         	    );
+        	    Cliente cliente=new Cliente();
+        	    Pago pago = new Pago(cliente,vehiculo, total, TipoPago.HORAS);
+        	    adminPago.registrarPago(pago, placa);
 
         	    break;
         	}
