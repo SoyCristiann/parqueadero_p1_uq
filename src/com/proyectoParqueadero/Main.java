@@ -24,7 +24,7 @@ import com.parqueadero.service.ParqueaderoService;
 public class Main {
 	
 	public static void main(String[] args) {        
-        ParqueaderoService adminParqueadero = new ParqueaderoService("Parqueadero de la U", "Universidad del Quindío", "Estudiantes de ingenería", "3100000000", 200, 150, 20);
+		ParqueaderoService adminParqueadero = new ParqueaderoService("Parqueadero de la U", "Universidad del Quindío", "Estudiantes de ingenería", "3100000000", 200, 150, 20);
         PagoService adminPago = new PagoService();
 
       //Menú. Ojo, no borrar, solo hacer ediciones que no afecten el funcionamiento del menú. Para editar el menú y/o crear submenues, vaya a com.parqueadero.utils -> Menu	
