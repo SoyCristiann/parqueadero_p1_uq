@@ -10,7 +10,7 @@ public class Membresia {
 	
 	private LocalDate fechaInicio;
 	private LocalDate fechaFinal; //Se calcula automaticamente.
-	private byte cantidadDiasMembresia=30;//Por defecto solo será mensual, con este parametro se puede modificar la cantidad de días de la membresía.
+	private int cantidadDiasMembresia=30;//Por defecto solo será mensual, con este parametro se puede modificar la cantidad de días de la membresía.
 	private Vehiculo vehiculo;
 	private Cliente cliente;
 	private double monto;
@@ -22,24 +22,26 @@ public class Membresia {
 		this.fechaInicio = LocalDate.now();
 		this.fechaFinal = fechaInicio.plusDays(cantidadDiasMembresia);
 		this.monto = 0.0;
+		this.cantidadDiasMembresia=0;
 	
 	}
 	
-	public Membresia(LocalDate fechaInicio, Vehiculo  vehiculo, Cliente cliente, double monto) {
+	public Membresia(LocalDate fechaInicio, Vehiculo  vehiculo, Cliente cliente, double monto, int cantidadDiasMembresia) {
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaInicio.plusDays(cantidadDiasMembresia); //Esto garantiza que la fecha final automaticamente será 30 días despues de la fecha de creación de la membresía.
 		this.vehiculo= vehiculo;
 		this.cliente= cliente;
 		this.monto = monto;
+		this.cantidadDiasMembresia= cantidadDiasMembresia;
 	}
 	
 	
 	// Métodos getters y setters
-	public byte getCantidadDiasMembresia() {
+	public int getCantidadDiasMembresia() {
 		return cantidadDiasMembresia;
 	}
 	
-	public void setCantidadDiasMembresia(byte cantidadDiasMembresia) {
+	public void setCantidadDiasMembresia(int cantidadDiasMembresia) {
 		this.cantidadDiasMembresia= cantidadDiasMembresia;
 	}
 	

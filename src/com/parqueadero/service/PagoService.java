@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.parqueadero.model.Membresia;
 import com.parqueadero.model.Pago;
 import com.parqueadero.model.Vehiculo;
 
@@ -12,7 +13,7 @@ import Interfaces.Tarifable;
 
 public class PagoService{
 	
-	private ArrayList<Pago> pagos;
+	private static ArrayList<Pago> pagos;
 	
 	
 	// Contructor vacío
@@ -26,10 +27,13 @@ public class PagoService{
 	}
 	
 	//Método para registrar un pago, retorna True o False en función de realizar pruebas.
-	public boolean registrarPago(Pago pago) {
+	public boolean registrarPago(Pago pago, Membresia membresia) {
+		StringBuilder mensaje=new StringBuilder();
 		if(pagos.isEmpty()) {
 			pagos.add(pago);
-			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.", "Confirmación de pago.", 1);
+			System.out.println(pagos);
+			mensaje.append(pago + "Fecha inicio Membresia: " + membresia.getFechaInicio() + "\nFecha fin membresía: " + membresia.getFechaFinal());
+			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
 			return true;
 		}else {
 			for(Pago p: pagos) {
@@ -38,8 +42,9 @@ public class PagoService{
 					return false;
 				}
 			}
-			pagos.add(pago);
-			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.", "Confirmación de pago.", 1);
+			pagos.add(pago);System.out.println(pagos);
+			mensaje.append(pago + "Fecha inicio Membresia: " + membresia.getFechaInicio() + "\nFecha fin membresía: " + membresia.getFechaFinal());
+			JOptionPane.showInternalMessageDialog(null, "El pago fue registrado de forma correcta.\n"+mensaje, "Confirmación de pago.", 1);
 			return true;
 		}
 	}
@@ -47,8 +52,8 @@ public class PagoService{
 	//Para verificar el total de pagos, se debe ingresar la fecha de inicio y de fin a calcular.
 	public double calcularTotalPagosPeriodo(LocalDate inicio, LocalDate fin) {
 		double totalPagosPeriodo=0;
-		if(fin.isBefore(inicio)) {
-			JOptionPane.showInternalMessageDialog(null, "La fecha de fin no puede ser menor a la fecha inicial.", "Fecha de fin erronea.", 1);
+		if(fin.isBefore(inicio) || fin.isAfter(LocalDate.now())) {
+			JOptionPane.showInternalMessageDialog(null, "Error en el rango de rechas seleccionado.", "Error de fecha.", 1);
 			return 0;
 		}else {
 			for(Pago p: pagos) {
@@ -62,18 +67,22 @@ public class PagoService{
 	
 	
 	//Método para obtener el historial de pagos de un vehiculo dado.
-	public ArrayList<Pago> obtenerHistorialPagoVehiculo(Vehiculo vehiculo) {
+	public ArrayList<Pago> obtenerHistorialPagoVehiculo(String placa) {
+		StringBuilder mensaje=new StringBuilder();
+		mensaje.append("Los pagos registrados para el vehículo con placa " + placa + " son: \n");
 		ArrayList<Pago> listaPagos= new ArrayList<>();
 		for(Pago p: pagos) {
 			Vehiculo v= p.getVehiculo();
-			if(v.getPlaca().equals(vehiculo.getPlaca())) {
+			if(v.getPlaca().equalsIgnoreCase(placa.trim())) {
 				listaPagos.add(p);
+				mensaje.append(p+"\n");
 			}
 		}
+		JOptionPane.showMessageDialog(null, mensaje);
 		return listaPagos;
 	}
 	
-	
+	//Cálcula el total de los ingresos teniendo en cuenta los pagos de la lista pagos.
 	public double calcularTotalIngresos() {
 		double total=0;
 		if(!pagos.isEmpty()) {
@@ -89,6 +98,7 @@ public class PagoService{
 	
 	//Método de prueba para ver la lista de pagos.
 	public void mostrarPagos() {
+		System.out.println("Tamaño de la lista pagos: " + pagos.size());
 		for(Pago p: pagos) {
 			System.out.println(p);
 		}

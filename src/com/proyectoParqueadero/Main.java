@@ -24,8 +24,9 @@ import com.parqueadero.service.ParqueaderoService;
 public class Main {
 	
 	public static void main(String[] args) {        
-        ParqueaderoService adminParqueadero = new ParqueaderoService("Parqueadero de la U", "Universidad del Quindío", "Estudiantes de ingenería", "3100000000", 200, 150, 20);
-        PagoService adminPago = new PagoService();
+		PagoService adminPago = new PagoService();
+		ParqueaderoService adminParqueadero = new ParqueaderoService("Parqueadero de la U", "Universidad del Quindío", "Estudiantes de ingenería", "3100000000", 200, 150, 20, adminPago);
+        
 
       //Menú. Ojo, no borrar, solo hacer ediciones que no afecten el funcionamiento del menú. Para editar el menú y/o crear submenues, vaya a com.parqueadero.utils -> Menu	
         byte opcion;
@@ -176,13 +177,9 @@ public class Main {
 						Vehiculo v=c.buscarVehiculoPlaca(placa);
 						if(v!=null) {
 							LocalDate fechaInicio = SelectorFecha.seleccionarFecha();
+							int cantidadDias=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de días deseados en la membresía: ")) ;
 							//TipoPago tipoPago = (TipoPago) JOptionPane.showInputDialog(null, "Seleccione el tipo de pago:", "Tipo de pago.",JOptionPane.QUESTION_MESSAGE,null, TipoPago.values(), TipoPago.HORAS);
-							Membresia membresia = adminParqueadero.crearMembresia(cedula, placa, fechaInicio);
-							if(membresia!=null) {						
-								Pago pago= new Pago(c,v, membresia.getMonto(), TipoPago.MEMBRESIA);
-								adminPago.registrarPago(pago);
-								JOptionPane.showMessageDialog(null, pago);
-							}
+							Membresia membresia = adminParqueadero.crearMembresia(cedula, placa, fechaInicio, cantidadDias);
 						}else {
 							break;
 						}						
@@ -229,7 +226,41 @@ public class Main {
 						break;
 					}
         		}
+        		break;
         	}
+        	case 7:{
+        		opcion=Menu.seleccionarReportes();
+        		switch (opcion) {
+					case 1: {//Historial total de pagos.
+						JOptionPane.showMessageDialog(null, "El total de pagos registrados es : $" + adminPago.calcularTotalIngresos());
+						break;
+					}
+					case 2:{//Historial pagos por periodo.
+						JOptionPane.showMessageDialog(null, "Seleccione la fecha inicial a consultar:");
+						LocalDate fechaInicio= SelectorFecha.seleccionarFecha();
+						JOptionPane.showMessageDialog(null, "Seleccione la fecha final:");
+						LocalDate fechaFin= SelectorFecha.seleccionarFecha();
+						double monto= adminPago.calcularTotalPagosPeriodo(fechaInicio, fechaFin);
+						if(monto!=0) {
+							JOptionPane.showMessageDialog(null, "El total de los ingresos para el periodo " + fechaInicio + " - " + fechaFin + " es:" + monto);
+							break;
+						}
+						break;
+						
+					}
+					case 3:{//Historial de pago por vehículo
+						String placa= JOptionPane.showInputDialog("Ingrese la placa del vehículo: ");
+						adminPago.obtenerHistorialPagoVehiculo(placa);
+						break;
+					}
+				}
+        		break;
+        	}
+        	case 8:{//Vehículos en el parqueadero.
+        		adminParqueadero.mostrarVehiculosActuales();
+        	}
+        	
+        	
 			case 0: {
 				JOptionPane.showMessageDialog(null, "Ha salido del sistema.");
 				break;

@@ -18,7 +18,7 @@ public class Pago {
 	public Pago() {
 		this.idPago=UUID.randomUUID().toString(); //Genera un ID de pago único de forma aleatoria.
 		this.cliente= new Cliente();
-		this.vehiculo = new Vehiculo();
+		//this.vehiculo = new Vehiculo();
 		this.monto = 0.0;
 		this.fechaPago = LocalDate.now();
 		this.tipoPago = TipoPago.NULL;

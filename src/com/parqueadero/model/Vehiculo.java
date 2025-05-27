@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-public class Vehiculo {
+public abstract class Vehiculo {
 	private TipoVehiculo tipoVehiculo;
 	private String placa;
 	private String color;
@@ -90,6 +90,8 @@ public class Vehiculo {
 		}
 		return false;
 	}
+	
+	public abstract double getTarifaMembresia();
 	
 	
 	@Override
